@@ -555,8 +555,8 @@ export default function HeroExperience({ onExploreProjects }) {
             </button>
           </div>
 
-          {/* Interactive Controls & Scrub Progress */}
-          <div className="flex items-center justify-between sm:justify-start gap-3 sm:gap-4">
+          {/* Interactive Controls & Scrub Progress (Desktop/Tablet only, hidden on mobile) */}
+          <div className="hidden md:flex items-center justify-start gap-3 sm:gap-4">
             {/* Auto Play / Pause Toggle Button */}
             <button
               onClick={toggleAutoPlay}
