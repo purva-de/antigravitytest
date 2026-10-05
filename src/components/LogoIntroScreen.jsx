@@ -4,7 +4,7 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 /**
  * LogoIntroScreen
  * Architectural black introductory screen displaying the Consilio Studios logo.
- * Automatically transitions directly to the landing page after 2 seconds
+ * Automatically transitions directly to the landing page after 0.5 seconds
  * without requiring any hovering or user actions.
  * Also supports clicking, scrolling, or pressing enter to proceed early.
  */
@@ -23,7 +23,7 @@ export default function LogoIntroScreen({ onIntroComplete }) {
     document.body.style.overflow = "";
     
     // Smooth architectural transition out
-    const exitDuration = shouldReduceMotion ? 100 : 950;
+    const exitDuration = shouldReduceMotion ? 100 : 750;
     setTimeout(() => {
       setIsVisible(false);
       if (onIntroComplete) onIntroComplete();
@@ -36,10 +36,10 @@ export default function LogoIntroScreen({ onIntroComplete }) {
       document.body.style.overflow = "hidden";
     }
 
-    // Auto-advance directly to the landing page after 2 seconds without requiring hover or interaction
+    // Auto-advance directly to the landing page after 0.5 seconds without requiring hover or interaction
     const autoLandTimer = setTimeout(() => {
       dismissIntro();
-    }, 2000);
+    }, 500);
 
     // Optional manual early skip triggers (click, scroll, swipe, key) if visitor prefers not to wait
     const handleWheel = (e) => {
@@ -93,7 +93,7 @@ export default function LogoIntroScreen({ onIntroComplete }) {
             y: shouldReduceMotion ? 0 : "-100%",
             opacity: shouldReduceMotion ? 0 : 1,
             transition: {
-              duration: shouldReduceMotion ? 0.2 : 0.95,
+              duration: shouldReduceMotion ? 0.2 : 0.75,
               ease: [0.76, 0, 0.24, 1], // Classic architectural curtain curve
             },
           }}
@@ -147,15 +147,15 @@ export default function LogoIntroScreen({ onIntroComplete }) {
                 className="w-24 h-24 xs:w-28 xs:h-28 sm:w-36 sm:h-36 lg:w-44 lg:h-44 object-contain invert drop-shadow-[0_0_28px_rgba(255,255,255,0.22)] transition-transform duration-500 group-hover:scale-105"
                 initial={{ filter: "invert(1) blur(4px)", opacity: 0 }}
                 animate={{ filter: "invert(1) blur(0px)", opacity: 1 }}
-                transition={{ duration: shouldReduceMotion ? 0.2 : 0.9, ease: "easeOut" }}
+                transition={{ duration: shouldReduceMotion ? 0.15 : 0.25, ease: "easeOut" }}
               />
             </div>
 
             {/* Studio Identity Name */}
             <motion.h1
-              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 12 }}
+              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: shouldReduceMotion ? 0 : 0.25, duration: shouldReduceMotion ? 0.2 : 0.9 }}
+              transition={{ delay: shouldReduceMotion ? 0 : 0.05, duration: shouldReduceMotion ? 0.15 : 0.25 }}
               className="font-serif text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-light tracking-[0.2em] sm:tracking-[0.26em] text-white uppercase mt-6 sm:mt-8 leading-tight"
             >
               Consilio Studios
@@ -163,9 +163,9 @@ export default function LogoIntroScreen({ onIntroComplete }) {
 
             {/* Disciplines & Location */}
             <motion.p
-              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 8 }}
+              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 6 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: shouldReduceMotion ? 0 : 0.4, duration: shouldReduceMotion ? 0.2 : 0.8 }}
+              transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: shouldReduceMotion ? 0.15 : 0.2 }}
               className="font-mono text-[9px] xs:text-[10px] sm:text-xs tracking-[0.25em] sm:tracking-[0.35em] text-white/60 uppercase mt-2.5 sm:mt-3"
             >
               Architecture • Spatial Design • Pune
@@ -175,21 +175,21 @@ export default function LogoIntroScreen({ onIntroComplete }) {
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: shouldReduceMotion ? 0 : 0.55, duration: shouldReduceMotion ? 0.2 : 0.8 }}
+              transition={{ delay: shouldReduceMotion ? 0 : 0.15, duration: shouldReduceMotion ? 0.15 : 0.2 }}
               className="font-serif italic text-xs sm:text-sm text-white/45 mt-3 sm:mt-4 tracking-wider"
             >
               "You got space, and we got the idea"
             </motion.p>
           </motion.div>
 
-          {/* BOTTOM SPACING & SUBTLE PROGRESS LINE (2s auto-landing) */}
+          {/* BOTTOM SPACING & SUBTLE PROGRESS LINE (0.5s auto-landing) */}
           <div className="w-full pb-8 sm:pb-16 flex flex-col items-center relative z-10 pointer-events-none">
-            {/* Subtle hairline progress indicator across 2s */}
+            {/* Subtle hairline progress indicator across 0.5s */}
             <div className="w-24 sm:w-32 h-[1px] bg-white/10 overflow-hidden rounded-full" aria-hidden="true">
               <motion.div
                 initial={{ width: "0%" }}
                 animate={{ width: "100%" }}
-                transition={{ duration: shouldReduceMotion ? 0 : 2, ease: "linear" }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.5, ease: "linear" }}
                 className="h-full bg-white/35"
               />
             </div>
