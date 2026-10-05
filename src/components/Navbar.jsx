@@ -58,17 +58,17 @@ export default function Navbar({ activeSection, onNavigate }) {
             : 'bg-transparent py-3 sm:py-5 border-b border-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 flex items-center justify-between gap-2">
+        <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-2">
           
           {/* LEFT: Circular Logo Emblem + Wordmark + Tagline */}
           <a
             href="#hero"
             onClick={(e) => handleItemClick(e, '#hero')}
-            className="flex items-center gap-2.5 sm:gap-3 group focus:outline-hidden min-w-0"
+            className="flex items-center gap-2 xs:gap-2.5 sm:gap-3 group focus:outline-hidden shrink-0"
             aria-label="Consilio Studios Home"
           >
             {/* The Official Uploaded Logo: White over hero video, Solid Black after scrolling */}
-            <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-transform duration-300 group-hover:scale-105 shrink-0">
+            <div className="w-7 h-7 xs:w-8 xs:h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-transform duration-300 group-hover:scale-105 shrink-0">
               <img
                 src="/logo.png"
                 alt="Consilio Studios Logo"
@@ -80,9 +80,9 @@ export default function Navbar({ activeSection, onNavigate }) {
               />
             </div>
             
-            <div className="flex flex-col min-w-0">
+            <div className="flex flex-col shrink-0">
               <span
-                className={`font-serif text-[17px] xs:text-xl sm:text-2xl font-normal tracking-wide leading-tight whitespace-nowrap transition-colors duration-300 ${
+                className={`font-serif text-[13.5px] xs:text-[15.5px] sm:text-xl md:text-2xl font-normal tracking-normal sm:tracking-wide leading-tight whitespace-nowrap transition-colors duration-300 ${
                   isScrolled
                     ? 'text-[#1C1B19]'
                     : 'text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]'
@@ -91,7 +91,7 @@ export default function Navbar({ activeSection, onNavigate }) {
                 Consilio Studios
               </span>
               <span
-                className={`text-[8px] xs:text-[9px] sm:text-[10px] tracking-[0.16em] sm:tracking-[0.2em] font-mono uppercase font-medium whitespace-nowrap transition-colors duration-300 ${
+                className={`text-[7.5px] xs:text-[8.5px] sm:text-[10px] tracking-[0.14em] sm:tracking-[0.2em] font-mono uppercase font-medium whitespace-nowrap transition-colors duration-300 ${
                   isScrolled
                     ? 'text-[#57544E]'
                     : 'text-[#D9CEBE] drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]'
@@ -123,11 +123,11 @@ export default function Navbar({ activeSection, onNavigate }) {
             </nav>
 
             {/* Utility Controls (Phone & Mobile Menu) */}
-            <div className="flex items-center gap-2 sm:gap-2.5">
+            <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-2.5 shrink-0">
               {/* Circular Phone / WhatsApp Button */}
               <a
                 href={`tel:${STUDIO_INFO.phone.replace(/\s+/g, '')}`}
-                className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-105 focus:outline-hidden ${
+                className={`w-7 h-7 xs:w-8 xs:h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-105 focus:outline-hidden ${
                   isScrolled
                     ? 'bg-white hover:bg-[#FAF8F5] text-[#1C1B19] border border-[#1C1B19]/15 shadow-xs'
                     : 'bg-white/20 hover:bg-white/30 text-white border border-white/30 shadow-md'
@@ -135,13 +135,13 @@ export default function Navbar({ activeSection, onNavigate }) {
                 title={`Call Consilio Studios: ${STUDIO_INFO.phone}`}
                 aria-label={`Call Consilio Studios at ${STUDIO_INFO.phone}`}
               >
-                <Phone size={14} className={isScrolled ? 'text-[#1C1B19]' : 'text-white'} />
+                <Phone className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isScrolled ? 'text-[#1C1B19]' : 'text-white'}`} />
               </a>
 
               {/* Mobile Hamburger Toggle */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className={`md:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-200 focus:outline-hidden ${
+                className={`md:hidden w-7 h-7 xs:w-8 xs:h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-200 focus:outline-hidden ${
                   isScrolled
                     ? 'bg-white hover:bg-[#FAF8F5] text-[#1C1B19] border border-[#1C1B19]/20 shadow-xs'
                     : 'bg-white/20 hover:bg-white/30 text-white border border-white/30 shadow-md'
@@ -150,9 +150,9 @@ export default function Navbar({ activeSection, onNavigate }) {
                 aria-expanded={mobileMenuOpen}
               >
                 {mobileMenuOpen ? (
-                  <X size={16} className={isScrolled ? 'text-[#1C1B19]' : 'text-white'} />
+                  <X className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isScrolled ? 'text-[#1C1B19]' : 'text-white'}`} />
                 ) : (
-                  <Menu size={16} className={isScrolled ? 'text-[#1C1B19]' : 'text-white'} />
+                  <Menu className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isScrolled ? 'text-[#1C1B19]' : 'text-white'}`} />
                 )}
               </button>
             </div>
