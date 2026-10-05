@@ -9,11 +9,18 @@ export default function HeroExperience({ onExploreProjects }) {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
   const videoRef = useRef(null);
+  const mobileVideoRef = useRef(null);
 
   const [scrollProgress, setScrollProgress] = useState(0);
   const [currentChapter, setCurrentChapter] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isReady, setIsReady] = useState(false);
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 1024;
+    }
+    return false;
+  });
 
   // References for rendering and animation loop
   const frameImagesRef = useRef([]);
@@ -113,8 +120,16 @@ export default function HeroExperience({ onExploreProjects }) {
     }
   };
 
-  // 3. Pause autoplay when scrolled out of view to save resources
+  // 3. Pause desktop autoplay when scrolled out of view or on mobile
   useEffect(() => {
+    if (isMobileOrTablet) {
+      if (autoPlayTimerRef.current) {
+        clearInterval(autoPlayTimerRef.current);
+        autoPlayTimerRef.current = null;
+      }
+      return;
+    }
+
     const handleScroll = () => {
       const isVisible = window.scrollY < window.innerHeight;
       if (!isVisible && autoPlayTimerRef.current) {
@@ -129,7 +144,7 @@ export default function HeroExperience({ onExploreProjects }) {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, isMobileOrTablet]);
 
   // 4. Smooth Animation Loop via requestAnimationFrame
   useEffect(() => {
@@ -196,22 +211,83 @@ export default function HeroExperience({ onExploreProjects }) {
     };
   }, [isAutoPlaying]);
 
-  // Handle Resize
+  // Handle Resize and Mobile/Tablet Detection
   useEffect(() => {
     const handleResize = () => {
-      const idx = Math.min(
-        TOTAL_FRAMES - 1,
-        Math.max(0, Math.round(currentFrameRef.current))
-      );
-      renderFrame(idx);
+      const isMob = window.innerWidth < 1024;
+      setIsMobileOrTablet(isMob);
+      if (!isMob) {
+        const idx = Math.min(
+          TOTAL_FRAMES - 1,
+          Math.max(0, Math.round(currentFrameRef.current))
+        );
+        renderFrame(idx);
+      }
     };
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Chapter Jump Helper (Direct frame animation without scrolling into empty space)
+  // Synchronize mobile video playback with chapter & progress
+  const handleMobileTimeUpdate = () => {
+    if (!mobileVideoRef.current) return;
+    const { currentTime, duration } = mobileVideoRef.current;
+    if (!duration) return;
+    const progress = currentTime / duration;
+    setScrollProgress(progress);
+    if (progress < 0.33) {
+      setCurrentChapter(0);
+    } else if (progress < 0.66) {
+      setCurrentChapter(1);
+    } else {
+      setCurrentChapter(2);
+    }
+  };
+
+  const toggleAutoPlay = () => {
+    const nextState = !isAutoPlaying;
+    setIsAutoPlaying(nextState);
+    if (mobileVideoRef.current) {
+      if (nextState) {
+        mobileVideoRef.current.play().catch(() => {});
+      } else {
+        mobileVideoRef.current.pause();
+      }
+    }
+  };
+
+  const handleTimelineScrub = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const pct = Math.max(0, Math.min(1, x / rect.width));
+
+    if (isMobileOrTablet && mobileVideoRef.current && mobileVideoRef.current.duration) {
+      mobileVideoRef.current.currentTime = pct * mobileVideoRef.current.duration;
+      setScrollProgress(pct);
+      return;
+    }
+
+    targetFrameRef.current = pct * (TOTAL_FRAMES - 1);
+  };
+
+  // Chapter Jump Helper (Supports both desktop frames and mobile video timeline)
   const goToChapter = (chapterIdx) => {
+    if (isMobileOrTablet && mobileVideoRef.current && mobileVideoRef.current.duration) {
+      const duration = mobileVideoRef.current.duration;
+      if (chapterIdx === 0) {
+        mobileVideoRef.current.currentTime = 0;
+        setCurrentChapter(0);
+      } else if (chapterIdx === 1) {
+        mobileVideoRef.current.currentTime = duration * 0.33;
+        setCurrentChapter(1);
+      } else if (chapterIdx === 2) {
+        mobileVideoRef.current.currentTime = duration * 0.66;
+        setCurrentChapter(2);
+      }
+      return;
+    }
+
     if (chapterIdx === 0) {
       targetFrameRef.current = 0;
       setCurrentChapter(0);
@@ -238,22 +314,34 @@ export default function HeroExperience({ onExploreProjects }) {
       */}
       <div className="relative h-full w-full overflow-hidden flex flex-col justify-between select-none">
         
-        {/* Full-bleed Edge-to-Edge Canvas: zero black bars, zero letterboxing */}
+        {/* Mobile / Tablet Dedicated Native Video (9:16 Portrait Optimized "mobileversion") */}
+        <video
+          ref={mobileVideoRef}
+          src="/videos/mobileversion.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          onTimeUpdate={handleMobileTimeUpdate}
+          className="absolute inset-0 w-full h-full object-cover z-0 block lg:hidden"
+        />
+
+        {/* Full-bleed Edge-to-Edge Canvas: zero black bars, zero letterboxing (Desktop) */}
         <canvas
           ref={canvasRef}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
-          className="absolute inset-0 w-full h-full object-cover z-0 touch-pan-y"
+          className="absolute inset-0 w-full h-full object-cover z-0 touch-pan-y hidden lg:block"
         />
 
-        {/* Fallback fastseek video */}
+        {/* Fallback fastseek video (Desktop) */}
         <video
           ref={videoRef}
           src="/main_video_fastseek.mp4"
           muted
           playsInline
           preload="auto"
-          className="absolute inset-0 w-full h-full object-cover z-0 opacity-0 pointer-events-none"
+          className="absolute inset-0 w-full h-full object-cover z-0 opacity-0 pointer-events-none hidden lg:block"
         />
 
         {/* Refined subtle gradient: no harsh black space */}
@@ -471,7 +559,7 @@ export default function HeroExperience({ onExploreProjects }) {
           <div className="flex items-center justify-between sm:justify-start gap-3 sm:gap-4">
             {/* Auto Play / Pause Toggle Button */}
             <button
-              onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+              onClick={toggleAutoPlay}
               className="px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-[10px] font-mono tracking-wider uppercase flex items-center gap-1.5 transition-colors active:scale-95"
               title={isAutoPlaying ? "Pause Walkthrough" : "Play Continuous Walkthrough"}
             >
@@ -481,12 +569,7 @@ export default function HeroExperience({ onExploreProjects }) {
 
             {/* Continuous Progress Track with Click-to-Scrub */}
             <div
-              onClick={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const pct = Math.max(0, Math.min(1, x / rect.width));
-                targetFrameRef.current = pct * (TOTAL_FRAMES - 1);
-              }}
+              onClick={handleTimelineScrub}
               className="flex-1 sm:flex-initial w-28 xs:w-36 h-2 bg-white/20 hover:bg-white/30 rounded-full overflow-hidden relative cursor-pointer transition-colors"
               title="Click timeline to scrub video"
             >
