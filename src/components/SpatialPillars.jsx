@@ -77,7 +77,7 @@ function InteractiveTiltCard({ pillar, index, isExpanded, onHover, onSelect }) {
       style={{
         perspective: '1200px',
       }}
-      className="group relative cursor-pointer h-[250px] xs:h-[280px] sm:h-[320px] lg:h-[350px] w-full transition-all duration-700 ease-out select-none"
+      className="group relative cursor-pointer h-[280px] xs:h-[320px] sm:h-[350px] lg:h-[380px] w-full transition-all duration-700 ease-out select-none"
       role="button"
       tabIndex={0}
       aria-label={`Explore ${pillar.title}`}
@@ -105,18 +105,19 @@ function InteractiveTiltCard({ pillar, index, isExpanded, onHover, onSelect }) {
           <img
             src={pillar.image}
             alt={pillar.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover brightness-[0.94] contrast-[1.03]"
+            loading="lazy"
           />
         </div>
 
-        {/* Ambient Darkened Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/10 transition-opacity duration-500 group-hover:from-black/90 group-hover:via-black/35" />
+        {/* Ambient Darkened Gradient Overlay: Clear view on top, readable on bottom */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent transition-opacity duration-500 group-hover:from-black/90 group-hover:via-black/35" />
 
         {/* Dynamic Specular Light Sheen (Simulates Architectural Glass Reflection) */}
         {isHovered && (
           <div
             style={{
-              background: `radial-gradient(circle at ${tilt.sheenX}% ${tilt.sheenY}%, rgba(255, 255, 255, 0.2) 0%, transparent 65%)`,
+              background: `radial-gradient(circle at ${tilt.sheenX}% ${tilt.sheenY}%, rgba(255, 255, 255, 0.22) 0%, transparent 65%)`,
             }}
             className="absolute inset-0 pointer-events-none transition-opacity duration-150"
           />
@@ -124,7 +125,7 @@ function InteractiveTiltCard({ pillar, index, isExpanded, onHover, onSelect }) {
 
         {/* Top Header: Discipline Tag & Floating Arrow Badge */}
         <div className="absolute top-3 sm:top-4 left-3 sm:left-4 right-3 sm:right-4 flex items-center justify-between z-20">
-          <span className="px-2.5 py-0.5 rounded-full bg-black/45 backdrop-blur-md border border-white/15 text-[9px] tracking-[0.2em] font-mono text-white/80 uppercase">
+          <span className="px-2.5 py-0.5 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-[9px] tracking-[0.2em] font-mono text-white/90 uppercase shadow-xs">
             {pillar.discipline}
           </span>
 
@@ -153,12 +154,12 @@ function InteractiveTiltCard({ pillar, index, isExpanded, onHover, onSelect }) {
             {pillar.title}
           </h3>
 
-          {/* Expandable Description & Specs on Hover */}
-          <div className="overflow-hidden transition-all duration-500 max-h-0 opacity-0 group-hover:max-h-28 group-hover:opacity-100 group-hover:mt-1.5">
-            <p className="text-[11px] sm:text-xs text-white/80 font-light leading-relaxed mb-1.5 line-clamp-2">
+          {/* Visible on mobile/tablet, expandable on desktop hover */}
+          <div className="overflow-hidden transition-all duration-500 max-md:max-h-24 max-md:opacity-100 max-md:mt-1 max-h-0 opacity-0 md:group-hover:max-h-28 md:group-hover:opacity-100 md:group-hover:mt-1.5">
+            <p className="text-[11px] sm:text-xs text-white/85 font-light leading-relaxed mb-1.5 line-clamp-2">
               {pillar.subtitle}
             </p>
-            <div className="pt-1.5 border-t border-white/15 flex items-center justify-between text-[9px] font-mono text-white/60 tracking-wider">
+            <div className="pt-1.5 border-t border-white/15 flex items-center justify-between text-[9px] font-mono text-white/70 tracking-wider">
               <span>{pillar.materials}</span>
             </div>
           </div>
@@ -231,15 +232,16 @@ export default function SpatialPillars({ onSelectProject }) {
           aria-modal="true"
         >
           <div className="w-full max-w-2xl bg-[#141413] border border-white/15 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl text-white max-h-[90dvh] flex flex-col">
-            <div className="relative aspect-video w-full shrink-0">
+            <div className="relative aspect-video w-full shrink-0 bg-[#0E0D0C]">
               <img
                 src={selectedPillar.image}
                 alt={selectedPillar.title}
                 className="w-full h-full object-cover"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#141413] via-transparent to-black/40 pointer-events-none" />
               <button
                 onClick={() => setSelectedPillar(null)}
-                className="absolute top-3 right-3 sm:top-4 sm:right-4 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-white hover:text-black transition-colors"
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-all hover:scale-105 active:scale-95 shadow-md"
                 aria-label="Close modal"
               >
                 ✕
