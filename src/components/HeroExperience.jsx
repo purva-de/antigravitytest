@@ -314,10 +314,10 @@ export default function HeroExperience({ onExploreProjects }) {
       */}
       <div className="relative h-full w-full overflow-hidden flex flex-col justify-between select-none">
         
-        {/* Mobile / Tablet Dedicated Native Video (9:16 Portrait Optimized "mobileversion") */}
+        {/* Mobile / Tablet Dedicated Native Video (9:16 Portrait Optimized "mobile") */}
         <video
           ref={mobileVideoRef}
-          src="/videos/mobileversion.mp4"
+          src="/videos/mobile.mp4"
           autoPlay
           loop
           muted
