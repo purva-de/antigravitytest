@@ -1,0 +1,222 @@
+import React, { useState, useEffect } from 'react';
+import { STUDIO_INFO } from '../data/projectsData';
+import { Phone, Menu, X, ArrowUpRight } from 'lucide-react';
+
+export default function Navbar({ activeSection, onNavigate }) {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 30) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
+  const navItems = [
+    { label: 'STUDIO', href: '#studio', desc: 'Philosophy & Credentials' },
+    { label: 'WORK', href: '#work', desc: 'Architectural Portfolio' },
+    { label: 'SERVICES', href: '#services', desc: 'Turnkey Spatial Solutions' },
+    { label: 'CONTACT', href: '#contact', desc: 'Connect & Inquiries' },
+  ];
+
+  const handleItemClick = (e, href) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    if (onNavigate) {
+      onNavigate(href.replace('#', ''));
+    } else {
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <>
+      <header
+        id="main-navigation"
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+          isScrolled
+            ? 'glass-nav py-2.5 sm:py-3.5 shadow-sm border-b border-[#1C1B19]/5'
+            : 'bg-transparent py-3 sm:py-5 border-b border-[#1C1B19]/5'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 flex items-center justify-between gap-2">
+          
+          {/* LEFT: Circular Logo Emblem + Wordmark + Tagline */}
+          <a
+            href="#hero"
+            onClick={(e) => handleItemClick(e, '#hero')}
+            className="flex items-center gap-2.5 sm:gap-3 group focus:outline-hidden min-w-0"
+            aria-label="Consilio Studios Home"
+          >
+            {/* The Official Uploaded Logo - Transparent */}
+            <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-transform duration-300 group-hover:scale-105 shrink-0">
+              <img
+                src="/logo.png"
+                alt="Consilio Studios Logo"
+                className="w-full h-full object-contain dark:invert transition-all duration-300"
+              />
+            </div>
+            
+            <div className="flex flex-col min-w-0">
+              <span className="font-serif text-lg xs:text-xl sm:text-2xl font-normal tracking-wide text-[#1C1B19] dark:text-[#FAF8F5] leading-tight truncate">
+                Consilio Studios
+              </span>
+              <span className="text-[8px] xs:text-[9px] sm:text-[10px] tracking-[0.14em] sm:tracking-[0.2em] font-mono text-[#4A4843] dark:text-[#A09C94] uppercase font-medium truncate">
+                <span className="hidden xs:inline">ARCHITECTURE / INTERIORS / </span>PUNE
+              </span>
+            </div>
+          </a>
+
+          {/* RIGHT: Navigation Links & Circular Action Buttons */}
+          <div className="flex items-center gap-2 xs:gap-3 sm:gap-6 lg:gap-8 shrink-0">
+            {/* Desktop Navigation Links */}
+            <nav className="hidden md:flex items-center gap-6 lg:gap-8" aria-label="Main navigation">
+              {navItems.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={(e) => handleItemClick(e, item.href)}
+                  className="text-xs tracking-[0.2em] font-medium text-[#1C1B19]/80 dark:text-[#FAF8F5]/80 hover:text-[#1C1B19] dark:hover:text-[#FAF8F5] hover-underline-animation transition-colors duration-200"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+
+            {/* Utility Controls (Phone & Mobile Menu) */}
+            <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-2.5">
+              {/* Circular Phone / WhatsApp Button */}
+              <a
+                href={`tel:${STUDIO_INFO.phone.replace(/\s+/g, '')}`}
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/80 hover:bg-white text-[#1C1B19] dark:bg-white/95 dark:text-[#121110] border border-black/10 flex items-center justify-center shadow-xs backdrop-blur-md transition-transform duration-300 hover:scale-105 focus:outline-hidden"
+                title={`Call Consilio Studios: ${STUDIO_INFO.phone}`}
+                aria-label={`Call Consilio Studios at ${STUDIO_INFO.phone}`}
+              >
+                <Phone size={13} />
+              </a>
+
+              {/* Mobile Hamburger Toggle */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="md:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-[#1C1B19]/15 dark:border-white/15 flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] bg-white/50 backdrop-blur-md transition-all duration-200 focus:outline-hidden"
+                aria-label={mobileMenuOpen ? "Close menu" : "Open mobile menu"}
+                aria-expanded={mobileMenuOpen}
+              >
+                {mobileMenuOpen ? <X size={15} /> : <Menu size={15} />}
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div
+          className="fixed inset-0 z-50 bg-[#FAF8F5] dark:bg-[#121110] flex flex-col justify-between p-5 xs:p-6 sm:p-8 md:hidden transition-all duration-300 pt-safe pb-safe"
+          id="mobile-drawer"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile navigation menu"
+        >
+          <div className="flex items-center justify-between border-b border-[#1C1B19]/10 pb-4">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 flex items-center justify-center shrink-0">
+                <img src="/logo.png" alt="Consilio Studios Logo" className="w-full h-full object-contain dark:invert transition-all duration-300" />
+              </div>
+              <span className="font-serif text-lg tracking-wider text-[#1C1B19] dark:text-white">Consilio Studios</span>
+            </div>
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-9 h-9 rounded-full border border-[#1C1B19]/20 dark:border-white/20 flex items-center justify-center text-[#1C1B19] dark:text-white"
+              aria-label="Close menu"
+            >
+              <X size={16} />
+            </button>
+          </div>
+
+          <nav className="flex flex-col gap-2.5 my-auto py-3 sm:py-5" aria-label="Mobile navigation">
+            {navItems.map((item, idx) => {
+              const isActive = activeSection === item.href.replace('#', '');
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={(e) => handleItemClick(e, item.href)}
+                  className={`group relative flex items-center justify-between p-3 xs:p-3.5 sm:p-4 rounded-xl border transition-all duration-300 active:scale-[0.98] ${
+                    isActive
+                      ? 'bg-[#1C1B19]/[0.06] border-[#1C1B19]/25 shadow-xs'
+                      : 'bg-white/60 hover:bg-white border-[#1C1B19]/10 hover:border-[#1C1B19]/25'
+                  }`}
+                >
+                  <div className="flex items-center gap-3 xs:gap-3.5">
+                    <span className={`text-[10px] xs:text-[11px] font-mono tracking-widest px-2 py-0.5 rounded-md transition-colors ${
+                      isActive ? 'bg-[#4F5542] text-white font-medium' : 'bg-black/5 text-[#8F8B83] group-hover:text-[#1C1B19] group-hover:bg-black/10'
+                    }`}>
+                      0{idx + 1}
+                    </span>
+                    <div className="flex flex-col text-left">
+                      <span className={`font-serif text-base xs:text-lg sm:text-xl tracking-wider uppercase transition-colors ${
+                        isActive ? 'text-[#1C1B19] font-medium' : 'text-[#1C1B19]/90 group-hover:text-[#1C1B19]'
+                      }`}>
+                        {item.label}
+                      </span>
+                      <span className="text-[10px] xs:text-[11px] font-mono text-[#8F8B83] tracking-wide mt-0.5">
+                        {item.desc}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    {isActive && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#4F5542] animate-pulse" />
+                    )}
+                    <div className={`w-7 h-7 xs:w-8 xs:h-8 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                      isActive
+                        ? 'border-[#1C1B19]/30 bg-white text-[#1C1B19]'
+                        : 'border-black/5 bg-black/[0.02] text-[#8F8B83] group-hover:border-[#1C1B19]/20 group-hover:bg-white group-hover:text-[#1C1B19] group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
+                    }`}>
+                      <ArrowUpRight size={13} />
+                    </div>
+                  </div>
+                </a>
+              );
+            })}
+          </nav>
+
+          <div className="pt-4 border-t border-[#1C1B19]/10 dark:border-white/10 flex flex-col gap-2.5 text-xs tracking-wider text-[#57544E] dark:text-[#A09C94]">
+            <p className="font-medium text-[#1C1B19] dark:text-white">ARCHITECTURE / INTERIORS / PUNE</p>
+            <p>{STUDIO_INFO.location}</p>
+            <div className="pt-1">
+              <a
+                href={STUDIO_INFO.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full justify-center px-4 py-2.5 rounded-full bg-[#25D366]/15 text-[#25D366] border border-[#25D366]/30 font-mono text-xs inline-flex items-center gap-1.5 font-medium hover:bg-[#25D366]/25 transition-colors"
+              >
+                <span>WhatsApp Dialogue: {STUDIO_INFO.phone}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}

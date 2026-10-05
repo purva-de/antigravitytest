@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Architectural Neutral Palette */
+  --color-bg-primary: #FAF8F5;
+  --color-bg-secondary: #F3EFEA;
+  --color-bg-elevated: #FFFFFF;
+  --color-bg-stone: #E8E3DB;
+  --color-bg-dark: #121110;
+  
+  --color-text-primary: #1C1B19;
+  --color-text-secondary: #57544E;
+  --color-text-muted: #8F8B83;
+  --color-text-inverse: #FAF8F5;
+  
+  --color-border-light: rgba(28, 27, 25, 0.08);
+  --color-border-medium: rgba(28, 27, 25, 0.16);
+  --color-border-dark: rgba(250, 248, 245, 0.12);
+  
+  --color-accent-olive: #4F5542;
+  --color-accent-gold: #C5A880;
+  --color-accent-sand: #D9CEBE;
+
+  /* Theme Aliases */
+  --color-bg: var(--color-bg-primary);
+  --color-text: var(--color-text-primary);
+  --color-border: var(--color-border-light);
+  --color-muted: var(--color-text-muted);
+  --color-accent: var(--color-accent-olive);
+
+  /* 8px Grid Spatial Variables */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 48px;
+  --space-7: 56px;
+  --space-8: 64px;
+  --space-10: 80px;
+  --space-12: 96px;
+  --space-16: 128px;
+  --space-20: 160px;
+}
+
+[data-theme="dark"] {
+  --color-bg-primary: #121110;
+  --color-bg-secondary: #1A1918;
+  --color-bg-elevated: #22211F;
+  --color-bg-stone: #2A2825;
+  --color-bg-dark: #0A0A09;
+  
+  --color-text-primary: #FAF8F5;
+  --color-text-secondary: #C8C4BC;
+  --color-text-muted: #7E7A73;
+  --color-text-inverse: #1C1B19;
+  
+  --color-border-light: rgba(250, 248, 245, 0.08);
+  --color-border-medium: rgba(250, 248, 245, 0.16);
+  --color-border-dark: rgba(28, 27, 25, 0.12);
+  
+  --color-accent-olive: #768065;
+  --color-accent-gold: #D4B993;
+  --color-accent-sand: #3D3934;
+
+  /* Theme Aliases */
+  --color-bg: var(--color-bg-primary);
+  --color-text: var(--color-text-primary);
+  --color-border: var(--color-border-light);
+  --color-muted: var(--color-text-muted);
+  --color-accent: var(--color-accent-olive);
+}
+
+html {
+  scroll-behavior: smooth;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  overflow-x: hidden;
+  max-width: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+  overflow-x: hidden;
+  max-width: 100%;
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Touch Friendly Utilities */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+h1, h2, h3, .font-serif {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-text-muted);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
+}
+
+/* Glassmorphic Navbar & Panels */
+.glass-nav {
+  background: rgba(250, 248, 245, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.glass-nav-dark {
+  background: rgba(18, 17, 16, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--color-border-dark);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--color-border-light);
+}
+
+/* Text Mask Reveal */
+.editorial-mask {
+  overflow: hidden;
+  display: block;
+}
+
+/* Editorial line underline */
+.hover-underline-animation {
+  position: relative;
+}
+.hover-underline-animation::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: currentColor;
+  transform-origin: bottom right;
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.hover-underline-animation:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
