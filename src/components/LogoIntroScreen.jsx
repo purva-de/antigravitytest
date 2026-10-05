@@ -4,7 +4,7 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 /**
  * LogoIntroScreen
  * Architectural black introductory screen displaying the Consilio Studios logo.
- * Automatically transitions directly to the landing page after 12 seconds (10-15s window)
+ * Automatically transitions directly to the landing page after 5 seconds
  * without requiring any hovering or user actions.
  * Also supports clicking, scrolling, or pressing enter to proceed early.
  */
@@ -36,10 +36,10 @@ export default function LogoIntroScreen({ onIntroComplete }) {
       document.body.style.overflow = "hidden";
     }
 
-    // Auto-advance directly to the landing page after 12 seconds without requiring hover or interaction
+    // Auto-advance directly to the landing page after 5 seconds without requiring hover or interaction
     const autoLandTimer = setTimeout(() => {
       dismissIntro();
-    }, 12000);
+    }, 5000);
 
     // Optional manual early skip triggers (click, scroll, swipe, key) if visitor prefers not to wait
     const handleWheel = (e) => {
@@ -182,14 +182,14 @@ export default function LogoIntroScreen({ onIntroComplete }) {
             </motion.p>
           </motion.div>
 
-          {/* BOTTOM SPACING & SUBTLE PROGRESS LINE (12s auto-landing) */}
+          {/* BOTTOM SPACING & SUBTLE PROGRESS LINE (5s auto-landing) */}
           <div className="w-full pb-8 sm:pb-16 flex flex-col items-center relative z-10 pointer-events-none">
-            {/* Subtle hairline progress indicator across 12s */}
+            {/* Subtle hairline progress indicator across 5s */}
             <div className="w-24 sm:w-32 h-[1px] bg-white/10 overflow-hidden rounded-full" aria-hidden="true">
               <motion.div
                 initial={{ width: "0%" }}
                 animate={{ width: "100%" }}
-                transition={{ duration: shouldReduceMotion ? 0 : 12, ease: "linear" }}
+                transition={{ duration: shouldReduceMotion ? 0 : 5, ease: "linear" }}
                 className="h-full bg-white/35"
               />
             </div>
