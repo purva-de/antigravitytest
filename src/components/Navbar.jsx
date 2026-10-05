@@ -14,6 +14,7 @@ export default function Navbar({ activeSection, onNavigate }) {
         setIsScrolled(false);
       }
     };
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -54,7 +55,7 @@ export default function Navbar({ activeSection, onNavigate }) {
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled
             ? 'glass-nav py-2.5 sm:py-3.5 shadow-sm border-b border-[#1C1B19]/10'
-            : 'bg-[#FAF8F5]/90 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none py-2.5 sm:py-5 border-b border-[#1C1B19]/8 sm:border-b-transparent'
+            : 'bg-transparent py-3 sm:py-5 border-b border-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 flex items-center justify-between gap-2">
@@ -66,20 +67,36 @@ export default function Navbar({ activeSection, onNavigate }) {
             className="flex items-center gap-2.5 sm:gap-3 group focus:outline-hidden min-w-0"
             aria-label="Consilio Studios Home"
           >
-            {/* The Official Uploaded Logo - Crisp High-Contrast Black */}
+            {/* The Official Uploaded Logo: White over hero video, Solid Black after scrolling */}
             <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-transform duration-300 group-hover:scale-105 shrink-0">
               <img
                 src="/logo.png"
                 alt="Consilio Studios Logo"
-                className="w-full h-full object-contain filter brightness-0 transition-all duration-300"
+                className={`w-full h-full object-contain transition-all duration-300 ${
+                  isScrolled
+                    ? 'filter brightness-0'
+                    : 'filter brightness-0 invert drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]'
+                }`}
               />
             </div>
             
             <div className="flex flex-col min-w-0">
-              <span className="font-serif text-[17px] xs:text-xl sm:text-2xl font-normal tracking-wide text-[#1C1B19] leading-tight whitespace-nowrap">
+              <span
+                className={`font-serif text-[17px] xs:text-xl sm:text-2xl font-normal tracking-wide leading-tight whitespace-nowrap transition-colors duration-300 ${
+                  isScrolled
+                    ? 'text-[#1C1B19]'
+                    : 'text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]'
+                }`}
+              >
                 Consilio Studios
               </span>
-              <span className="text-[8px] xs:text-[9px] sm:text-[10px] tracking-[0.16em] sm:tracking-[0.2em] font-mono text-[#57544E] uppercase font-medium whitespace-nowrap">
+              <span
+                className={`text-[8px] xs:text-[9px] sm:text-[10px] tracking-[0.16em] sm:tracking-[0.2em] font-mono uppercase font-medium whitespace-nowrap transition-colors duration-300 ${
+                  isScrolled
+                    ? 'text-[#57544E]'
+                    : 'text-[#D9CEBE] drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]'
+                }`}
+              >
                 <span className="hidden xs:inline">ARCHITECTURE / INTERIORS / </span>PUNE
               </span>
             </div>
@@ -94,7 +111,11 @@ export default function Navbar({ activeSection, onNavigate }) {
                   key={item.label}
                   href={item.href}
                   onClick={(e) => handleItemClick(e, item.href)}
-                  className="text-xs tracking-[0.2em] font-medium text-[#1C1B19]/80 dark:text-[#FAF8F5]/80 hover:text-[#1C1B19] dark:hover:text-[#FAF8F5] hover-underline-animation transition-colors duration-200"
+                  className={`text-xs tracking-[0.2em] font-medium hover-underline-animation transition-colors duration-200 ${
+                    isScrolled
+                      ? 'text-[#1C1B19]/80 hover:text-[#1C1B19]'
+                      : 'text-white/90 hover:text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]'
+                  }`}
                 >
                   {item.label}
                 </a>
@@ -106,21 +127,33 @@ export default function Navbar({ activeSection, onNavigate }) {
               {/* Circular Phone / WhatsApp Button */}
               <a
                 href={`tel:${STUDIO_INFO.phone.replace(/\s+/g, '')}`}
-                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white hover:bg-[#FAF8F5] text-[#1C1B19] border border-[#1C1B19]/15 flex items-center justify-center shadow-xs backdrop-blur-md transition-transform duration-300 hover:scale-105 focus:outline-hidden"
+                className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-105 focus:outline-hidden ${
+                  isScrolled
+                    ? 'bg-white hover:bg-[#FAF8F5] text-[#1C1B19] border border-[#1C1B19]/15 shadow-xs'
+                    : 'bg-white/20 hover:bg-white/30 text-white border border-white/30 shadow-md'
+                }`}
                 title={`Call Consilio Studios: ${STUDIO_INFO.phone}`}
                 aria-label={`Call Consilio Studios at ${STUDIO_INFO.phone}`}
               >
-                <Phone size={14} className="text-[#1C1B19]" />
+                <Phone size={14} className={isScrolled ? 'text-[#1C1B19]' : 'text-white'} />
               </a>
 
               {/* Mobile Hamburger Toggle */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-[#1C1B19]/20 flex items-center justify-center text-[#1C1B19] bg-white hover:bg-[#FAF8F5] shadow-xs backdrop-blur-md transition-all duration-200 focus:outline-hidden"
+                className={`md:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-200 focus:outline-hidden ${
+                  isScrolled
+                    ? 'bg-white hover:bg-[#FAF8F5] text-[#1C1B19] border border-[#1C1B19]/20 shadow-xs'
+                    : 'bg-white/20 hover:bg-white/30 text-white border border-white/30 shadow-md'
+                }`}
                 aria-label={mobileMenuOpen ? "Close menu" : "Open mobile menu"}
                 aria-expanded={mobileMenuOpen}
               >
-                {mobileMenuOpen ? <X size={16} className="text-[#1C1B19]" /> : <Menu size={16} className="text-[#1C1B19]" />}
+                {mobileMenuOpen ? (
+                  <X size={16} className={isScrolled ? 'text-[#1C1B19]' : 'text-white'} />
+                ) : (
+                  <Menu size={16} className={isScrolled ? 'text-[#1C1B19]' : 'text-white'} />
+                )}
               </button>
             </div>
           </div>
