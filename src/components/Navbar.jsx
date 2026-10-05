@@ -53,8 +53,8 @@ export default function Navbar({ activeSection, onNavigate }) {
         id="main-navigation"
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled
-            ? 'glass-nav py-2.5 sm:py-3.5 shadow-sm border-b border-[#1C1B19]/5'
-            : 'bg-transparent py-3 sm:py-5 border-b border-[#1C1B19]/5'
+            ? 'glass-nav py-2.5 sm:py-3.5 shadow-sm border-b border-[#1C1B19]/10'
+            : 'bg-[#FAF8F5]/90 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none py-2.5 sm:py-5 border-b border-[#1C1B19]/8 sm:border-b-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 flex items-center justify-between gap-2">
@@ -66,20 +66,20 @@ export default function Navbar({ activeSection, onNavigate }) {
             className="flex items-center gap-2.5 sm:gap-3 group focus:outline-hidden min-w-0"
             aria-label="Consilio Studios Home"
           >
-            {/* The Official Uploaded Logo - Transparent */}
+            {/* The Official Uploaded Logo - Crisp High-Contrast Black */}
             <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-transform duration-300 group-hover:scale-105 shrink-0">
               <img
                 src="/logo.png"
                 alt="Consilio Studios Logo"
-                className="w-full h-full object-contain dark:invert transition-all duration-300"
+                className="w-full h-full object-contain filter brightness-0 transition-all duration-300"
               />
             </div>
             
             <div className="flex flex-col min-w-0">
-              <span className="font-serif text-lg xs:text-xl sm:text-2xl font-normal tracking-wide text-[#1C1B19] dark:text-[#FAF8F5] leading-tight truncate">
+              <span className="font-serif text-[17px] xs:text-xl sm:text-2xl font-normal tracking-wide text-[#1C1B19] leading-tight whitespace-nowrap">
                 Consilio Studios
               </span>
-              <span className="text-[8px] xs:text-[9px] sm:text-[10px] tracking-[0.14em] sm:tracking-[0.2em] font-mono text-[#4A4843] dark:text-[#A09C94] uppercase font-medium truncate">
+              <span className="text-[8px] xs:text-[9px] sm:text-[10px] tracking-[0.16em] sm:tracking-[0.2em] font-mono text-[#57544E] uppercase font-medium whitespace-nowrap">
                 <span className="hidden xs:inline">ARCHITECTURE / INTERIORS / </span>PUNE
               </span>
             </div>
@@ -102,25 +102,25 @@ export default function Navbar({ activeSection, onNavigate }) {
             </nav>
 
             {/* Utility Controls (Phone & Mobile Menu) */}
-            <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-2.5">
+            <div className="flex items-center gap-2 sm:gap-2.5">
               {/* Circular Phone / WhatsApp Button */}
               <a
                 href={`tel:${STUDIO_INFO.phone.replace(/\s+/g, '')}`}
-                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/80 hover:bg-white text-[#1C1B19] dark:bg-white/95 dark:text-[#121110] border border-black/10 flex items-center justify-center shadow-xs backdrop-blur-md transition-transform duration-300 hover:scale-105 focus:outline-hidden"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white hover:bg-[#FAF8F5] text-[#1C1B19] border border-[#1C1B19]/15 flex items-center justify-center shadow-xs backdrop-blur-md transition-transform duration-300 hover:scale-105 focus:outline-hidden"
                 title={`Call Consilio Studios: ${STUDIO_INFO.phone}`}
                 aria-label={`Call Consilio Studios at ${STUDIO_INFO.phone}`}
               >
-                <Phone size={13} />
+                <Phone size={14} className="text-[#1C1B19]" />
               </a>
 
               {/* Mobile Hamburger Toggle */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-[#1C1B19]/15 dark:border-white/15 flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] bg-white/50 backdrop-blur-md transition-all duration-200 focus:outline-hidden"
+                className="md:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-[#1C1B19]/20 flex items-center justify-center text-[#1C1B19] bg-white hover:bg-[#FAF8F5] shadow-xs backdrop-blur-md transition-all duration-200 focus:outline-hidden"
                 aria-label={mobileMenuOpen ? "Close menu" : "Open mobile menu"}
                 aria-expanded={mobileMenuOpen}
               >
-                {mobileMenuOpen ? <X size={15} /> : <Menu size={15} />}
+                {mobileMenuOpen ? <X size={16} className="text-[#1C1B19]" /> : <Menu size={16} className="text-[#1C1B19]" />}
               </button>
             </div>
           </div>
@@ -139,16 +139,16 @@ export default function Navbar({ activeSection, onNavigate }) {
           <div className="flex items-center justify-between border-b border-[#1C1B19]/10 pb-4">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 flex items-center justify-center shrink-0">
-                <img src="/logo.png" alt="Consilio Studios Logo" className="w-full h-full object-contain dark:invert transition-all duration-300" />
+                <img src="/logo.png" alt="Consilio Studios Logo" className="w-full h-full object-contain filter brightness-0 transition-all duration-300" />
               </div>
-              <span className="font-serif text-lg tracking-wider text-[#1C1B19] dark:text-white">Consilio Studios</span>
+              <span className="font-serif text-lg tracking-wider text-[#1C1B19]">Consilio Studios</span>
             </div>
             <button
               onClick={() => setMobileMenuOpen(false)}
-              className="w-9 h-9 rounded-full border border-[#1C1B19]/20 dark:border-white/20 flex items-center justify-center text-[#1C1B19] dark:text-white"
+              className="w-9 h-9 rounded-full border border-[#1C1B19]/20 flex items-center justify-center text-[#1C1B19]"
               aria-label="Close menu"
             >
-              <X size={16} />
+              <X size={16} className="text-[#1C1B19]" />
             </button>
           </div>
 

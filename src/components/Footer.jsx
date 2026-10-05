@@ -30,7 +30,7 @@ export default function Footer({ onNavigate }) {
                 <img
                   src="/logo.png"
                   alt="Consilio Studios Official Logo"
-                  className="h-full w-full object-contain dark:invert transition-all duration-300"
+                  className="h-full w-full object-contain filter brightness-0 transition-all duration-300"
                 />
               </div>
               <span className="font-serif text-xl xs:text-2xl tracking-wider text-[var(--color-text)] font-normal">
