@@ -1,5 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { ArrowUpRight, Sparkles, Layers, Maximize2 } from 'lucide-react';
+import imgStructuralRhythm from '../assets/showcase/structural_rhythm.jpg';
+import imgMaterialEssence from '../assets/showcase/material_essence.jpg';
+import imgSpatialCalm from '../assets/showcase/spatial_calm.jpg';
 
 const PILLARS_DATA = [
   {
@@ -9,7 +12,7 @@ const PILLARS_DATA = [
     subtitle: "Cantilevered stone procession & floating thresholds",
     description: "Every step is engineered as an unadorned structural sculpture, bridging levels with light, shadow, and architectural clarity.",
     discipline: "ARCHITECTURAL FORM",
-    image: "/showcase/card_1_structural_rhythm.jpg",
+    image: imgStructuralRhythm,
     materials: "Board-Marked Concrete • Laminated Glass • Basalt"
   },
   {
@@ -19,7 +22,7 @@ const PILLARS_DATA = [
     subtitle: "Fluted timber joinery & ambient cove illumination",
     description: "Honoring raw tactility through warm kiln-dried hardwoods, organic architectural radii, and seamlessly integrated indirect lighting.",
     discipline: "BESPOKE INTERIORS",
-    image: "/showcase/card_2_material_essence.jpg",
+    image: imgMaterialEssence,
     materials: "Fluted White Oak • Calacatta Marble • Matte Brass"
   },
   {
@@ -29,7 +32,7 @@ const PILLARS_DATA = [
     subtitle: "Expansive double-height volume & uninterrupted flow",
     description: "Balancing generous openness with intimate sanctuaries, calibrated precisely for unhurried residential rituals.",
     discipline: "SPATIAL CHOREOGRAPHY",
-    image: "/showcase/card_3_spatial_calm.jpg",
+    image: imgSpatialCalm,
     materials: "Double-Height Glazing • Acoustic Plaster • Linen"
   }
 ];
