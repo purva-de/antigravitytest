@@ -61,8 +61,8 @@ export default function Contact({ onNavigate }) {
               </span>
             </h2>
 
-            {/* Action Buttons: Consultation Modal & Direct WhatsApp */}
-            <div className="mt-6 sm:mt-8 flex flex-col xs:flex-row items-stretch xs:items-center gap-3 xs:gap-3.5">
+            {/* Action Buttons: Consultation Modal & Direct WhatsApp (Mobile & Tablet only; removed on desktop version) */}
+            <div className="mt-6 sm:mt-8 flex lg:hidden flex-col xs:flex-row items-stretch xs:items-center gap-3 xs:gap-3.5">
               <button
                 onClick={() => setIsModalOpen(true)}
                 className="px-6 xs:px-7 sm:px-9 py-3 sm:py-3.5 rounded-full bg-white text-black text-xs sm:text-sm font-medium inline-flex items-center justify-center gap-3 hover:bg-neutral-200 transition-all duration-300 hover:scale-105 shadow-2xl group focus:outline-hidden"
