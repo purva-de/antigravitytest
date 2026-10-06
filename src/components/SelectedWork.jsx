@@ -144,6 +144,13 @@ function CurvedPanoramaCard({
     onSpecsToggle(virtualIndex);
   };
 
+  const handleExploreFromSpecs = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onSpecsToggle(virtualIndex);
+    onSelectProject(project);
+  };
+
   return (
     <article
       ref={(el) => setCardElementRef(virtualIndex, el)}
@@ -298,74 +305,81 @@ function CurvedPanoramaCard({
               exit={{ opacity: 0, y: '100%' }}
               transition={{ duration: 0.22, ease: 'easeOut' }}
               onClick={(e) => e.stopPropagation()}
-              className="absolute inset-0 bg-[#1C1B19]/96 backdrop-blur-md text-[#FAF8F5] p-4 flex flex-col justify-between z-30"
+              onMouseDown={(e) => e.stopPropagation()}
+              onTouchStart={(e) => e.stopPropagation()}
+              onTouchMove={(e) => e.stopPropagation()}
+              onTouchEnd={(e) => e.stopPropagation()}
+              className="absolute inset-0 bg-[#1C1B19]/96 backdrop-blur-md text-[#FAF8F5] p-3 sm:p-3.5 flex flex-col justify-between z-30 overflow-y-auto no-scrollbar"
             >
               <div>
-                <div className="flex items-center justify-between pb-1.5 border-b border-white/15 mb-2.5">
-                  <span className="text-[9px] font-mono tracking-widest text-[#828C74] uppercase font-semibold">
-                    {project.criteriaNum} • {project.criteriaTitle} SPECIFICATION
-                  </span>
-                  <button
-                    onClick={handleSpecsButtonClick}
-                    className="text-[8.5px] font-mono text-white/60 hover:text-white px-1.5 py-0.5 rounded-xs border border-white/20"
-                  >
-                    CLOSE
-                  </button>
+                <div className="flex items-center justify-between pb-1.5 border-b border-white/15 mb-2">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#828C74]" />
+                    <span className="text-[8.5px] sm:text-[9px] font-mono tracking-widest text-[#D4B993] uppercase font-semibold">
+                      {project.criteriaNum} • {project.criteriaTitle}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={handleExploreFromSpecs}
+                      className="text-[8px] sm:text-[8.5px] font-mono text-[#D4B993] hover:text-white flex items-center gap-0.5 transition-colors uppercase tracking-wider"
+                      title="Explore full project details"
+                    >
+                      <span>EXPLORE</span>
+                      <ArrowUpRight size={10} />
+                    </button>
+                    <button
+                      onClick={handleSpecsButtonClick}
+                      className="text-[8px] sm:text-[8.5px] font-mono text-white/50 hover:text-white px-1.5 py-0.5 rounded-xs border border-white/20 hover:border-white/40 transition-colors uppercase"
+                    >
+                      CLOSE
+                    </button>
+                  </div>
                 </div>
 
-                <div className="space-y-1.5 text-[9px] font-mono">
+                <div className="space-y-1 sm:space-y-1.5 text-[8.5px] sm:text-[9px] font-mono">
                   <div className="flex justify-between border-b border-white/5 pb-1">
                     <span className="text-[#A09C94]">SCALE:</span>
                     <span className="text-white font-medium">{project.area || 'Bespoke'}</span>
                   </div>
                   <div className="flex justify-between border-b border-white/5 pb-1">
                     <span className="text-[#A09C94]">LOCATION:</span>
-                    <span className="text-white truncate max-w-[160px] text-right">
+                    <span className="text-white truncate max-w-[140px] text-right">
                       {project.location}
                     </span>
                   </div>
                   {project.highlightStats?.[0] && (
                     <div className="flex justify-between border-b border-white/5 pb-1">
-                      <span className="text-[#A09C94] truncate max-w-[95px]">
+                      <span className="text-[#A09C94] truncate max-w-[85px]">
                         {project.highlightStats[0].label}:
                       </span>
-                      <span className="text-white truncate max-w-[150px] text-right">
+                      <span className="text-white truncate max-w-[130px] text-right">
                         {project.highlightStats[0].value}
                       </span>
                     </div>
                   )}
                   {project.highlightStats?.[1] && (
                     <div className="flex justify-between border-b border-white/5 pb-1">
-                      <span className="text-[#A09C94] truncate max-w-[95px]">
+                      <span className="text-[#A09C94] truncate max-w-[85px]">
                         {project.highlightStats[1].label}:
                       </span>
-                      <span className="text-white truncate max-w-[150px] text-right">
+                      <span className="text-white truncate max-w-[130px] text-right">
                         {project.highlightStats[1].value}
-                      </span>
-                    </div>
-                  )}
-                  {project.highlightStats?.[2] && (
-                    <div className="flex justify-between border-b border-white/5 pb-1">
-                      <span className="text-[#A09C94] truncate max-w-[95px]">
-                        {project.highlightStats[2].label}:
-                      </span>
-                      <span className="text-white truncate max-w-[150px] text-right">
-                        {project.highlightStats[2].value}
                       </span>
                     </div>
                   )}
                 </div>
               </div>
 
+              {/* Prominent High-Contrast Explore Button Always Anchored at Bottom */}
               <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onSelectProject(project);
-                }}
-                className="w-full py-2 rounded-md bg-white text-black text-[9px] font-mono tracking-wider uppercase font-semibold hover:bg-neutral-200 transition-colors flex items-center justify-center gap-1.5 shadow-md mt-2"
+                onClick={handleExploreFromSpecs}
+                className="w-full py-2 sm:py-2.5 rounded-lg bg-white hover:bg-neutral-100 active:bg-neutral-200 text-black text-[9px] sm:text-[10px] font-mono tracking-wider uppercase font-semibold transition-all duration-200 flex items-center justify-center gap-1.5 shadow-lg active:scale-98 mt-2.5 cursor-pointer shrink-0"
+                data-cursor="pointer"
               >
                 <span>EXPLORE FULL SPACE</span>
-                <ArrowUpRight size={11} />
+                <ArrowUpRight size={12} />
               </button>
             </motion.div>
           )}
