@@ -423,7 +423,7 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
     if (w < 640) {
       cWidth = Math.min(170, Math.floor(w * 0.52));
       cHeight = Math.floor(cWidth * 1.36); // ~230px
-      cGap = 12;
+      cGap = 4;
       rad = 480;
       persp = 680;
       curve = 0.90;
@@ -431,7 +431,7 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
     } else if (w < 1024) {
       cWidth = 195;
       cHeight = 265;
-      cGap = 14;
+      cGap = 4;
       rad = 620;
       persp = 760;
       curve = 0.88;
@@ -439,7 +439,7 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
     } else {
       cWidth = 220;
       cHeight = 300;
-      cGap = 16;
+      cGap = 5;
       rad = 750;
       persp = 850;
       curve = 0.85;
@@ -675,7 +675,7 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
   }, []);
 
   return (
-    <div className="w-full relative py-3 sm:py-6">
+    <div className="w-full relative py-0.5 sm:py-1">
       {/* ===================================================================== */}
       {/* 3D CYLINDRICAL PANORAMA STAGE                                          */}
       {/* ===================================================================== */}
@@ -695,7 +695,7 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
         style={{
           perspective: `${dimensions.perspective}px`,
           perspectiveOrigin: '50% 50%',
-          height: `${dimensions.cardHeight + 20}px`
+          height: `${dimensions.cardHeight + 10}px`
         }}
         role="region"
         aria-roledescription="carousel"
@@ -734,7 +734,7 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
       {/* ===================================================================== */}
       {/* NAVIGATION CONTROLS: Centered (←) (→) Circles matching Reference       */}
       {/* ===================================================================== */}
-      <div className="mt-3 sm:mt-5 flex flex-col items-center justify-center gap-2.5">
+      <div className="mt-2 sm:mt-3 flex flex-col items-center justify-center gap-1.5">
         {/* Centered Circular Arrow Buttons */}
         <nav
           className="flex items-center justify-center gap-2.5"
@@ -767,7 +767,7 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
         </nav>
 
         {/* Five Micro Criteria Indicator Dots */}
-        <div className="flex items-center gap-2 mt-1" aria-hidden="true">
+        <div className="flex items-center gap-2 mt-0.5" aria-hidden="true">
           {CRITERIA_CONFIG.map((crit, idx) => (
             <button
               key={crit.id}
@@ -803,14 +803,14 @@ export default function SelectedWork({ onSelectProject }) {
   return (
     <section
       id="work"
-      className="pt-3 sm:pt-4 pb-4 sm:pb-6 bg-[#FAF8F5] dark:bg-[#121110] text-[#1C1B19] dark:text-[#FAF8F5] transition-colors duration-500 relative"
+      className="pt-1 sm:pt-1.5 pb-3 sm:pb-4 bg-[#FAF8F5] dark:bg-[#121110] text-[#1C1B19] dark:text-[#FAF8F5] transition-colors duration-500 relative"
       aria-label="Selected Architectural Work"
     >
       <div className="max-w-7xl mx-auto px-4 xs:px-6 sm:px-8 lg:px-12">
         {/* ===================================================================== */}
         {/* SECTION HEADER: Clean Title Only                                      */}
         {/* ===================================================================== */}
-        <div className="pb-3 sm:pb-4 border-b border-[#1C1B19]/10 dark:border-white/10 mb-4 sm:mb-6">
+        <div className="pb-1 sm:pb-1.5 border-b border-[#1C1B19]/10 dark:border-white/10 mb-1.5 sm:mb-2">
           <h2 className="font-serif text-base xs:text-lg sm:text-xl lg:text-2xl font-normal tracking-tight">
             SELECTED WORK
           </h2>
@@ -827,7 +827,7 @@ export default function SelectedWork({ onSelectProject }) {
         {/* ===================================================================== */}
         {/* BOTTOM CALLOUT ACTION                                                 */}
         {/* ===================================================================== */}
-        <div className="mt-6 sm:mt-8 pt-4 border-t border-[#1C1B19]/10 dark:border-white/10 flex items-center justify-end">
+        <div className="mt-3 sm:mt-4 pt-2 border-t border-[#1C1B19]/10 dark:border-white/10 flex items-center justify-end">
           <a
             href="#contact"
             className="inline-flex items-center gap-2 text-xs font-mono tracking-[0.18em] uppercase font-medium text-[#1C1B19] dark:text-[#FAF8F5] hover-underline-animation group"
