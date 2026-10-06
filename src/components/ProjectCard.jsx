@@ -299,19 +299,19 @@ export default function ProjectCard({
               className="absolute inset-0 bg-[#1C1B19]/95 backdrop-blur-md text-[#FAF8F5] p-3.5 sm:p-4 flex flex-col justify-between z-30"
             >
               <div>
-                <div className="flex items-center justify-between pb-2 border-b border-white/15 mb-2.5 sm:mb-3">
-                  <span className="text-[10px] font-mono tracking-widest text-[#828C74] uppercase font-semibold">
-                    {project.category} SPECIFICATION
+                <div className="flex items-center justify-between pb-1.5 border-b border-white/15 mb-2">
+                  <span className="text-[8.5px] xs:text-[9px] font-mono tracking-widest text-[#828C74] uppercase font-semibold">
+                    {project.name} SPECIFICATION
                   </span>
                   <button
                     onClick={handleToggleSpecs}
-                    className="text-[10px] font-mono text-white/60 hover:text-white px-2 py-0.5 rounded-sm border border-white/20"
+                    className="text-[8px] xs:text-[8.5px] font-mono text-white/60 hover:text-white px-1.5 py-0.5 rounded-xs border border-white/20"
                   >
                     CLOSE
                   </button>
                 </div>
 
-                <div className="space-y-1.5 sm:space-y-2 text-[11px] sm:text-xs font-mono">
+                <div className="space-y-1 sm:space-y-1.5 text-[8.5px] xs:text-[9px] sm:text-[9.5px] font-mono">
                   <div className="flex justify-between">
                     <span className="text-[#A09C94]">SCALE:</span>
                     <span className="text-white font-medium">{project.area || 'Bespoke'}</span>
@@ -347,10 +347,10 @@ export default function ProjectCard({
 
               <button
                 onClick={() => onSelect(project)}
-                className="w-full py-2 rounded-md bg-white text-black text-[10px] font-mono tracking-wider uppercase font-semibold hover:bg-neutral-200 transition-colors flex items-center justify-center gap-1.5 shadow-md"
+                className="w-full py-1.5 rounded-md bg-white text-black text-[8.5px] xs:text-[9px] font-mono tracking-wider uppercase font-semibold hover:bg-neutral-200 transition-colors flex items-center justify-center gap-1.5 shadow-md"
               >
                 <span>OPEN SPACE DETAILS</span>
-                <ArrowUpRight size={12} />
+                <ArrowUpRight size={10} />
               </button>
             </motion.div>
           )}
@@ -373,8 +373,8 @@ export default function ProjectCard({
           </p>
         </div>
 
-        {/* Action Buttons: Specs + Contact symbol only */}
-        <div className="mt-3.5 pt-2.5 border-t border-black/5 dark:border-white/5 flex items-center gap-1.5 sm:gap-2">
+        {/* Action Buttons: Specs + Contact symbol only (no outer box) */}
+        <div className="mt-3.5 pt-2.5 border-t border-black/5 dark:border-white/5 flex items-center gap-2">
           <button
             onClick={handleToggleSpecs}
             className={`px-3 py-1.5 sm:px-2.5 sm:py-1 rounded-sm text-[10px] font-mono tracking-wider transition-colors flex items-center gap-1.5 ${
@@ -394,11 +394,11 @@ export default function ProjectCard({
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="w-7 h-7 sm:w-6 sm:h-6 rounded-sm bg-[#25D366]/15 hover:bg-[#25D366] text-[#128C7E] hover:text-white dark:text-[#25D366] dark:hover:text-black transition-colors flex items-center justify-center shrink-0"
+            className="p-1 text-[#25D366] hover:text-[#1ebe5b] transition-all hover:scale-110 active:scale-95 flex items-center justify-center shrink-0"
             title={`Contact Consilio Studios about ${project.name}`}
             aria-label={`Contact about ${project.name}`}
           >
-            <MessageCircle size={12} />
+            <MessageCircle size={15} />
           </a>
         </div>
       </div>
