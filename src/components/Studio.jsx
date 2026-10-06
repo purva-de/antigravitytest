@@ -94,7 +94,7 @@ export default function Studio() {
           </div>
 
           {/* Right: Vibrant Audience Connection Card */}
-          <div className="lg:col-span-5 p-[16px] xs:p-[18px] sm:p-[22px] rounded-2xl bg-gradient-to-br from-[#FEF3C7]/40 via-white to-[#ECFDF5]/50 dark:from-[#1E1D1B] dark:via-[#171615] dark:to-[#141A16] border border-amber-600/20 dark:border-amber-500/20 shadow-sm flex flex-col justify-between overflow-hidden">
+          <div className="lg:col-span-5 p-[16px] xs:p-[18px] sm:p-5 md:p-6 rounded-2xl bg-gradient-to-br from-[#FEF3C7]/40 via-white to-[#ECFDF5]/50 dark:from-[#1E1D1B] dark:via-[#171615] dark:to-[#141A16] border border-amber-600/20 dark:border-amber-500/20 shadow-sm flex flex-col justify-between overflow-hidden">
             <div>
               <div className="flex items-center justify-between text-[10px] xs:text-[11px] font-mono tracking-wider mb-2">
                 <span className="text-[#9A3412] dark:text-[#FDBA74] font-medium uppercase">
@@ -111,13 +111,13 @@ export default function Studio() {
               </p>
             </div>
 
-            {/* Direct Quick Action Buttons */}
+            {/* Direct Quick Action Buttons: Compact on Mobile, Full on Desktop */}
             <div className="mt-3.5 pt-2.5 border-t border-black/5 dark:border-white/10 flex flex-col xs:flex-row items-stretch xs:items-center gap-1.5 xs:gap-2">
               <a
                 href="https://wa.me/917028234778"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-2.5 py-1.5 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white text-[9.5px] xs:text-[10px] sm:text-[11px] font-mono uppercase tracking-normal font-medium inline-flex items-center justify-center gap-1.5 whitespace-nowrap transition-colors shadow-xs"
+                className="px-2.5 py-1.5 md:px-3.5 md:py-2 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white text-[9.5px] xs:text-[10px] md:text-xs font-mono uppercase tracking-normal md:tracking-wider font-medium inline-flex items-center justify-center gap-1.5 whitespace-nowrap transition-colors shadow-xs"
               >
                 <MessageCircle size={12} className="shrink-0" />
                 <span className="whitespace-nowrap">WhatsApp: +91 70282 34778</span>
@@ -125,7 +125,7 @@ export default function Studio() {
 
               <a
                 href="#contact"
-                className="px-2.5 py-1.5 rounded-full bg-[#1C1B19] dark:bg-white text-white dark:text-black text-[9.5px] xs:text-[10px] sm:text-[11px] font-mono uppercase tracking-normal font-medium inline-flex items-center justify-center gap-1.5 whitespace-nowrap transition-colors shadow-xs hover:bg-[#9A3412]"
+                className="px-2.5 py-1.5 md:px-3.5 md:py-2 rounded-full bg-[#1C1B19] dark:bg-white text-white dark:text-black text-[9.5px] xs:text-[10px] md:text-xs font-mono uppercase tracking-normal md:tracking-wider font-medium inline-flex items-center justify-center gap-1.5 whitespace-nowrap transition-colors shadow-xs hover:bg-[#9A3412]"
               >
                 <span className="whitespace-nowrap">Book Consultation</span>
                 <ArrowRight size={11} className="shrink-0" />

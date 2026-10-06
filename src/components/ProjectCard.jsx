@@ -377,34 +377,45 @@ export default function ProjectCard({
           </p>
         </div>
 
-        {/* Action Buttons: Only Specs & WhatsApp Contact */}
+        {/* Action Buttons: Mobile shows Specs + Contact only; Desktop shows Specs + Contact + Details */}
         <div className="mt-3.5 pt-2.5 border-t border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
-          <button
-            onClick={handleToggleSpecs}
-            className={`px-3 py-1.5 sm:px-2.5 sm:py-1 rounded-sm text-[10px] font-mono tracking-wider transition-colors flex items-center gap-1.5 ${
-              showSpecs
-                ? 'bg-[#1C1B19] text-white dark:bg-white dark:text-black font-medium'
-                : 'bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-[#57544E] hover:text-[#1C1B19] dark:text-[#A09C94] dark:hover:text-white'
-            }`}
-            title="Toggle architectural specifications"
-            aria-label="Toggle specs"
-          >
-            <Sliders size={11} />
-            <span>SPECS</span>
-          </button>
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <button
+              onClick={handleToggleSpecs}
+              className={`px-3 py-1.5 sm:px-2.5 sm:py-1 rounded-sm text-[10px] font-mono tracking-wider transition-colors flex items-center gap-1.5 ${
+                showSpecs
+                  ? 'bg-[#1C1B19] text-white dark:bg-white dark:text-black font-medium'
+                  : 'bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-[#57544E] hover:text-[#1C1B19] dark:text-[#A09C94] dark:hover:text-white'
+              }`}
+              title="Toggle architectural specifications"
+              aria-label="Toggle specs"
+            >
+              <Sliders size={11} />
+              <span>SPECS</span>
+            </button>
 
-          <a
-            href={`${STUDIO_INFO.whatsapp}?text=${encodeURIComponent(`Hello Consilio Studios, I am interested in inquiring about your ${project.category} (${project.name}) design.`)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="px-3 py-1.5 sm:px-2.5 sm:py-1 rounded-sm bg-[#25D366]/15 hover:bg-[#25D366] text-[#128C7E] hover:text-white dark:text-[#25D366] dark:hover:text-black transition-colors flex items-center gap-1.5 text-[10px] font-mono font-medium"
-            title={`Contact Consilio Studios about ${project.name}`}
-            aria-label={`Contact about ${project.name}`}
+            <a
+              href={`${STUDIO_INFO.whatsapp}?text=${encodeURIComponent(`Hello Consilio Studios, I am interested in inquiring about your ${project.category} (${project.name}) design.`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="px-2.5 py-1.5 sm:px-2 sm:py-1 rounded-sm bg-[#25D366]/15 hover:bg-[#25D366] text-[#128C7E] hover:text-white dark:text-[#25D366] dark:hover:text-black transition-colors flex items-center gap-1.5 text-[10px] font-mono font-medium"
+              title={`Contact Consilio Studios about ${project.name}`}
+              aria-label={`Contact about ${project.name}`}
+            >
+              <MessageCircle size={12} />
+              <span className="md:hidden">CONTACT</span>
+            </a>
+          </div>
+
+          {/* Desktop-Only Details Action */}
+          <button
+            onClick={() => onSelect(project)}
+            className="hidden md:inline-flex items-center gap-1 py-1 text-xs font-mono uppercase tracking-wider text-[#1C1B19] dark:text-[#FAF8F5] hover:text-[#4F5542] dark:hover:text-[#D9CEBE] transition-colors group/btn"
           >
-            <MessageCircle size={12} />
-            <span>CONTACT</span>
-          </a>
+            <span>Details</span>
+            <ArrowUpRight size={13} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+          </button>
         </div>
       </div>
     </article>

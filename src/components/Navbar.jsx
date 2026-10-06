@@ -58,7 +58,7 @@ export default function Navbar({ activeSection, onNavigate }) {
             : 'bg-transparent py-3 sm:py-5 border-b border-transparent'
         }`}
       >
-        <div className="w-full px-3 xs:px-4 sm:px-5 lg:px-6 flex items-center justify-between gap-1.5 xs:gap-2">
+        <div className="w-full max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-1.5 xs:gap-2">
           
           {/* LEFT: Circular Logo Emblem + Wordmark + Tagline */}
           <a
