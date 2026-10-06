@@ -125,9 +125,9 @@ function CurvedPanoramaCard({
     }
   };
 
-  // Click card to open monograph (suppressed if dragged)
+  // Click card to open explore monograph (suppressed if intentionally dragged/swiped)
   const handleCardClick = (e) => {
-    if (dragDistRef.current > 6) {
+    if (dragDistRef.current > 12) {
       e.preventDefault();
       return;
     }
@@ -150,6 +150,7 @@ function CurvedPanoramaCard({
       onClick={handleCardClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      data-cursor="view"
       className="absolute top-0 cursor-pointer select-none rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 shadow-2xl bg-[#EFECE6] dark:bg-[#181716] group transition-shadow duration-300"
       style={{
         width: `${cardWidth}px`,
@@ -158,12 +159,14 @@ function CurvedPanoramaCard({
         transformOrigin: '50% 50%',
         willChange: 'transform'
       }}
-      role="group"
-      aria-roledescription="slide"
-      aria-label={`${project.criteriaTitle}: ${project.name}`}
+      role="button"
+      aria-label={`Explore criteria ${project.criteriaTitle}: ${project.name}`}
       tabIndex={0}
       onKeyDown={(e) => {
-        if (e.key === 'Enter') onSelectProject(project);
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onSelectProject(project);
+        }
       }}
     >
       {/* Dynamic 3D Atmospheric Lighting Shadow Overlay */}
@@ -182,7 +185,8 @@ function CurvedPanoramaCard({
           src={project.heroImage}
           alt={`${project.name} architectural space`}
           loading="lazy"
-          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          draggable="false"
+          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 pointer-events-none select-none"
         />
 
         {/* Video Overlay on Hover */}
@@ -208,7 +212,7 @@ function CurvedPanoramaCard({
         {/* Top Badges & Controls */}
         <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between z-10">
           {/* Criteria Tag Pill (e.g. 01 • LIVING ROOM) */}
-          <span className="px-2 py-0.5 rounded-full bg-black/60 dark:bg-black/75 backdrop-blur-md text-[8px] sm:text-[8.5px] font-mono font-medium tracking-widest text-[#FAF8F5] uppercase border border-white/15 shadow-sm">
+          <span className="px-2 py-0.5 rounded-full bg-black/60 dark:bg-black/75 backdrop-blur-md text-[8px] sm:text-[8.5px] font-mono font-medium tracking-widest text-[#FAF8F5] uppercase border border-white/15 group-hover:border-white/35 transition-colors shadow-sm">
             {project.criteriaNum} • {project.criteriaTitle}
           </span>
 
@@ -251,7 +255,7 @@ function CurvedPanoramaCard({
             </p>
           </div>
 
-          {/* Action Row: SPECS button + WhatsApp contact icon (frameless) */}
+          {/* Action Row: SPECS button + WhatsApp contact icon (EXPLORE part removed from image) */}
           <div className="pt-1.5 border-t border-white/15 flex items-center justify-between">
             <div className="flex items-center gap-1.5">
               <button
@@ -280,11 +284,6 @@ function CurvedPanoramaCard({
                 <MessageCircle size={14} />
               </a>
             </div>
-
-            <span className="text-[8.5px] font-mono uppercase tracking-wider text-white/60 group-hover:text-white inline-flex items-center gap-0.5 transition-colors">
-              <span>EXPLORE</span>
-              <ArrowUpRight size={10} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </span>
           </div>
         </div>
 
@@ -365,7 +364,7 @@ function CurvedPanoramaCard({
                 }}
                 className="w-full py-2 rounded-md bg-white text-black text-[9px] font-mono tracking-wider uppercase font-semibold hover:bg-neutral-200 transition-colors flex items-center justify-center gap-1.5 shadow-md mt-2"
               >
-                <span>OPEN FULL MONOGRAPH</span>
+                <span>EXPLORE FULL SPACE</span>
                 <ArrowUpRight size={11} />
               </button>
             </motion.div>
@@ -604,22 +603,31 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
     if (e.button !== 0) return; // primary click only
     isDraggingRef.current = true;
     dragStartXRef.current = e.clientX;
+    dragStartYRef.current = e.clientY;
     dragStartOffsetRef.current = targetOffsetRef.current;
     dragDistRef.current = 0;
 
     const handleMouseMove = (moveEvent) => {
       if (!isDraggingRef.current) return;
       const dx = moveEvent.clientX - dragStartXRef.current;
-      dragDistRef.current = Math.abs(dx);
-      // Dragging left (dx < 0) advances offset (moves cards left)
-      targetOffsetRef.current = dragStartOffsetRef.current - dx;
-      currentOffsetRef.current = targetOffsetRef.current;
+      const dy = moveEvent.clientY - dragStartYRef.current;
+      const dist = Math.hypot(dx, dy);
+      dragDistRef.current = dist;
+      if (dist > 6) {
+        // Dragging left (dx < 0) advances offset (moves cards left)
+        targetOffsetRef.current = dragStartOffsetRef.current - dx;
+        currentOffsetRef.current = targetOffsetRef.current;
+      }
     };
 
     const handleMouseUp = () => {
       isDraggingRef.current = false;
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
+      // Reset drag distance shortly after click event completes
+      setTimeout(() => {
+        dragDistRef.current = 0;
+      }, 120);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -640,10 +648,11 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
     if (!isDraggingRef.current || e.touches.length !== 1) return;
     const dx = e.touches[0].clientX - dragStartXRef.current;
     const dy = e.touches[0].clientY - dragStartYRef.current;
+    const dist = Math.hypot(dx, dy);
+    dragDistRef.current = dist;
 
     // Distinguish horizontal swipe from vertical page scroll
-    if (Math.abs(dx) > Math.abs(dy)) {
-      dragDistRef.current = Math.abs(dx);
+    if (Math.abs(dx) > Math.abs(dy) && dist > 6) {
       targetOffsetRef.current = dragStartOffsetRef.current - dx;
       currentOffsetRef.current = targetOffsetRef.current;
     }
@@ -651,6 +660,10 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
 
   const handleTouchEnd = () => {
     isDraggingRef.current = false;
+    // Reset drag distance shortly after tap/click event completes
+    setTimeout(() => {
+      dragDistRef.current = 0;
+    }, 120);
   };
 
   const handleSpecsToggle = (virtualIdx) => {
