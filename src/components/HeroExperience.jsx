@@ -293,8 +293,8 @@ export default function HeroExperience({ onExploreProjects }) {
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/25 to-transparent pointer-events-none z-10" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none z-10" />
 
-                {/* FLOATING SOCIAL ICONS (RIGHT EDGE: Small & Elegant) */}
-        <div className="absolute right-2 xs:right-2.5 sm:right-3.5 md:right-4 lg:right-5 top-1/2 -translate-y-1/2 z-30 flex flex-col gap-1.5 xs:gap-2">
+        {/* FLOATING SOCIAL ICONS (RIGHT EDGE: Small & Elegant, Perfectly aligned with Navbar Contact Symbol) */}
+        <div className="absolute right-4 sm:right-5 lg:right-6 top-1/2 -translate-y-1/2 z-30 flex flex-col gap-1.5 xs:gap-2">
           <a
             href={STUDIO_INFO.whatsapp}
             target="_blank"

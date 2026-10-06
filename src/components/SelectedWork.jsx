@@ -1,55 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { PROJECTS_DATA } from '../data/projectsData';
 import ProjectCard from './ProjectCard';
 import {
   ArrowRight,
-  Bookmark,
   X,
   ChevronLeft,
-  ChevronRight,
-  Check
+  ChevronRight
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function SelectedWork({ onSelectProject }) {
-  const [bookmarkedIds, setBookmarkedIds] = useState(() => {
-    try {
-      const saved = localStorage.getItem("consilio_saved_projects");
-      return saved ? JSON.parse(saved) : ["living-room"];
-    } catch {
-      return ["living-room"];
-    }
-  });
-  const [onlySaved, setOnlySaved] = useState(false);
-  const [toastMessage, setToastMessage] = useState(null);
   const [lightboxData, setLightboxData] = useState(null);
-
-  // Sync saved bookmarks with localStorage
-  useEffect(() => {
-    try {
-      localStorage.setItem("consilio_saved_projects", JSON.stringify(bookmarkedIds));
-    } catch (e) {
-      console.warn("Could not save to localStorage", e);
-    }
-  }, [bookmarkedIds]);
-
-  const handleToggleBookmark = (project) => {
-    const isSaved = bookmarkedIds.includes(project.id);
-    const newSaved = isSaved
-      ? bookmarkedIds.filter((id) => id !== project.id)
-      : [...bookmarkedIds, project.id];
-    setBookmarkedIds(newSaved);
-
-    setToastMessage(isSaved ? `Removed "${project.name}" from Moodboard` : `Added "${project.name}" to your Moodboard`);
-    setTimeout(() => {
-      setToastMessage(null);
-    }, 2800);
-  };
-
-  // Filter projects by saved status or show all criteria
-  const filteredProjects = onlySaved
-    ? PROJECTS_DATA.filter((project) => bookmarkedIds.includes(project.id))
-    : PROJECTS_DATA;
 
   return (
     <section
@@ -60,7 +21,7 @@ export default function SelectedWork({ onSelectProject }) {
       <div className="max-w-7xl mx-auto px-4 xs:px-6 sm:px-8 lg:px-12">
         
         {/* ========================================================================= */}
-        {/* SECTION HEADER: Title & All Criteria Filter Pill                          */}
+        {/* SECTION HEADER: Title & Small All Criteria Badge                          */}
         {/* ========================================================================= */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 sm:gap-5 pb-5 border-b border-[#1C1B19]/10 dark:border-white/10 mb-6 sm:mb-10">
           
@@ -78,73 +39,29 @@ export default function SelectedWork({ onSelectProject }) {
             </p>
           </div>
 
-          {/* Right: Only "ALL CRITERIA" + Moodboard Button */}
-          <div className="flex flex-wrap items-center gap-2 xs:gap-2.5">
-            {/* "ALL CRITERIA" Button */}
-            <button
-              onClick={() => setOnlySaved(false)}
-              className={`px-3.5 xs:px-4 py-1.5 xs:py-2 rounded-full text-[11px] xs:text-xs font-mono tracking-wider uppercase transition-all flex items-center gap-1.5 xs:gap-2 border shadow-xs ${
-                !onlySaved
-                  ? 'bg-[#1C1B19] text-[#FAF8F5] dark:bg-white dark:text-black border-transparent font-medium'
-                  : 'bg-white dark:bg-[#1A1918] text-[#57544E] dark:text-[#A09C94] border-black/10 dark:border-white/10 hover:border-black/25'
-              }`}
-              title="Show all criteria"
-            >
-              <span>ALL CRITERIA</span>
-              <span className={`text-[10px] ${!onlySaved ? 'opacity-80' : 'opacity-50'}`}>
-                ({PROJECTS_DATA.length})
-              </span>
-            </button>
-
-            {/* Moodboard Saved Toggle Button */}
-            <button
-              onClick={() => setOnlySaved(!onlySaved)}
-              className={`px-3.5 xs:px-4 py-1.5 xs:py-2 rounded-full text-[11px] xs:text-xs font-mono tracking-wider uppercase transition-all flex items-center gap-1.5 xs:gap-2 border shadow-xs ${
-                onlySaved
-                  ? 'bg-amber-500 text-white border-amber-400 font-medium'
-                  : 'bg-white dark:bg-[#1A1918] text-[#57544E] dark:text-[#A09C94] border-black/10 dark:border-white/10 hover:border-black/25'
-              }`}
-              title="Filter by saved spaces"
-            >
-              <Bookmark size={13} className={onlySaved ? 'fill-current' : ''} />
-              <span>MOODBOARD ({bookmarkedIds.length})</span>
-            </button>
+          {/* Right: Small "ALL CRITERIA" Indicator */}
+          <div className="flex items-center">
+            <span className="px-2.5 sm:px-3 py-1 rounded-full text-[9px] sm:text-[10px] font-mono tracking-widest uppercase bg-[#1C1B19] text-[#FAF8F5] dark:bg-white dark:text-black font-medium">
+              ALL CRITERIA ({PROJECTS_DATA.length})
+            </span>
           </div>
         </div>
-
-        {/* Empty state if Moodboard is empty */}
-        {filteredProjects.length === 0 && (
-          <div className="py-20 text-center">
-            <p className="font-serif text-sm sm:text-base text-[#8F8B83] mb-2">No saved spaces in your moodboard yet.</p>
-            <p className="text-xs text-[#8F8B83] mb-4">Click the bookmark icon on any card to save spaces here.</p>
-            <button
-              onClick={() => setOnlySaved(false)}
-              className="text-xs font-mono tracking-widest uppercase underline text-[#1C1B19] dark:text-white"
-            >
-              View All Criteria
-            </button>
-          </div>
-        )}
 
         {/* ========================================================================= */}
         {/* 3x2 ARCHITECTURAL GRID (3 COLUMNS x 2 ROWS)                               */}
         {/* ========================================================================= */}
-        {filteredProjects.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-start">
-            {filteredProjects.map((project, idx) => (
-              <div key={project.id} className="w-full">
-                <ProjectCard
-                  project={project}
-                  onSelect={onSelectProject}
-                  onQuickView={(proj, imgIdx) => setLightboxData({ project: proj, imgIndex: imgIdx })}
-                  isBookmarked={bookmarkedIds.includes(project.id)}
-                  onToggleBookmark={handleToggleBookmark}
-                  index={idx}
-                />
-              </div>
-            ))}
-          </div>
-        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-start">
+          {PROJECTS_DATA.map((project, idx) => (
+            <div key={project.id} className="w-full">
+              <ProjectCard
+                project={project}
+                onSelect={onSelectProject}
+                onQuickView={(proj, imgIdx) => setLightboxData({ project: proj, imgIndex: imgIdx })}
+                index={idx}
+              />
+            </div>
+          ))}
+        </div>
 
         {/* ========================================================================= */}
         {/* BOTTOM CALLOUT & ARCHITECTURAL INQUIRY ACTION                             */}
@@ -165,24 +82,7 @@ export default function SelectedWork({ onSelectProject }) {
 
       </div>
 
-      {/* ========================================================================= */}
-      {/* INTERACTIVE TOAST NOTIFICATION FOR SAVED MOODBOARD ITEMS                  */}
-      {/* ========================================================================= */}
-      <AnimatePresence>
-        {toastMessage && (
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 15 }}
-            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 max-w-[calc(100vw-32px)] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-lg bg-[#1C1B19] text-[#FAF8F5] dark:bg-[#FAF8F5] dark:text-[#1C1B19] shadow-2xl flex items-center gap-2.5 sm:gap-3 border border-white/10 text-[11px] sm:text-xs font-mono"
-          >
-            <div className="w-5 h-5 rounded-full bg-amber-500 text-white flex items-center justify-center shrink-0">
-              <Check size={11} />
-            </div>
-            <span className="truncate">{toastMessage}</span>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
 
       {/* ========================================================================= */}
       {/* INTERACTIVE LIGHTBOX / FULLSCREEN ZOOM MODAL                              */}

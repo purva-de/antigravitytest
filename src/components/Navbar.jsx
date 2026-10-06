@@ -58,7 +58,7 @@ export default function Navbar({ activeSection, onNavigate }) {
             : 'bg-transparent py-3 sm:py-5 border-b border-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-2">
+        <div className="w-full px-4 sm:px-5 lg:px-6 flex items-center justify-between gap-2">
           
           {/* LEFT: Circular Logo Emblem + Wordmark + Tagline */}
           <a
@@ -122,23 +122,9 @@ export default function Navbar({ activeSection, onNavigate }) {
               ))}
             </nav>
 
-            {/* Utility Controls (Phone Contact Symbol & Mobile Menu) */}
+            {/* Utility Controls (Mobile Menu & Phone Contact Symbol) */}
             <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
-              {/* Refined Small Contact Symbol in Right Corner */}
-              <a
-                href={`tel:${STUDIO_INFO.phone.replace(/\s+/g, '')}`}
-                className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-105 focus:outline-hidden ${
-                  isScrolled
-                    ? 'bg-[#1C1B19]/5 hover:bg-[#1C1B19]/10 text-[#1C1B19] border border-[#1C1B19]/15 shadow-xs'
-                    : 'bg-white/10 hover:bg-white/20 text-white border border-white/20 shadow-xs'
-                }`}
-                title={`Call Consilio Studios: ${STUDIO_INFO.phone}`}
-                aria-label={`Call Consilio Studios at ${STUDIO_INFO.phone}`}
-              >
-                <Phone className={`w-3.5 h-3.5 ${isScrolled ? 'text-[#1C1B19]' : 'text-white'}`} />
-              </a>
-
-              {/* Mobile Hamburger Toggle */}
+              {/* Mobile Hamburger Toggle (placed before contact symbol so contact symbol stays at far right) */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className={`md:hidden w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-200 focus:outline-hidden ${
@@ -155,6 +141,20 @@ export default function Navbar({ activeSection, onNavigate }) {
                   <Menu className={`w-3.5 h-3.5 ${isScrolled ? 'text-[#1C1B19]' : 'text-white'}`} />
                 )}
               </button>
+
+              {/* Refined Small Contact Symbol in Far Right Corner */}
+              <a
+                href={`tel:${STUDIO_INFO.phone.replace(/\s+/g, '')}`}
+                className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-105 focus:outline-hidden ${
+                  isScrolled
+                    ? 'bg-[#1C1B19]/5 hover:bg-[#1C1B19]/10 text-[#1C1B19] border border-[#1C1B19]/15 shadow-xs'
+                    : 'bg-white/10 hover:bg-white/20 text-white border border-white/20 shadow-xs'
+                }`}
+                title={`Call Consilio Studios: ${STUDIO_INFO.phone}`}
+                aria-label={`Call Consilio Studios at ${STUDIO_INFO.phone}`}
+              >
+                <Phone className={`w-3.5 h-3.5 ${isScrolled ? 'text-[#1C1B19]' : 'text-white'}`} />
+              </a>
             </div>
           </div>
         </div>

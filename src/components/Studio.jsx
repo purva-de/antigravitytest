@@ -112,23 +112,23 @@ export default function Studio() {
             </div>
 
             {/* Direct Quick Action Buttons */}
-            <div className="mt-3.5 pt-3 border-t border-black/5 dark:border-white/10 flex flex-col xs:flex-row items-stretch xs:items-center gap-2 xs:gap-2.5">
+            <div className="mt-3.5 pt-3 border-t border-black/5 dark:border-white/10 flex flex-wrap items-center gap-2 xs:gap-2.5">
               <a
                 href="https://wa.me/917028234778"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-3.5 py-2 xs:py-1.5 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-mono uppercase tracking-wider font-medium flex items-center justify-center gap-1.5 transition-colors shadow-xs"
+                className="px-3.5 py-1.5 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white text-[11px] sm:text-xs font-mono uppercase tracking-wider font-medium inline-flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0 transition-colors shadow-xs"
               >
-                <MessageCircle size={13} />
-                <span>WhatsApp: +91 70282 34778</span>
+                <MessageCircle size={13} className="shrink-0" />
+                <span className="whitespace-nowrap">WhatsApp: +91 70282 34778</span>
               </a>
 
               <a
                 href="#contact"
-                className="px-3.5 py-2 xs:py-1.5 rounded-full bg-[#1C1B19] dark:bg-white text-white dark:text-black text-xs font-mono uppercase tracking-wider font-medium flex items-center justify-center gap-1.5 transition-colors shadow-xs hover:bg-[#9A3412]"
+                className="px-3.5 py-1.5 rounded-full bg-[#1C1B19] dark:bg-white text-white dark:text-black text-[11px] sm:text-xs font-mono uppercase tracking-wider font-medium inline-flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0 transition-colors shadow-xs hover:bg-[#9A3412]"
               >
-                <span>Book Consultation</span>
-                <ArrowRight size={12} />
+                <span className="whitespace-nowrap">Book Consultation</span>
+                <ArrowRight size={12} className="shrink-0" />
               </a>
             </div>
           </div>

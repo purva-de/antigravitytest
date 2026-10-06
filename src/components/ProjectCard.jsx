@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ArrowUpRight, Bookmark, Maximize2, Sliders, Film, Play, Pause, MessageCircle } from 'lucide-react';
+import { ArrowUpRight, Maximize2, Sliders, Film, Play, Pause, MessageCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { STUDIO_INFO } from '../data/projectsData';
 
@@ -7,8 +7,6 @@ export default function ProjectCard({
   project,
   onSelect,
   onQuickView,
-  isBookmarked = false,
-  onToggleBookmark,
   index = 0
 }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -177,12 +175,6 @@ export default function ProjectCard({
     }
   };
 
-  const handleToggleBookmark = (e) => {
-    e.stopPropagation();
-    if (onToggleBookmark) {
-      onToggleBookmark(project);
-    }
-  };
 
   const handleQuickViewClick = (e) => {
     e.stopPropagation();
@@ -279,20 +271,6 @@ export default function ProjectCard({
               aria-label="Expand image"
             >
               <Maximize2 size={12} />
-            </button>
-
-            {/* Bookmark / Moodboard Pin */}
-            <button
-              onClick={handleToggleBookmark}
-              className={`w-8 h-8 sm:w-7 sm:h-7 rounded-full backdrop-blur-md flex items-center justify-center transition-all border shadow-xs ${
-                isBookmarked
-                  ? 'bg-amber-500 text-white border-amber-400 opacity-100'
-                  : 'bg-black/60 hover:bg-black/90 text-white border-white/15 opacity-85 group-hover:opacity-100'
-              }`}
-              title={isBookmarked ? 'Saved to Moodboard' : 'Save to Moodboard'}
-              aria-label={isBookmarked ? 'Remove from moodboard' : 'Save to moodboard'}
-            >
-              <Bookmark size={12} className={isBookmarked ? 'fill-current' : ''} />
             </button>
           </div>
         </div>

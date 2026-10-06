@@ -128,10 +128,6 @@ export default function Services() {
 
           {/* Interactive Controls & View Toggle */}
           <div className="flex items-center gap-3">
-            <span className="text-[11px] font-mono text-[#8F8B83] hidden sm:inline">
-              HOVER OR CLICK TO EXPAND
-            </span>
-
             <div className="flex items-center gap-1 p-1 rounded-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10">
               <button
                 onClick={() => setViewMode("panels")}
