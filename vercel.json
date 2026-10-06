@@ -19,7 +19,7 @@
       ]
     },
     {
-      "source": "/(hero_sequence|videos|projects|showcase)/(.*)",
+      "source": "/(hero_sequence|videos|projects|showcase|fonts)/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "source": "/(.*).(jpg|jpeg|png|webp|svg|ico|mp4)",
+      "source": "/(.*).(jpg|jpeg|png|webp|svg|ico|mp4|woff2|woff|ttf)",
       "headers": [
         {
           "key": "Cache-Control",

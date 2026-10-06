@@ -111,7 +111,7 @@ export default function Navbar({ activeSection, onNavigate }) {
                   key={item.label}
                   href={item.href}
                   onClick={(e) => handleItemClick(e, item.href)}
-                  className={`text-xs tracking-[0.2em] font-medium hover-underline-animation transition-colors duration-200 ${
+                  className={`text-xs tracking-[0.2em] font-medium font-mono hover-underline-animation transition-colors duration-200 ${
                     isScrolled
                       ? 'text-[#1C1B19]/80 hover:text-[#1C1B19]'
                       : 'text-white/90 hover:text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]'

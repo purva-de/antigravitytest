@@ -32,9 +32,12 @@ export default {
         }
       },
       fontFamily: {
-        serif: ['"Cormorant Garamond"', 'Playfair Display', 'Georgia', 'serif'],
-        sans: ['"Outfit"', 'Inter', 'system-ui', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'monospace'],
+        serif: ['"Good Times"', 'sans-serif'],
+        display: ['"Good Times"', 'sans-serif'],
+        sans: ['"Noah Text"', 'system-ui', 'sans-serif'],
+        body: ['"Noah Text"', 'system-ui', 'sans-serif'],
+        mono: ['"ITC Blair"', '"Noah Text"', 'sans-serif'],
+        blair: ['"ITC Blair"', 'sans-serif'],
       },
       spacing: {
         // 8px grid system

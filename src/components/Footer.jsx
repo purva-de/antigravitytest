@@ -37,7 +37,7 @@ export default function Footer({ onNavigate }) {
                 CONSILIO STUDIOS
               </span>
             </div>
-            <p className="text-xs uppercase tracking-[0.25em] text-[var(--color-muted)] font-medium">
+            <p className="text-xs uppercase tracking-[0.25em] font-mono text-[var(--color-muted)] font-medium">
               Architecture • Interiors • Spatial Design
             </p>
             <p className="text-sm text-[var(--color-muted)] font-light leading-relaxed pt-1">
@@ -118,7 +118,7 @@ export default function Footer({ onNavigate }) {
                 <li key={item.id}>
                   <button
                     onClick={() => onNavigate ? onNavigate(item.id) : document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' })}
-                    className="text-xs uppercase tracking-widest text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors"
+                    className="text-xs uppercase tracking-widest font-mono text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors"
                   >
                     {item.label}
                   </button>
