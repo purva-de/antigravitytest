@@ -62,10 +62,10 @@ export default function Contact({ onNavigate }) {
             </h2>
 
             {/* Action Buttons: Consultation Modal & Direct WhatsApp (Mobile & Tablet only; removed on desktop version) */}
-            <div className="mt-6 sm:mt-8 flex lg:hidden flex-col xs:flex-row items-stretch xs:items-center gap-3 xs:gap-3.5">
+            <div className="mt-6 sm:mt-8 flex lg:hidden flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:max-w-md">
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="px-6 xs:px-7 sm:px-9 py-3 sm:py-3.5 rounded-full bg-white text-black text-xs sm:text-sm font-medium inline-flex items-center justify-center gap-3 hover:bg-neutral-200 transition-all duration-300 hover:scale-105 shadow-2xl group focus:outline-hidden"
+                className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-white text-black text-xs sm:text-sm font-medium inline-flex items-center justify-center gap-2.5 hover:bg-neutral-200 transition-all duration-300 shadow-xl group cursor-pointer focus:outline-hidden active:scale-98"
                 data-cursor="pointer"
               >
                 <span>Consult with us</span>
@@ -76,13 +76,12 @@ export default function Contact({ onNavigate }) {
                 href={STUDIO_INFO.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-5 xs:px-6 py-2.5 sm:py-3 rounded-full bg-[#25D366]/15 hover:bg-[#25D366] text-[#25D366] hover:text-black border border-[#25D366]/30 text-xs sm:text-sm font-medium inline-flex items-center justify-center gap-2.5 transition-all duration-300 hover:scale-105 shadow-lg group focus:outline-hidden"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-[#25D366] hover:bg-[#1ebe5b] text-black text-xs sm:text-sm font-medium inline-flex items-center justify-center gap-2 transition-all duration-300 shadow-lg group cursor-pointer focus:outline-hidden active:scale-98"
                 data-cursor="pointer"
               >
-                <MessageCircle size={16} className="shrink-0" />
-                <span className="flex flex-col text-left leading-tight">
-                  <span className="text-[11px] sm:text-xs font-normal">WhatsApp:</span>
-                  <span className="whitespace-nowrap font-mono text-xs sm:text-sm font-medium">{STUDIO_INFO.phone}</span>
+                <MessageCircle size={17} className="shrink-0" />
+                <span className="font-mono text-xs sm:text-sm font-semibold tracking-wide">
+                  WhatsApp: {STUDIO_INFO.phone}
                 </span>
               </a>
             </div>
@@ -379,11 +378,11 @@ export default function Contact({ onNavigate }) {
                     />
                   </div>
 
-                  <div className="pt-2 flex flex-col xs:flex-row items-stretch xs:items-center justify-between gap-3 sm:gap-4">
+                  <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full xs:w-auto px-6 sm:px-7 py-3 rounded-full bg-white text-black text-xs uppercase tracking-widest font-medium hover:bg-neutral-200 transition-all flex items-center justify-center gap-2 group shadow-lg"
+                      className="w-full sm:w-auto px-6 sm:px-7 py-3 rounded-full bg-white text-black text-xs uppercase tracking-widest font-medium hover:bg-neutral-200 transition-all flex items-center justify-center gap-2 group shadow-lg cursor-pointer"
                     >
                       <span>{isSubmitting ? "Transmitting..." : "Send Consultation"}</span>
                       <Send size={12} className="group-hover:translate-x-0.5 transition-transform" />
@@ -393,7 +392,7 @@ export default function Contact({ onNavigate }) {
                       href={STUDIO_INFO.whatsapp}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs text-white/70 hover:text-[#25D366] transition-colors flex items-center justify-center gap-1.5 font-mono"
+                      className="text-xs text-white/70 hover:text-[#25D366] transition-colors flex items-center justify-center gap-1.5 font-mono py-1 sm:py-0"
                     >
                       <MessageCircle size={14} className="text-[#25D366]" />
                       <span>WhatsApp: {STUDIO_INFO.phone}</span>

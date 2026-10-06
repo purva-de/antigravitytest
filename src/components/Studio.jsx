@@ -1,5 +1,6 @@
 import React from 'react';
 import { Compass, Sparkles, ShieldCheck, HeartHandshake, ArrowRight, Phone, MessageCircle } from 'lucide-react';
+import { STUDIO_INFO } from '../data/projectsData';
 
 export default function Studio() {
   const credentials = [
@@ -112,23 +113,23 @@ export default function Studio() {
             </div>
 
             {/* Direct Quick Action Buttons: Removed on desktop version, present on mobile/tablet */}
-            <div className="md:hidden mt-3.5 pt-2.5 border-t border-black/5 dark:border-white/10 flex flex-col xs:flex-row items-stretch xs:items-center gap-1.5 xs:gap-2">
+            <div className="md:hidden mt-3.5 pt-2.5 border-t border-black/5 dark:border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
               <a
-                href="https://wa.me/917028234778"
+                href={STUDIO_INFO.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-2.5 py-1.5 md:px-3.5 md:py-2 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white text-[9.5px] xs:text-[10px] md:text-xs font-mono uppercase tracking-normal md:tracking-wider font-medium inline-flex items-center justify-center gap-1.5 whitespace-nowrap transition-colors shadow-xs"
+                className="w-full sm:w-auto px-3.5 py-2.5 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white text-[11px] font-mono uppercase tracking-wider font-medium inline-flex items-center justify-center gap-2 transition-colors shadow-xs"
               >
-                <MessageCircle size={12} className="shrink-0" />
-                <span className="whitespace-nowrap">WhatsApp: +91 70282 34778</span>
+                <MessageCircle size={14} className="shrink-0" />
+                <span>WhatsApp: {STUDIO_INFO.phone}</span>
               </a>
 
               <a
                 href="#contact"
-                className="px-2.5 py-1.5 md:px-3.5 md:py-2 rounded-full bg-[#1C1B19] dark:bg-white text-white dark:text-black text-[9.5px] xs:text-[10px] md:text-xs font-mono uppercase tracking-normal md:tracking-wider font-medium inline-flex items-center justify-center gap-1.5 whitespace-nowrap transition-colors shadow-xs hover:bg-[#9A3412]"
+                className="w-full sm:w-auto px-3.5 py-2.5 rounded-full bg-[#1C1B19] dark:bg-white text-white dark:text-black text-[11px] font-mono uppercase tracking-wider font-medium inline-flex items-center justify-center gap-2 transition-colors shadow-xs hover:bg-[#9A3412]"
               >
-                <span className="whitespace-nowrap">Book Consultation</span>
-                <ArrowRight size={11} className="shrink-0" />
+                <span>Book Consultation</span>
+                <ArrowRight size={13} className="shrink-0" />
               </a>
             </div>
           </div>
