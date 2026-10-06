@@ -330,16 +330,16 @@ export default function HeroExperience({ onExploreProjects }) {
                       href={STUDIO_INFO.whatsapp}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-5 sm:px-6 py-2.5 rounded-full bg-[#4A5844] hover:bg-[#3D4938] text-white flex items-center gap-2 text-xs font-mono tracking-wider uppercase font-medium shadow-md transition-all duration-300 hover:scale-105 active:scale-95"
+                      className="px-4 sm:px-4.5 py-2 rounded-full bg-[#4A5844] hover:bg-[#3D4938] text-white flex items-center gap-1.5 text-[10px] md:text-[10.5px] font-mono tracking-wider uppercase font-medium shadow-md transition-all duration-300 hover:scale-105 active:scale-95"
                       data-cursor="pointer"
                     >
-                      <MessageCircle size={14} />
+                      <MessageCircle size={13} />
                       <span>Message Now</span>
                     </a>
 
                     <button
                       onClick={onExploreProjects}
-                      className="px-5 sm:px-6 py-2.5 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/25 text-xs font-mono tracking-wider uppercase font-medium backdrop-blur-md transition-all duration-300 hover:scale-105 active:scale-95"
+                      className="px-4 sm:px-4.5 py-2 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/25 text-[10px] md:text-[10.5px] font-mono tracking-wider uppercase font-medium backdrop-blur-md transition-all duration-300 hover:scale-105 active:scale-95"
                       data-cursor="pointer"
                     >
                       <span>Explore Projects</span>
