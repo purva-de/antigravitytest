@@ -153,7 +153,7 @@ function InteractiveTiltCard({ pillar, index, isExpanded, onHover, onSelect }) {
           </div>
 
           {/* Clean Serif Title */}
-          <h3 className="font-serif text-lg sm:text-xl lg:text-2xl font-normal text-white tracking-tight leading-tight drop-shadow-md">
+          <h3 className="font-serif text-xs sm:text-sm lg:text-base font-normal text-white tracking-tight leading-tight drop-shadow-md">
             {pillar.title}
           </h3>
 
@@ -193,7 +193,7 @@ export default function SpatialPillars({ onSelectProject }) {
               <span className="w-6 sm:w-8 h-px bg-[#1C1B19]/30 dark:bg-white/30" />
               <span>SPATIAL CURATION</span>
             </div>
-            <h2 className="font-serif text-2xl sm:text-3xl font-normal tracking-tight">
+            <h2 className="font-serif text-base sm:text-lg font-normal tracking-tight">
               ARCHITECTURAL INTENTIONS
             </h2>
           </div>
@@ -256,7 +256,7 @@ export default function SpatialPillars({ onSelectProject }) {
                 <span>•</span>
                 <span>{selectedPillar.discipline}</span>
               </div>
-              <h3 className="font-serif text-2xl sm:text-3xl font-normal text-white">
+              <h3 className="font-serif text-sm sm:text-base font-normal text-white">
                 {selectedPillar.title}
               </h3>
               <p className="text-xs sm:text-sm text-white/70 font-light leading-relaxed">

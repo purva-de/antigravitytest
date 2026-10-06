@@ -408,7 +408,7 @@ export default function ProjectCard({
             </span>
           </div>
 
-          <h3 className="font-serif text-lg sm:text-xl font-normal text-[#1C1B19] dark:text-[#FAF8F5] tracking-tight group-hover:text-[#4F5542] dark:group-hover:text-[#D9CEBE] transition-colors duration-200">
+          <h3 className="font-serif text-xs sm:text-sm font-normal text-[#1C1B19] dark:text-[#FAF8F5] tracking-tight group-hover:text-[#4F5542] dark:group-hover:text-[#D9CEBE] transition-colors duration-200">
             {project.name}
           </h3>
           <p className="text-xs text-[#57544E] dark:text-[#A09C94] font-light mt-1 line-clamp-1">

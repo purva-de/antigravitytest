@@ -42,20 +42,20 @@ export default function Introduction() {
           {/* Left: Editorial Statement & Philosophy */}
           <div className="lg:col-span-7 flex flex-col justify-between">
             <div>
-              <h2 className="font-serif text-2xl xs:text-3xl sm:text-5xl lg:text-6xl font-normal leading-[1.08] tracking-tight text-[#1C1B19] dark:text-[#FAF8F5]">
+              <h2 className="font-serif text-base xs:text-lg sm:text-2xl lg:text-3xl font-normal leading-[1.12] tracking-tight text-[#1C1B19] dark:text-[#FAF8F5]">
                 DESIGNING SPACES
-                <span className="block italic text-[#4F5542] dark:text-[#D4B993] font-light mt-1">
+                <span className="block text-[#4F5542] dark:text-[#D4B993] font-normal mt-1">
                   WITH INTENTION.
                 </span>
               </h2>
 
-              <p className="mt-3 sm:mt-5 text-xs xs:text-sm sm:text-base lg:text-lg text-[#57544E] dark:text-[#C8C4BC] font-light leading-relaxed max-w-2xl">
+              <p className="mt-2.5 sm:mt-4 text-xs sm:text-sm text-[#57544E] dark:text-[#C8C4BC] font-light leading-relaxed max-w-2xl">
                 {STUDIO_INFO.introParagraph}
               </p>
             </div>
 
             <div className="mt-3.5 sm:mt-6 pl-3.5 sm:pl-5 border-l-2 border-[#4F5542]/40 dark:border-[#D4B993]/40">
-              <p className="text-xs sm:text-sm text-[#706B63] dark:text-[#A09C94] italic leading-relaxed max-w-xl">
+              <p className="text-xs sm:text-sm text-[#706B63] dark:text-[#A09C94] font-sans italic leading-relaxed max-w-xl">
                 "{STUDIO_INFO.philosophy}"
               </p>
               <span className="block mt-1 text-[10px] font-mono tracking-widest uppercase text-[#8F8B83]">
@@ -92,8 +92,8 @@ export default function Introduction() {
 
             {/* Center: Large Typographic Motto */}
             <div className="relative z-10 py-3 sm:py-4 my-auto">
-              <span className="font-serif text-2xl sm:text-3xl text-[#D4B993]/80 leading-none select-none block -mb-1 sm:-mb-2">“</span>
-              <p className="font-serif text-lg xs:text-xl sm:text-2xl text-white font-normal leading-snug tracking-tight">
+              <span className="font-serif text-base sm:text-lg text-[#D4B993]/80 leading-none select-none block -mb-1 sm:-mb-2">“</span>
+              <p className="font-serif text-xs xs:text-sm sm:text-base text-white font-normal leading-snug tracking-tight">
                 YOU GOT SPACE, AND WE GOT THE IDEA.
               </p>
             </div>
@@ -122,7 +122,7 @@ export default function Introduction() {
               <span className="font-mono text-xs text-[#8F8B83] tracking-widest block mb-1.5 sm:mb-2 group-hover:text-[#4F5542] dark:group-hover:text-[#D4B993] transition-colors">
                 {pillar.num}
               </span>
-              <h3 className="font-serif text-base sm:text-xl text-[#1C1B19] dark:text-[#FAF8F5] mb-1 font-medium">
+              <h3 className="font-serif text-xs sm:text-sm text-[#1C1B19] dark:text-[#FAF8F5] mb-1 font-medium">
                 {pillar.title}
               </h3>
               <p className="text-xs sm:text-sm text-[#57544E] dark:text-[#A09C94] leading-relaxed font-light">

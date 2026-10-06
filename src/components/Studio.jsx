@@ -76,15 +76,15 @@ export default function Studio() {
           
           {/* Left: Punchy Core Philosophy (Zero Fluff) */}
           <div className="lg:col-span-7 flex flex-col justify-center">
-            <h2 className="font-serif text-2xl xs:text-3xl sm:text-4xl lg:text-[42px] font-normal leading-[1.14] tracking-tight text-[#1C1B19] dark:text-[#FAF8F5]">
+            <h2 className="font-serif text-base xs:text-lg sm:text-xl lg:text-[21px] font-normal leading-[1.16] tracking-tight text-[#1C1B19] dark:text-[#FAF8F5]">
               Good design begins with{' '}
-              <span className="italic font-serif text-[#9A3412] dark:text-[#FDBA74] font-medium">
+              <span className="text-[#9A3412] dark:text-[#FDBA74] font-normal">
                 good thinking.
               </span>
             </h2>
 
             {/* The Main Motto */}
-            <p className="font-serif text-lg xs:text-xl sm:text-2xl text-[#1C1B19] dark:text-[#FAF8F5] italic mt-2">
+            <p className="font-sans italic text-xs xs:text-sm sm:text-base text-[#1C1B19] dark:text-[#FAF8F5] mt-1.5">
               “You got space, and we got the idea.”
             </p>
 
@@ -158,7 +158,7 @@ export default function Studio() {
                   </div>
 
                   {/* Punchy Title */}
-                  <h3 className="font-serif text-lg font-normal text-[#1C1B19] dark:text-[#FAF8F5] mb-1.5">
+                  <h3 className="font-serif text-xs sm:text-sm font-normal text-[#1C1B19] dark:text-[#FAF8F5] mb-1.5">
                     {cred.title}
                   </h3>
 

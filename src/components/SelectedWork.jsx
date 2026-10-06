@@ -70,7 +70,7 @@ export default function SelectedWork({ onSelectProject }) {
               <span className="w-6 sm:w-8 h-px bg-[#1C1B19]/30 dark:bg-white/30" />
               <span>PORTFOLIO CURATION</span>
             </div>
-            <h2 className="font-serif text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight">
+            <h2 className="font-serif text-base xs:text-lg sm:text-xl lg:text-2xl font-normal tracking-tight">
               SELECTED WORK
             </h2>
             <p className="text-xs sm:text-sm text-[#57544E] dark:text-[#A09C94] font-light mt-1.5">
@@ -115,7 +115,7 @@ export default function SelectedWork({ onSelectProject }) {
         {/* Empty state if Moodboard is empty */}
         {filteredProjects.length === 0 && (
           <div className="py-20 text-center">
-            <p className="font-serif text-2xl text-[#8F8B83] mb-2">No saved spaces in your moodboard yet.</p>
+            <p className="font-serif text-sm sm:text-base text-[#8F8B83] mb-2">No saved spaces in your moodboard yet.</p>
             <p className="text-xs text-[#8F8B83] mb-4">Click the bookmark icon on any card to save spaces here.</p>
             <button
               onClick={() => setOnlySaved(false)}
@@ -199,7 +199,7 @@ export default function SelectedWork({ onSelectProject }) {
             {/* Lightbox Topbar */}
             <div className="flex items-center justify-between text-white pb-3 sm:pb-4 border-b border-white/10">
               <div>
-                <h3 className="font-serif text-lg sm:text-2xl">{lightboxData.project.name}</h3>
+                <h3 className="font-serif text-xs sm:text-sm">{lightboxData.project.name}</h3>
                 <p className="text-[10px] sm:text-xs font-mono text-[#A09C94] uppercase tracking-wider">
                   {lightboxData.project.category} • {lightboxData.project.location} • PHOTO {lightboxData.imgIndex + 1} OF {lightboxData.project.galleryImages.length}
                 </p>

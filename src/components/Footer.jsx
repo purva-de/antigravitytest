@@ -33,7 +33,7 @@ export default function Footer({ onNavigate }) {
                   className="h-full w-full object-contain filter brightness-0 transition-all duration-300"
                 />
               </div>
-              <span className="font-serif text-xl xs:text-2xl tracking-wider text-[var(--color-text)] font-normal">
+              <span className="font-serif text-xs xs:text-sm sm:text-base tracking-wider text-[var(--color-text)] font-normal">
                 CONSILIO STUDIOS
               </span>
             </div>
@@ -80,7 +80,7 @@ export default function Footer({ onNavigate }) {
                   <span className="text-[9px] font-mono uppercase tracking-[0.2em] text-[var(--color-accent)] font-medium">
                     Principal Architect
                   </span>
-                  <h4 className="font-serif text-base sm:text-lg text-[var(--color-text)] font-normal leading-snug mt-0.5">
+                  <h4 className="font-serif text-xs sm:text-sm text-[var(--color-text)] font-normal leading-snug mt-0.5">
                     Consilio Studios
                   </h4>
                   <span className="text-[10px] font-mono text-[var(--color-muted)] mt-0.5">

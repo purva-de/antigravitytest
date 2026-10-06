@@ -82,7 +82,7 @@ export default function Navbar({ activeSection, onNavigate }) {
             
             <div className="flex flex-col shrink-0">
               <span
-                className={`font-serif text-[13.5px] xs:text-[15.5px] sm:text-xl md:text-2xl font-normal tracking-normal sm:tracking-wide leading-tight whitespace-nowrap transition-colors duration-300 ${
+                className={`font-serif text-[10px] xs:text-[11.5px] sm:text-sm md:text-base font-normal tracking-wide leading-tight whitespace-nowrap transition-colors duration-300 ${
                   isScrolled
                     ? 'text-[#1C1B19]'
                     : 'text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]'
@@ -91,7 +91,7 @@ export default function Navbar({ activeSection, onNavigate }) {
                 Consilio Studios
               </span>
               <span
-                className={`text-[7.5px] xs:text-[8.5px] sm:text-[10px] tracking-[0.14em] sm:tracking-[0.2em] font-mono uppercase font-medium whitespace-nowrap transition-colors duration-300 ${
+                className={`text-[6.5px] xs:text-[7.5px] sm:text-[8.5px] tracking-[0.14em] sm:tracking-[0.2em] font-mono uppercase font-medium whitespace-nowrap transition-colors duration-300 ${
                   isScrolled
                     ? 'text-[#57544E]'
                     : 'text-[#D9CEBE] drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]'
@@ -174,7 +174,7 @@ export default function Navbar({ activeSection, onNavigate }) {
               <div className="w-8 h-8 flex items-center justify-center shrink-0">
                 <img src="/logo.png" alt="Consilio Studios Logo" className="w-full h-full object-contain filter brightness-0 transition-all duration-300" />
               </div>
-              <span className="font-serif text-lg tracking-wider text-[#1C1B19]">Consilio Studios</span>
+              <span className="font-serif text-xs xs:text-sm tracking-wider text-[#1C1B19]">Consilio Studios</span>
             </div>
             <button
               onClick={() => setMobileMenuOpen(false)}
@@ -206,7 +206,7 @@ export default function Navbar({ activeSection, onNavigate }) {
                       0{idx + 1}
                     </span>
                     <div className="flex flex-col text-left">
-                      <span className={`font-serif text-base xs:text-lg sm:text-xl tracking-wider uppercase transition-colors ${
+                      <span className={`font-serif text-xs xs:text-sm sm:text-base tracking-wider uppercase transition-colors ${
                         isActive ? 'text-[#1C1B19] font-medium' : 'text-[#1C1B19]/90 group-hover:text-[#1C1B19]'
                       }`}>
                         {item.label}

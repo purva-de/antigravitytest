@@ -121,7 +121,7 @@ export default function Services() {
               <span className="w-6 sm:w-8 h-px bg-[#1C1B19]/30 dark:bg-white/30" />
               <span>DISCIPLINES & CAPABILITIES</span>
             </div>
-            <h2 className="font-serif text-2xl sm:text-3xl font-normal tracking-tight">
+            <h2 className="font-serif text-base sm:text-lg font-normal tracking-tight">
               SERVICES
             </h2>
           </div>
@@ -251,7 +251,7 @@ export default function Services() {
                           <span className="text-white/70">{srv.badge}</span>
                         </div>
 
-                        <h3 className="font-serif text-2xl sm:text-3xl font-normal tracking-tight text-white leading-tight">
+                        <h3 className="font-serif text-sm sm:text-base font-normal tracking-tight text-white leading-tight">
                           {srv.title}
                         </h3>
 
@@ -335,7 +335,7 @@ export default function Services() {
 
                   {/* Title overlay */}
                   <div className="absolute bottom-2.5 left-3 right-3 flex items-end justify-between">
-                    <h3 className="font-serif text-lg xs:text-xl font-normal text-white">
+                    <h3 className="font-serif text-xs xs:text-sm font-normal text-white">
                       {srv.title}
                     </h3>
                     <div className={`w-6 h-6 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center transition-transform ${isExpanded ? 'rotate-90 bg-white text-black' : ''}`}>
@@ -437,7 +437,7 @@ export default function Services() {
                 {/* Card Bottom: Concise Typography */}
                 <div className="p-4 sm:p-5 flex flex-col justify-between flex-1">
                   <div>
-                    <h3 className="font-serif text-xl sm:text-2xl font-normal text-[#1C1B19] dark:text-white tracking-tight mb-2 group-hover:text-[#4A5844] dark:group-hover:text-[#D9CEBE] transition-colors">
+                    <h3 className="font-serif text-xs sm:text-sm font-normal text-[#1C1B19] dark:text-white tracking-tight mb-2 group-hover:text-[#4A5844] dark:group-hover:text-[#D9CEBE] transition-colors">
                       {srv.title}
                     </h3>
                     <p className="text-xs font-light text-[#57544E] dark:text-[#A09C94] leading-relaxed line-clamp-2 mb-3">
@@ -500,7 +500,7 @@ export default function Services() {
                     <span className="text-[10px] font-mono tracking-widest uppercase text-white/70 block mb-0.5 sm:mb-1">
                       DISCIPLINE {selectedServiceForModal.number} • {selectedServiceForModal.badge}
                     </span>
-                    <h3 className="font-serif text-2xl xs:text-3xl sm:text-4xl font-normal text-white">
+                    <h3 className="font-serif text-sm xs:text-base sm:text-lg font-normal text-white">
                       {selectedServiceForModal.title}
                     </h3>
                   </div>

@@ -72,11 +72,11 @@ export default function ProjectDetail({ project, onClose, onSelectProject }) {
             <span>{project.projectType}</span>
           </div>
 
-          <h1 id="project-title" className="font-serif text-3xl xs:text-4xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-[#1C1B19] dark:text-[#FAF8F5]">
+          <h1 id="project-title" className="font-serif text-lg xs:text-xl sm:text-3xl lg:text-4xl font-normal tracking-tight text-[#1C1B19] dark:text-[#FAF8F5]">
             {project.name}
           </h1>
 
-          <p className="font-serif italic text-lg xs:text-xl sm:text-2xl text-[#57544E] dark:text-[#D9CEBE] mt-2 font-light">
+          <p className="font-serif italic text-sm xs:text-base sm:text-lg text-[#57544E] dark:text-[#D9CEBE] mt-2 font-light">
             {project.subtitle}
           </p>
         </header>
@@ -124,7 +124,7 @@ export default function ProjectDetail({ project, onClose, onSelectProject }) {
             <span className="text-xs font-mono text-[#8F8B83] tracking-[0.2em] uppercase block mb-3">
               01 • DESIGN CONCEPT
             </span>
-            <h2 className="font-serif text-2xl sm:text-3xl font-medium leading-snug">
+            <h2 className="font-serif text-sm sm:text-base font-medium leading-snug">
               {project.designConcept}
             </h2>
           </div>
@@ -217,7 +217,7 @@ export default function ProjectDetail({ project, onClose, onSelectProject }) {
             </div>
             <div>
               <span className="text-[10px] font-mono text-[#8F8B83] uppercase block">PREVIOUS PROJECT</span>
-              <span className="font-serif text-base sm:text-lg group-hover:underline">{prevProject.name}</span>
+              <span className="font-serif text-xs sm:text-sm group-hover:underline">{prevProject.name}</span>
             </div>
           </button>
 
@@ -228,7 +228,7 @@ export default function ProjectDetail({ project, onClose, onSelectProject }) {
           >
             <div className="text-left sm:text-right">
               <span className="text-[10px] font-mono text-[#8F8B83] uppercase block">NEXT PROJECT</span>
-              <span className="font-serif text-base sm:text-lg group-hover:underline">{nextProject.name}</span>
+              <span className="font-serif text-xs sm:text-sm group-hover:underline">{nextProject.name}</span>
             </div>
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#1C1B19]/20 flex items-center justify-center group-hover:bg-[#1C1B19] group-hover:text-white transition-all shrink-0">
               <ArrowRight size={16} />

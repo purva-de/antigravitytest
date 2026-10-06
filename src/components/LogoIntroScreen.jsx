@@ -156,7 +156,7 @@ export default function LogoIntroScreen({ onIntroComplete }) {
               initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: shouldReduceMotion ? 0 : 0.05, duration: shouldReduceMotion ? 0.15 : 0.25 }}
-              className="font-serif text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-light tracking-[0.2em] sm:tracking-[0.26em] text-white uppercase mt-6 sm:mt-8 leading-tight"
+              className="font-serif text-sm xs:text-base sm:text-xl lg:text-2xl font-light tracking-[0.2em] sm:tracking-[0.26em] text-white uppercase mt-6 sm:mt-8 leading-tight"
             >
               Consilio Studios
             </motion.h1>
@@ -166,7 +166,7 @@ export default function LogoIntroScreen({ onIntroComplete }) {
               initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: shouldReduceMotion ? 0 : 0.1, duration: shouldReduceMotion ? 0.15 : 0.2 }}
-              className="font-mono text-[9px] xs:text-[10px] sm:text-xs tracking-[0.25em] sm:tracking-[0.35em] text-white/60 uppercase mt-2.5 sm:mt-3"
+              className="font-mono text-[8px] xs:text-[8.5px] sm:text-[9.5px] tracking-[0.25em] sm:tracking-[0.35em] text-white/60 uppercase mt-2.5 sm:mt-3"
             >
               Architecture • Spatial Design • Pune
             </motion.p>
@@ -176,7 +176,7 @@ export default function LogoIntroScreen({ onIntroComplete }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: shouldReduceMotion ? 0 : 0.15, duration: shouldReduceMotion ? 0.15 : 0.2 }}
-              className="font-serif italic text-xs sm:text-sm text-white/45 mt-3 sm:mt-4 tracking-wider"
+              className="font-sans italic text-[10px] sm:text-xs text-white/45 mt-3 sm:mt-4 tracking-wider"
             >
               "You got space, and we got the idea"
             </motion.p>

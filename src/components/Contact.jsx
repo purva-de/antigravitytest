@@ -42,7 +42,7 @@ export default function Contact({ onNavigate }) {
         className="absolute left-1/2 -translate-x-1/2 bottom-8 pointer-events-none select-none w-full text-center overflow-hidden opacity-90 z-0"
         aria-hidden="true"
       >
-        <span className="font-serif text-[18vw] leading-none uppercase tracking-[0.16em] text-white/[0.04] font-normal whitespace-nowrap block">
+        <span className="font-serif text-[10vw] leading-none uppercase tracking-[0.16em] text-white/[0.04] font-normal whitespace-nowrap block">
           CONSILIO
         </span>
       </div>
@@ -53,7 +53,7 @@ export default function Contact({ onNavigate }) {
           
           {/* LEFT: Grand Editorial Headline & Consultation Button */}
           <div className="lg:col-span-6">
-            <h2 className="font-serif text-3xl xs:text-4xl sm:text-6xl lg:text-7xl font-normal leading-[1.04] tracking-tight text-white">
+            <h2 className="font-serif text-lg xs:text-xl sm:text-3xl lg:text-4xl font-normal leading-[1.08] tracking-tight text-white">
               Elevate your<br />
               architectural<br />
               <span className="italic text-[#828C74] font-light">
@@ -211,7 +211,7 @@ export default function Contact({ onNavigate }) {
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#828C74]/20 border border-[#828C74]/40 text-[#828C74] text-[10px] font-mono tracking-widest uppercase mb-1.5 sm:mb-2">
                 Founder & Principal Architect
               </div>
-              <h3 className="font-serif text-xl sm:text-3xl text-white font-normal">
+              <h3 className="font-serif text-sm sm:text-base text-white font-normal">
                 Consilio Studios Leadership
               </h3>
               <p className="text-xs sm:text-sm text-white/70 font-light max-w-xl mt-1 sm:mt-1.5 leading-relaxed">
@@ -256,7 +256,7 @@ export default function Contact({ onNavigate }) {
                 className="w-full h-full object-contain invert"
               />
             </div>
-            <span className="font-serif italic text-white/90 text-sm">
+            <span className="font-serif italic text-white/90 text-xs">
               Consilio Studios
             </span>
             <span className="w-4 h-px bg-white/30 hidden sm:inline-block" />
@@ -294,7 +294,7 @@ export default function Contact({ onNavigate }) {
             {isSubmitted ? (
               <div className="text-center py-6 sm:py-8 space-y-4">
                 <CheckCircle2 className="w-10 h-10 sm:w-12 sm:h-12 text-[#828C74] mx-auto" />
-                <h3 className="font-serif text-2xl text-white">Inquiry Received</h3>
+                <h3 className="font-serif text-sm sm:text-base text-white">Inquiry Received</h3>
                 <p className="text-xs sm:text-sm text-white/70 max-w-sm mx-auto font-light leading-relaxed">
                   Thank you, {formData.name || "friend"}. Our studio partners will review your project brief and connect within 24–48 hours.
                 </p>
@@ -312,7 +312,7 @@ export default function Contact({ onNavigate }) {
                 <span className="text-[10px] uppercase tracking-[0.25em] font-mono text-[#828C74] block mb-1.5 sm:mb-2">
                   CONSILIO STUDIOS
                 </span>
-                <h3 className="font-serif text-2xl sm:text-3xl text-white mb-1.5 sm:mb-2">
+                <h3 className="font-serif text-sm sm:text-base text-white mb-1.5 sm:mb-2">
                   Initiate a Consultation
                 </h3>
                 <p className="text-xs text-white/60 font-light mb-5 sm:mb-6">

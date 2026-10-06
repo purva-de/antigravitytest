@@ -13,7 +13,7 @@ export default function Process() {
               <span className="w-6 sm:w-8 h-px bg-[#1C1B19]/30 dark:bg-white/30" />
               <span>METHODOLOGY & EXECUTION</span>
             </div>
-            <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal tracking-tight">
+            <h2 className="font-serif text-sm sm:text-base lg:text-lg font-normal tracking-tight">
               THE PROCESS
             </h2>
           </div>
@@ -37,7 +37,7 @@ export default function Process() {
                   <span className="w-2 h-2 rounded-full bg-[#1C1B19]/20 dark:bg-white/20 group-hover:bg-[#4F5542] dark:group-hover:bg-[#D9CEBE] transition-colors" />
                 </div>
 
-                <h3 className="font-serif text-lg sm:text-xl lg:text-2xl font-normal tracking-tight text-[#1C1B19] dark:text-[#FAF8F5] mb-1">
+                <h3 className="font-serif text-xs sm:text-sm lg:text-base font-normal tracking-tight text-[#1C1B19] dark:text-[#FAF8F5] mb-1">
                   {step.name}
                 </h3>
 
