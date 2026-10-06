@@ -245,14 +245,9 @@ export default function ProjectCard({
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
 
         {/* Top Badges & Quick Action Controls */}
-        <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
-          {/* Space Name Badge */}
-          <div className="flex items-center gap-1.5">
-            <span className="px-2.5 py-1 rounded-full bg-black/75 backdrop-blur-md text-[10px] tracking-[0.2em] font-mono text-white uppercase border border-white/15 shadow-sm font-medium">
-              {project.category}
-            </span>
-
-            {/* Subtle Live Video Motion Indicator */}
+        <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10 pointer-events-none">
+          {/* Subtle Live Video Motion Indicator */}
+          <div>
             {isVideoVisible && isPlaying && (
               <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-600/90 backdrop-blur-md text-[8px] font-mono text-white tracking-widest uppercase border border-amber-400/30 shadow-xs animate-pulse">
                 <span className="w-1.5 h-1.5 rounded-full bg-white" />
