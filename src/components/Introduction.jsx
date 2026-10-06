@@ -94,7 +94,7 @@ export default function Introduction() {
             <div className="relative z-10 py-3 sm:py-4 my-auto">
               <span className="font-serif text-base sm:text-lg text-[#D4B993]/80 leading-none select-none block -mb-1 sm:-mb-2">“</span>
               <p className="font-serif text-xs xs:text-sm sm:text-base text-white font-normal leading-snug tracking-tight">
-                YOU GOT SPACE, AND WE GOT THE IDEA.
+                YOU GOT SPACE, AND WE GOT THE IDEA."
               </p>
             </div>
 
@@ -102,7 +102,7 @@ export default function Introduction() {
             <div className="relative z-10 pt-2.5 sm:pt-3 border-t border-white/10 flex items-center justify-between font-mono tracking-wider">
               <div className="flex items-center gap-1.5 sm:gap-2 text-white/70">
                 <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
-                <span className="text-[8.5px] xs:text-[9.5px] sm:text-[10.5px]">ARCHITECTURE & INTERIORS</span>
+                <span className="text-[8.5px] xs:text-[9.5px] sm:text-[10.5px]"></span>
               </div>
               <a
                 href="#work"
