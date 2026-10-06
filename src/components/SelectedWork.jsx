@@ -34,9 +34,6 @@ export default function SelectedWork({ onSelectProject }) {
             <h2 className="font-serif text-base xs:text-lg sm:text-xl lg:text-2xl font-normal tracking-tight">
               SELECTED WORK
             </h2>
-            <p className="text-xs sm:text-sm text-[#57544E] dark:text-[#A09C94] font-light mt-1.5">
-              3×2 architectural monograph — Living Room, Hall, Bedroom, Balcony, TV Unit & Classic Interior.
-            </p>
           </div>
 
           {/* Right: Small "ALL CRITERIA" Indicator */}
