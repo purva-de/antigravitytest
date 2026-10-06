@@ -99,17 +99,17 @@ export default function Introduction() {
             </div>
 
             {/* Bottom Bar: Discipline & Direct Link */}
-            <div className="relative z-10 pt-2.5 sm:pt-3 border-t border-white/10 flex items-center justify-between text-[10px] xs:text-[11px] font-mono tracking-wider">
+            <div className="relative z-10 pt-2.5 sm:pt-3 border-t border-white/10 flex items-center justify-between font-mono tracking-wider">
               <div className="flex items-center gap-1.5 sm:gap-2 text-white/70">
                 <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
-                <span>ARCHITECTURE & INTERIORS</span>
+                <span className="text-[8.5px] xs:text-[9.5px] sm:text-[10.5px]">ARCHITECTURE & INTERIORS</span>
               </div>
               <a
                 href="#work"
-                className="text-[10px] uppercase tracking-widest text-[#D4B993] hover:text-white flex items-center gap-1 transition-colors group/link"
+                className="text-[8px] xs:text-[8.5px] sm:text-[10px] uppercase tracking-widest text-[#D4B993] hover:text-white flex items-center gap-0.5 sm:gap-1 transition-colors group/link shrink-0"
               >
                 <span>PORTFOLIO</span>
-                <ArrowUpRight size={12} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+                <ArrowUpRight className="w-2.5 h-2.5 sm:w-3 sm:h-3 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
               </a>
             </div>
           </div>
