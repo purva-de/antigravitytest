@@ -413,7 +413,7 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
   const lastTimeRef = useRef(0);
   const rafIdRef = useRef(null);
 
-  // 1. Responsive Resizing (Compact & Balanced Proportions)
+  // 1. Responsive Resizing (Sleek Compact Proportions)
   const updateDimensions = useCallback(() => {
     if (!containerRef.current) return;
     const w = containerRef.current.clientWidth || window.innerWidth;
@@ -421,27 +421,27 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
     let cWidth, cHeight, cGap, rad, persp, curve, depth;
 
     if (w < 640) {
-      cWidth = Math.min(210, Math.floor(w * 0.60));
-      cHeight = Math.floor(cWidth * 1.36); // ~285px
-      cGap = 14;
-      rad = 560;
-      persp = 750;
+      cWidth = Math.min(170, Math.floor(w * 0.52));
+      cHeight = Math.floor(cWidth * 1.36); // ~230px
+      cGap = 12;
+      rad = 480;
+      persp = 680;
       curve = 0.90;
-      depth = 1.28;
+      depth = 1.30;
     } else if (w < 1024) {
-      cWidth = 240;
-      cHeight = 330;
-      cGap = 16;
-      rad = 760;
-      persp = 880;
+      cWidth = 195;
+      cHeight = 265;
+      cGap = 14;
+      rad = 620;
+      persp = 760;
       curve = 0.88;
       depth = 1.25;
     } else {
-      cWidth = 270;
-      cHeight = 370;
-      cGap = 18;
-      rad = 920;
-      persp = 980;
+      cWidth = 220;
+      cHeight = 300;
+      cGap = 16;
+      rad = 750;
+      persp = 850;
       curve = 0.85;
       depth = 1.25;
     }
@@ -517,14 +517,14 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
         activeSpecsIndex !== null;
 
       if (!isPaused) {
-        // Continuous brisk flow moving right to left: ~70px/sec
-        const autoSpeed = 1.15;
+        // Brisk, continuous motion moving right to left: ~135px/sec
+        const autoSpeed = 2.2;
         targetOffsetRef.current += autoSpeed * dt;
       }
 
       // Smooth Snappy Lerp Glide
       const diff = targetOffsetRef.current - currentOffsetRef.current;
-      currentOffsetRef.current += diff * (isDraggingRef.current ? 1 : 0.16);
+      currentOffsetRef.current += diff * (isDraggingRef.current ? 1 : 0.20);
 
       // Keep currentOffset normalized within track range
       if (currentOffsetRef.current > trackLength * 10) {
@@ -695,7 +695,7 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
         style={{
           perspective: `${dimensions.perspective}px`,
           perspectiveOrigin: '50% 50%',
-          height: `${dimensions.cardHeight + 28}px`
+          height: `${dimensions.cardHeight + 20}px`
         }}
         role="region"
         aria-roledescription="carousel"
@@ -734,35 +734,35 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
       {/* ===================================================================== */}
       {/* NAVIGATION CONTROLS: Centered (←) (→) Circles matching Reference       */}
       {/* ===================================================================== */}
-      <div className="mt-4 sm:mt-6 flex flex-col items-center justify-center gap-3">
+      <div className="mt-3 sm:mt-5 flex flex-col items-center justify-center gap-2.5">
         {/* Centered Circular Arrow Buttons */}
         <nav
-          className="flex items-center justify-center gap-3"
+          className="flex items-center justify-center gap-2.5"
           aria-label="3D Panorama Carousel Controls"
         >
           <button
             onClick={handlePrev}
-            className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#1C1B19]/30 dark:border-white/30 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs"
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#1C1B19]/30 dark:border-white/30 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs"
             aria-label="Previous criteria (←)"
             title="Previous criteria (←)"
           >
-            <ArrowLeft size={16} />
+            <ArrowLeft size={15} />
           </button>
 
           {/* Active Criterion Status Indicator */}
-          <div className="px-3.5 py-1 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[10px] font-mono tracking-widest text-[#1C1B19] dark:text-[#FAF8F5] uppercase">
+          <div className="px-3 py-0.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[9px] font-mono tracking-widest text-[#1C1B19] dark:text-[#FAF8F5] uppercase">
             <span>{CRITERIA_CONFIG[activeCenterCriterion]?.num}</span>
-            <span className="mx-1.5 opacity-40">/</span>
+            <span className="mx-1 opacity-40">/</span>
             <span className="font-medium">{CRITERIA_CONFIG[activeCenterCriterion]?.criteriaName}</span>
           </div>
 
           <button
             onClick={handleNext}
-            className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#1C1B19]/30 dark:border-white/30 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs"
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#1C1B19]/30 dark:border-white/30 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs"
             aria-label="Next criteria (→)"
             title="Next criteria (→)"
           >
-            <ArrowRight size={16} />
+            <ArrowRight size={15} />
           </button>
         </nav>
 
