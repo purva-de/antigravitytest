@@ -58,17 +58,17 @@ export default function Navbar({ activeSection, onNavigate }) {
             : 'bg-transparent py-3 sm:py-5 border-b border-transparent'
         }`}
       >
-        <div className="w-full px-4 sm:px-5 lg:px-6 flex items-center justify-between gap-2">
+        <div className="w-full px-3 xs:px-4 sm:px-5 lg:px-6 flex items-center justify-between gap-1.5 xs:gap-2">
           
           {/* LEFT: Circular Logo Emblem + Wordmark + Tagline */}
           <a
             href="#hero"
             onClick={(e) => handleItemClick(e, '#hero')}
-            className="flex items-center gap-2 xs:gap-2.5 sm:gap-3 group focus:outline-hidden shrink-0"
+            className="flex items-center gap-1.5 xs:gap-2 sm:gap-2.5 group focus:outline-hidden shrink-0"
             aria-label="Consilio Studios Home"
           >
             {/* The Official Uploaded Logo: White over hero video, Solid Black after scrolling */}
-            <div className="w-7 h-7 xs:w-8 xs:h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-transform duration-300 group-hover:scale-105 shrink-0">
+            <div className="w-[28px] h-[28px] xs:w-[32px] xs:h-[32px] sm:w-[38px] sm:h-[38px] flex items-center justify-center transition-transform duration-300 group-hover:scale-105 shrink-0">
               <img
                 src="/logo.png"
                 alt="Consilio Studios Logo"
@@ -82,7 +82,7 @@ export default function Navbar({ activeSection, onNavigate }) {
             
             <div className="flex flex-col shrink-0">
               <span
-                className={`font-serif text-[10px] xs:text-[11.5px] sm:text-sm md:text-base font-normal tracking-wide leading-tight whitespace-nowrap transition-colors duration-300 ${
+                className={`font-serif text-[10px] xs:text-[11px] sm:text-sm md:text-base font-normal tracking-wide leading-tight whitespace-nowrap transition-colors duration-300 ${
                   isScrolled
                     ? 'text-[#1C1B19]'
                     : 'text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]'
@@ -91,7 +91,7 @@ export default function Navbar({ activeSection, onNavigate }) {
                 Consilio Studios
               </span>
               <span
-                className={`text-[6.5px] xs:text-[7.5px] sm:text-[8.5px] tracking-[0.14em] sm:tracking-[0.2em] font-mono uppercase font-medium whitespace-nowrap transition-colors duration-300 ${
+                className={`text-[6.5px] xs:text-[7px] sm:text-[8px] tracking-[0.14em] sm:tracking-[0.2em] font-mono uppercase font-medium whitespace-nowrap transition-colors duration-300 ${
                   isScrolled
                     ? 'text-[#57544E]'
                     : 'text-[#D9CEBE] drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]'
@@ -123,11 +123,11 @@ export default function Navbar({ activeSection, onNavigate }) {
             </nav>
 
             {/* Utility Controls (Mobile Menu & Phone Contact Symbol) */}
-            <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
-              {/* Mobile Hamburger Toggle (placed before contact symbol so contact symbol stays at far right) */}
+            <div className="flex items-center gap-1.5 xs:gap-2 shrink-0">
+              {/* Mobile Hamburger Toggle */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className={`md:hidden w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-200 focus:outline-hidden ${
+                className={`md:hidden w-[32px] h-[32px] xs:w-[34px] xs:h-[34px] rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-200 focus:outline-hidden shrink-0 ${
                   isScrolled
                     ? 'bg-[#1C1B19]/5 hover:bg-[#1C1B19]/10 text-[#1C1B19] border border-[#1C1B19]/15 shadow-xs'
                     : 'bg-white/10 hover:bg-white/20 text-white border border-white/20 shadow-xs'
@@ -145,7 +145,7 @@ export default function Navbar({ activeSection, onNavigate }) {
               {/* Refined Small Contact Symbol in Far Right Corner */}
               <a
                 href={`tel:${STUDIO_INFO.phone.replace(/\s+/g, '')}`}
-                className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-105 focus:outline-hidden ${
+                className={`w-[32px] h-[32px] xs:w-[34px] xs:h-[34px] sm:w-[36px] sm:h-[36px] rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-105 focus:outline-hidden shrink-0 ${
                   isScrolled
                     ? 'bg-[#1C1B19]/5 hover:bg-[#1C1B19]/10 text-[#1C1B19] border border-[#1C1B19]/15 shadow-xs'
                     : 'bg-white/10 hover:bg-white/20 text-white border border-white/20 shadow-xs'

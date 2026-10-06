@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ArrowUpRight, Maximize2, Sliders, Film, Play, Pause, MessageCircle } from 'lucide-react';
+import { ArrowUpRight, Maximize2, Sliders, MessageCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { STUDIO_INFO } from '../data/projectsData';
 
@@ -275,24 +275,7 @@ export default function ProjectCard({
           </div>
         </div>
 
-        {/* Mobile-Only Tap-To-Play Indicator Pill */}
-        {isTouchDevice && project.video && !prefersReducedMotion && (
-          <div className="absolute bottom-2.5 left-2.5 z-10 pointer-events-none">
-            <span className="px-2 py-1 rounded-full bg-black/75 backdrop-blur-md text-[9px] font-mono text-white flex items-center gap-1.5 border border-white/15 shadow-sm">
-              {isPlaying ? (
-                <>
-                  <Pause size={10} className="text-amber-400" />
-                  <span>TAP TO STOP</span>
-                </>
-              ) : (
-                <>
-                  <Film size={10} className="text-amber-400" />
-                  <span>TAP TO PREVIEW</span>
-                </>
-              )}
-            </span>
-          </div>
-        )}
+
 
         {/* Ultra-Thin 2px Gold Architectural Playback Progress Bar */}
         {isVideoVisible && (
@@ -394,43 +377,34 @@ export default function ProjectCard({
           </p>
         </div>
 
-        {/* Action Buttons: View Details, Specs, WhatsApp */}
-        <div className="mt-4 pt-3 border-t border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handleToggleSpecs}
-              className={`px-3 py-1.5 sm:px-2.5 sm:py-1 rounded-sm text-[10px] font-mono tracking-wider transition-colors flex items-center gap-1 ${
-                showSpecs
-                  ? 'bg-[#1C1B19] text-white dark:bg-white dark:text-black'
-                  : 'bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-[#8F8B83] hover:text-[#1C1B19] dark:hover:text-white'
-              }`}
-              title="Toggle architectural specifications"
-              aria-label="Toggle specs"
-            >
-              <Sliders size={10} />
-              <span>SPECS</span>
-            </button>
-
-            <a
-              href={`${STUDIO_INFO.whatsapp}?text=${encodeURIComponent(`Hello Consilio Studios, I am interested in inquiring about your ${project.category} (${project.name}) design.`)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="p-2 sm:p-1.5 rounded-sm bg-[#25D366]/10 hover:bg-[#25D366] text-[#25D366] hover:text-black transition-colors"
-              title={`Inquire via WhatsApp about ${project.name}`}
-              aria-label={`WhatsApp inquiry for ${project.name}`}
-            >
-              <MessageCircle size={13} />
-            </a>
-          </div>
-
+        {/* Action Buttons: Only Specs & WhatsApp Contact */}
+        <div className="mt-3.5 pt-2.5 border-t border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
           <button
-            onClick={() => onSelect(project)}
-            className="inline-flex items-center gap-1 py-1 text-xs font-mono uppercase tracking-wider text-[#1C1B19] dark:text-[#FAF8F5] hover:text-[#4F5542] dark:hover:text-[#D9CEBE] transition-colors group/btn"
+            onClick={handleToggleSpecs}
+            className={`px-3 py-1.5 sm:px-2.5 sm:py-1 rounded-sm text-[10px] font-mono tracking-wider transition-colors flex items-center gap-1.5 ${
+              showSpecs
+                ? 'bg-[#1C1B19] text-white dark:bg-white dark:text-black font-medium'
+                : 'bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-[#57544E] hover:text-[#1C1B19] dark:text-[#A09C94] dark:hover:text-white'
+            }`}
+            title="Toggle architectural specifications"
+            aria-label="Toggle specs"
           >
-            <span>Details</span>
-            <ArrowUpRight size={13} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+            <Sliders size={11} />
+            <span>SPECS</span>
           </button>
+
+          <a
+            href={`${STUDIO_INFO.whatsapp}?text=${encodeURIComponent(`Hello Consilio Studios, I am interested in inquiring about your ${project.category} (${project.name}) design.`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="px-3 py-1.5 sm:px-2.5 sm:py-1 rounded-sm bg-[#25D366]/15 hover:bg-[#25D366] text-[#128C7E] hover:text-white dark:text-[#25D366] dark:hover:text-black transition-colors flex items-center gap-1.5 text-[10px] font-mono font-medium"
+            title={`Contact Consilio Studios about ${project.name}`}
+            aria-label={`Contact about ${project.name}`}
+          >
+            <MessageCircle size={12} />
+            <span>CONTACT</span>
+          </a>
         </div>
       </div>
     </article>

@@ -293,44 +293,7 @@ export default function HeroExperience({ onExploreProjects }) {
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/25 to-transparent pointer-events-none z-10" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none z-10" />
 
-        {/* FLOATING SOCIAL ICONS (RIGHT EDGE: Small & Elegant, Perfectly aligned with Navbar Contact Symbol) */}
-        <div className="absolute right-4 sm:right-5 lg:right-6 top-1/2 -translate-y-1/2 z-30 flex flex-col gap-1.5 xs:gap-2">
-          <a
-            href={STUDIO_INFO.whatsapp}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-[#25D366] text-white/90 hover:text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-105 shadow-md border border-white/15"
-            aria-label="WhatsApp Consilio Studios"
-            title="WhatsApp Dialogue"
-            data-cursor="pointer"
-          >
-            <MessageCircle className="w-3.5 h-3.5" />
-          </a>
 
-          <a
-            href={STUDIO_INFO.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-[#E4405F] text-white/90 hover:text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-105 shadow-md border border-white/15"
-            aria-label="Instagram Consilio Studios"
-            title="Instagram Portfolio"
-            data-cursor="pointer"
-          >
-            <Instagram className="w-3.5 h-3.5" />
-          </a>
-
-          <a
-            href={STUDIO_INFO.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-[#0A66C2] text-white/90 hover:text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-105 shadow-md border border-white/15"
-            aria-label="LinkedIn Consilio Studios"
-            title="LinkedIn Architectural Network"
-            data-cursor="pointer"
-          >
-            <Linkedin className="w-3.5 h-3.5" />
-          </a>
-        </div>
 
         {/* ========================================================================= */}
         {/* EDITORIAL STORYTELLING OVERLAYS (SYNCHRONIZED WITH WALKTHROUGH)           */}
@@ -455,6 +418,47 @@ export default function HeroExperience({ onExploreProjects }) {
             </AnimatePresence>
 
           </div>
+        </div>
+
+        {/* ========================================================================= */}
+        {/* HORIZONTAL SOCIAL ICONS (PLACED BELOW TEXT, NEAR WHERE SCREEN ENDS)      */}
+        {/* ========================================================================= */}
+        <div className="absolute bottom-4 xs:bottom-5 sm:bottom-6 left-4 xs:left-6 sm:left-10 lg:left-12 z-30 flex items-center gap-2 xs:gap-2.5">
+          <a
+            href={STUDIO_INFO.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-[32px] h-[32px] xs:w-[34px] xs:h-[34px] sm:w-[36px] sm:h-[36px] rounded-full bg-black/60 hover:bg-[#25D366] text-white/90 hover:text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-105 shadow-md border border-white/20"
+            aria-label="WhatsApp Consilio Studios"
+            title="WhatsApp Dialogue"
+            data-cursor="pointer"
+          >
+            <MessageCircle className="w-3.5 h-3.5" />
+          </a>
+
+          <a
+            href={STUDIO_INFO.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-[32px] h-[32px] xs:w-[34px] xs:h-[34px] sm:w-[36px] sm:h-[36px] rounded-full bg-black/60 hover:bg-[#E4405F] text-white/90 hover:text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-105 shadow-md border border-white/20"
+            aria-label="Instagram Consilio Studios"
+            title="Instagram Portfolio"
+            data-cursor="pointer"
+          >
+            <Instagram className="w-3.5 h-3.5" />
+          </a>
+
+          <a
+            href={STUDIO_INFO.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-[32px] h-[32px] xs:w-[34px] xs:h-[34px] sm:w-[36px] sm:h-[36px] rounded-full bg-black/60 hover:bg-[#0A66C2] text-white/90 hover:text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-105 shadow-md border border-white/20"
+            aria-label="LinkedIn Consilio Studios"
+            title="LinkedIn Architectural Network"
+            data-cursor="pointer"
+          >
+            <Linkedin className="w-3.5 h-3.5" />
+          </a>
         </div>
       </div>
     </section>
