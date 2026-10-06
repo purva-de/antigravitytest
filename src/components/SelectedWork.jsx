@@ -206,20 +206,20 @@ function CurvedPanoramaCard({
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/60 pointer-events-none" />
 
         {/* Top Badges & Controls */}
-        <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
+        <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between z-10">
           {/* Criteria Tag Pill (e.g. 01 • LIVING ROOM) */}
-          <span className="px-2.5 py-1 rounded-full bg-black/60 dark:bg-black/75 backdrop-blur-md text-[9px] font-mono font-medium tracking-widest text-[#FAF8F5] uppercase border border-white/15 shadow-sm">
+          <span className="px-2 py-0.5 rounded-full bg-black/60 dark:bg-black/75 backdrop-blur-md text-[8px] sm:text-[8.5px] font-mono font-medium tracking-widest text-[#FAF8F5] uppercase border border-white/15 shadow-sm">
             {project.criteriaNum} • {project.criteriaTitle}
           </span>
 
           {/* Quick Lightbox Expand Icon */}
           <button
             onClick={handleQuickViewClick}
-            className="w-7 h-7 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md text-white flex items-center justify-center transition-all border border-white/20 active:scale-90"
+            className="w-6 h-6 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md text-white flex items-center justify-center transition-all border border-white/20 active:scale-90"
             title="Expand photo lightbox"
             aria-label={`Expand photo for ${project.name}`}
           >
-            <Maximize2 size={12} />
+            <Maximize2 size={11} />
           </button>
         </div>
 
@@ -236,27 +236,27 @@ function CurvedPanoramaCard({
         {/* ===================================================================== */}
         {/* LOWER METADATA OVERLAY (Space Name, Area, Specs, Contact)              */}
         {/* ===================================================================== */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 text-white z-10 flex flex-col justify-end">
-          <div className="mb-2.5">
+        <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-3.5 text-white z-10 flex flex-col justify-end">
+          <div className="mb-2">
             <div className="flex items-baseline justify-between gap-2 mb-0.5">
-              <h3 className="font-serif text-sm sm:text-base font-normal tracking-tight text-white drop-shadow-sm group-hover:text-amber-200 transition-colors">
+              <h3 className="font-serif text-xs sm:text-sm font-normal tracking-tight text-white drop-shadow-sm group-hover:text-amber-200 transition-colors">
                 {project.name}
               </h3>
-              <span className="text-[10px] font-mono text-[#D9CEBE] shrink-0 font-light">
+              <span className="text-[9px] font-mono text-[#D9CEBE] shrink-0 font-light">
                 {project.area}
               </span>
             </div>
-            <p className="text-[11px] sm:text-xs text-[#E5E0D8]/80 font-light line-clamp-1">
+            <p className="text-[10px] sm:text-[10.5px] text-[#E5E0D8]/80 font-light line-clamp-1">
               {project.subtitle}
             </p>
           </div>
 
           {/* Action Row: SPECS button + WhatsApp contact icon (frameless) */}
-          <div className="pt-2 border-t border-white/15 flex items-center justify-between">
-            <div className="flex items-center gap-2">
+          <div className="pt-1.5 border-t border-white/15 flex items-center justify-between">
+            <div className="flex items-center gap-1.5">
               <button
                 onClick={handleSpecsButtonClick}
-                className={`px-2.5 py-1 rounded-sm text-[9.5px] font-mono tracking-wider transition-colors flex items-center gap-1.5 ${
+                className={`px-2 py-0.5 rounded-xs text-[8.5px] font-mono tracking-wider transition-colors flex items-center gap-1 ${
                   isSpecsOpen
                     ? 'bg-white text-black font-semibold'
                     : 'bg-white/15 hover:bg-white/25 text-white/90 border border-white/20'
@@ -264,7 +264,7 @@ function CurvedPanoramaCard({
                 title="Toggle architectural specifications"
                 aria-label={`Toggle specs for ${project.name}`}
               >
-                <Sliders size={10} />
+                <Sliders size={9} />
                 <span>SPECS</span>
               </button>
 
@@ -273,17 +273,17 @@ function CurvedPanoramaCard({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="p-1 text-[#25D366] hover:text-[#1ebe5b] transition-all hover:scale-115 active:scale-95 flex items-center justify-center shrink-0"
+                className="p-0.5 text-[#25D366] hover:text-[#1ebe5b] transition-all hover:scale-115 active:scale-95 flex items-center justify-center shrink-0"
                 title={`WhatsApp inquiry for ${project.name}`}
                 aria-label={`WhatsApp inquiry for ${project.name}`}
               >
-                <MessageCircle size={15} />
+                <MessageCircle size={14} />
               </a>
             </div>
 
-            <span className="text-[9.5px] font-mono uppercase tracking-wider text-white/60 group-hover:text-white inline-flex items-center gap-1 transition-colors">
+            <span className="text-[8.5px] font-mono uppercase tracking-wider text-white/60 group-hover:text-white inline-flex items-center gap-0.5 transition-colors">
               <span>EXPLORE</span>
-              <ArrowUpRight size={11} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <ArrowUpRight size={10} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </span>
           </div>
         </div>
@@ -413,7 +413,7 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
   const lastTimeRef = useRef(0);
   const rafIdRef = useRef(null);
 
-  // 1. Responsive Resizing
+  // 1. Responsive Resizing (Compact & Balanced Proportions)
   const updateDimensions = useCallback(() => {
     if (!containerRef.current) return;
     const w = containerRef.current.clientWidth || window.innerWidth;
@@ -421,27 +421,27 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
     let cWidth, cHeight, cGap, rad, persp, curve, depth;
 
     if (w < 640) {
-      cWidth = Math.min(280, Math.floor(w * 0.74));
-      cHeight = Math.floor(cWidth * 1.38);
-      cGap = 16;
-      rad = 680;
-      persp = 850;
+      cWidth = Math.min(210, Math.floor(w * 0.60));
+      cHeight = Math.floor(cWidth * 1.36); // ~285px
+      cGap = 14;
+      rad = 560;
+      persp = 750;
       curve = 0.90;
-      depth = 1.30;
+      depth = 1.28;
     } else if (w < 1024) {
-      cWidth = 320;
-      cHeight = 450;
-      cGap = 20;
-      rad = 900;
-      persp = 1000;
+      cWidth = 240;
+      cHeight = 330;
+      cGap = 16;
+      rad = 760;
+      persp = 880;
       curve = 0.88;
       depth = 1.25;
     } else {
-      cWidth = 360;
-      cHeight = 500;
-      cGap = 24;
-      rad = 1100;
-      persp = 1100;
+      cWidth = 270;
+      cHeight = 370;
+      cGap = 18;
+      rad = 920;
+      persp = 980;
       curve = 0.85;
       depth = 1.25;
     }
@@ -517,14 +517,14 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
         activeSpecsIndex !== null;
 
       if (!isPaused) {
-        // Continuous flow moving right to left: ~36px/sec
-        const autoSpeed = 0.58;
+        // Continuous brisk flow moving right to left: ~70px/sec
+        const autoSpeed = 1.15;
         targetOffsetRef.current += autoSpeed * dt;
       }
 
-      // Smooth Lerp Glide
+      // Smooth Snappy Lerp Glide
       const diff = targetOffsetRef.current - currentOffsetRef.current;
-      currentOffsetRef.current += diff * (isDraggingRef.current ? 1 : 0.12);
+      currentOffsetRef.current += diff * (isDraggingRef.current ? 1 : 0.16);
 
       // Keep currentOffset normalized within track range
       if (currentOffsetRef.current > trackLength * 10) {
@@ -695,7 +695,7 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
         style={{
           perspective: `${dimensions.perspective}px`,
           perspectiveOrigin: '50% 50%',
-          height: `${dimensions.cardHeight + 48}px`
+          height: `${dimensions.cardHeight + 28}px`
         }}
         role="region"
         aria-roledescription="carousel"
