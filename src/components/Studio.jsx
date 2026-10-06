@@ -121,7 +121,7 @@ export default function Studio() {
                 className="w-full sm:w-auto px-3.5 py-2.5 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white text-[11px] font-mono uppercase tracking-wider font-medium inline-flex items-center justify-center gap-2 transition-colors shadow-xs"
               >
                 <MessageCircle size={14} className="shrink-0" />
-                <span>WhatsApp: {STUDIO_INFO.phone}</span>
+                <span>{STUDIO_INFO.phone}</span>
               </a>
 
               <a

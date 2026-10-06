@@ -81,7 +81,7 @@ export default function Contact({ onNavigate }) {
               >
                 <MessageCircle size={17} className="shrink-0" />
                 <span className="font-mono text-xs sm:text-sm font-semibold tracking-wide">
-                  WhatsApp: {STUDIO_INFO.phone}
+                  {STUDIO_INFO.phone}
                 </span>
               </a>
             </div>
