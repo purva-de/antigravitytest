@@ -290,7 +290,7 @@ function CurvedPanoramaCard({
               initial={{ opacity: 0, y: '100%' }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: '100%' }}
-              transition={{ duration: 0.22, ease: 'easeOut' }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
               onClick={(e) => e.stopPropagation()}
               onMouseDown={(e) => e.stopPropagation()}
               onTouchStart={(e) => e.stopPropagation()}
@@ -516,14 +516,14 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
         activeSpecsIndex !== null;
 
       if (!isPaused) {
-        // Brisk, continuous motion moving right to left: ~135px/sec
-        const autoSpeed = 2.2;
+        // Slow, elegant continuous motion moving right to left: 0.3 speed (~18px/sec)
+        const autoSpeed = 0.3;
         targetOffsetRef.current += autoSpeed * dt;
       }
 
-      // Smooth Snappy Lerp Glide
+      // Smooth Snappy Lerp Glide (~0.3s settling response)
       const diff = targetOffsetRef.current - currentOffsetRef.current;
-      currentOffsetRef.current += diff * (isDraggingRef.current ? 1 : 0.20);
+      currentOffsetRef.current += diff * (isDraggingRef.current ? 1 : 0.12);
 
       // Keep currentOffset normalized within track range
       if (currentOffsetRef.current > trackLength * 10) {
