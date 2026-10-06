@@ -325,7 +325,7 @@ export default function HeroExperience({ onExploreProjects }) {
                     {STUDIO_INFO.tagline}. An experiential walkthrough of bespoke living spaces, curved botanical niches, and tailored woodwork.
                   </p>
 
-                  <div className="pt-2 flex flex-wrap items-center gap-2.5 sm:gap-3">
+                  <div className="hidden md:flex pt-2 flex-wrap items-center gap-2.5 sm:gap-3">
                     <a
                       href={STUDIO_INFO.whatsapp}
                       target="_blank"
