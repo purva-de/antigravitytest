@@ -245,36 +245,6 @@ export default function HeroExperience({ onExploreProjects }) {
     }
   };
 
-
-  // Chapter Jump Helper (Supports both desktop frames and mobile video timeline)
-  const goToChapter = (chapterIdx) => {
-    if (isMobileOrTablet && mobileVideoRef.current && mobileVideoRef.current.duration) {
-      const duration = mobileVideoRef.current.duration;
-      if (chapterIdx === 0) {
-        mobileVideoRef.current.currentTime = 0;
-        setCurrentChapter(0);
-      } else if (chapterIdx === 1) {
-        mobileVideoRef.current.currentTime = duration * 0.33;
-        setCurrentChapter(1);
-      } else if (chapterIdx === 2) {
-        mobileVideoRef.current.currentTime = duration * 0.66;
-        setCurrentChapter(2);
-      }
-      return;
-    }
-
-    if (chapterIdx === 0) {
-      targetFrameRef.current = 0;
-      setCurrentChapter(0);
-    } else if (chapterIdx === 1) {
-      targetFrameRef.current = 65;
-      setCurrentChapter(1);
-    } else if (chapterIdx === 2) {
-      targetFrameRef.current = 135;
-      setCurrentChapter(2);
-    }
-  };
-
   return (
     <section
       id="hero"
@@ -323,39 +293,42 @@ export default function HeroExperience({ onExploreProjects }) {
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/25 to-transparent pointer-events-none z-10" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none z-10" />
 
-        {/* FLOATING SOCIAL ICONS (RIGHT EDGE) */}
-        <div className="absolute right-2 xs:right-2.5 sm:right-3.5 md:right-4 lg:right-6 top-1/2 -translate-y-1/2 z-30 flex flex-col gap-1.5 xs:gap-2 sm:gap-2.5 lg:gap-3">
+                {/* FLOATING SOCIAL ICONS (RIGHT EDGE: Small & Elegant) */}
+        <div className="absolute right-2 xs:right-2.5 sm:right-3.5 md:right-4 lg:right-5 top-1/2 -translate-y-1/2 z-30 flex flex-col gap-1.5 xs:gap-2">
           <a
             href={STUDIO_INFO.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-7 h-7 xs:w-8 xs:h-8 sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-11 lg:h-11 rounded-full bg-black/70 hover:bg-[#25D366] text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-110 shadow-lg border border-white/10"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-[#25D366] text-white/90 hover:text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-105 shadow-md border border-white/15"
             aria-label="WhatsApp Consilio Studios"
+            title="WhatsApp Dialogue"
             data-cursor="pointer"
           >
-            <MessageCircle className="w-3.5 h-3.5 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 lg:w-[18px] lg:h-[18px]" />
+            <MessageCircle className="w-3.5 h-3.5" />
           </a>
 
           <a
             href={STUDIO_INFO.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-7 h-7 xs:w-8 xs:h-8 sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-11 lg:h-11 rounded-full bg-black/70 hover:bg-[#E4405F] text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-110 shadow-lg border border-white/10"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-[#E4405F] text-white/90 hover:text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-105 shadow-md border border-white/15"
             aria-label="Instagram Consilio Studios"
+            title="Instagram Portfolio"
             data-cursor="pointer"
           >
-            <Instagram className="w-3.5 h-3.5 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 lg:w-[18px] lg:h-[18px]" />
+            <Instagram className="w-3.5 h-3.5" />
           </a>
 
           <a
             href={STUDIO_INFO.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-7 h-7 xs:w-8 xs:h-8 sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-11 lg:h-11 rounded-full bg-black/70 hover:bg-[#0A66C2] text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-110 shadow-lg border border-white/10"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-[#0A66C2] text-white/90 hover:text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-105 shadow-md border border-white/15"
             aria-label="LinkedIn Consilio Studios"
+            title="LinkedIn Architectural Network"
             data-cursor="pointer"
           >
-            <Linkedin className="w-3.5 h-3.5 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 lg:w-[18px] lg:h-[18px]" />
+            <Linkedin className="w-3.5 h-3.5" />
           </a>
         </div>
 
@@ -370,41 +343,40 @@ export default function HeroExperience({ onExploreProjects }) {
               {currentChapter === 0 && (
                 <motion.div
                   key="chap-0"
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
+                  exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.3 }}
-                  className="space-y-3 sm:space-y-4"
+                  className="space-y-3 sm:space-y-3.5"
                 >
-                  <div className="flex items-center gap-2.5 sm:gap-3 text-[10px] xs:text-xs tracking-[0.25em] font-mono text-[#D9CEBE] uppercase">
-                    <span className="w-6 sm:w-8 h-px bg-[#D9CEBE]" />
-                    <span>01 / LIVING ROOM</span>
+                  <div className="flex items-center gap-2 sm:gap-2.5 text-[9px] xs:text-[10px] sm:text-[11px] tracking-[0.26em] font-mono text-[#D9CEBE] uppercase font-medium">
+                    <span className="w-5 sm:w-6 h-px bg-[#D9CEBE]/70" />
+                    <span>01 / Living Sanctuary</span>
                   </div>
 
-                  <h1 className="font-serif text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-white leading-[1.02] drop-shadow-md">
-                    Consilio<br />
-                    Studios
+                  <h1 className="font-serif text-xl xs:text-2xl sm:text-3xl lg:text-[32px] font-normal tracking-wide text-white leading-tight drop-shadow-md">
+                    Consilio Studios
                   </h1>
 
-                  <p className="text-xs xs:text-sm sm:text-base text-white/90 max-w-md font-light leading-relaxed">
+                  <p className="text-xs sm:text-sm text-white/85 max-w-md font-light leading-relaxed font-sans">
                     {STUDIO_INFO.tagline}. An experiential walkthrough of bespoke living spaces, curved botanical niches, and tailored woodwork.
                   </p>
 
-                  <div className="pt-2 flex flex-wrap items-center gap-3 sm:gap-4">
+                  <div className="pt-2 flex flex-wrap items-center gap-2.5 sm:gap-3">
                     <a
                       href={STUDIO_INFO.whatsapp}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-5 xs:px-6 sm:px-7 py-2.5 xs:py-3 rounded-full bg-[#4A5844] hover:bg-[#3D4938] text-white flex items-center gap-2 text-xs sm:text-sm font-medium shadow-md transition-all duration-300 hover:scale-105 active:scale-95"
+                      className="px-5 sm:px-6 py-2.5 rounded-full bg-[#4A5844] hover:bg-[#3D4938] text-white flex items-center gap-2 text-xs font-mono tracking-wider uppercase font-medium shadow-md transition-all duration-300 hover:scale-105 active:scale-95"
                       data-cursor="pointer"
                     >
-                      <MessageCircle size={15} />
+                      <MessageCircle size={14} />
                       <span>Message Now</span>
                     </a>
 
                     <button
                       onClick={onExploreProjects}
-                      className="px-5 xs:px-6 sm:px-7 py-2.5 xs:py-3 rounded-full bg-white/20 hover:bg-white/35 text-white border border-white/30 text-xs sm:text-sm font-medium backdrop-blur-md transition-all duration-300 hover:scale-105 active:scale-95"
+                      className="px-5 sm:px-6 py-2.5 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/25 text-xs font-mono tracking-wider uppercase font-medium backdrop-blur-md transition-all duration-300 hover:scale-105 active:scale-95"
                       data-cursor="pointer"
                     >
                       <span>Explore Projects</span>
@@ -417,31 +389,31 @@ export default function HeroExperience({ onExploreProjects }) {
               {currentChapter === 1 && (
                 <motion.div
                   key="chap-1"
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
+                  exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.3 }}
-                  className="space-y-3"
+                  className="space-y-3 sm:space-y-3.5"
                 >
-                  <div className="flex items-center gap-2.5 sm:gap-3 text-[10px] xs:text-xs tracking-[0.25em] font-mono text-[#D9CEBE] uppercase">
-                    <span className="w-6 sm:w-8 h-px bg-[#D9CEBE]" />
-                    <span>02 / BOTANICAL NICHE</span>
+                  <div className="flex items-center gap-2 sm:gap-2.5 text-[9px] xs:text-[10px] sm:text-[11px] tracking-[0.26em] font-mono text-[#D9CEBE] uppercase font-medium">
+                    <span className="w-5 sm:w-6 h-px bg-[#D9CEBE]/70" />
+                    <span>02 / Botanical Niche</span>
                   </div>
 
-                  <h2 className="font-serif text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-normal tracking-tight text-white leading-tight drop-shadow-md">
-                    Living<br />Room
+                  <h2 className="font-serif text-lg xs:text-xl sm:text-2xl lg:text-[28px] font-normal tracking-wide text-white leading-tight drop-shadow-md">
+                    Living Room
                   </h2>
 
-                  <p className="text-xs xs:text-sm sm:text-base text-white/90 max-w-md font-light leading-relaxed">
+                  <p className="text-xs sm:text-sm text-white/85 max-w-md font-light leading-relaxed font-sans">
                     Arched architectural niche with hand-curated botanical wallpaper, 2700K indirect cove halo, and floating fluted oak credenza.
                   </p>
 
                   <div className="flex items-center gap-2 pt-1 flex-wrap">
-                    <span className="px-2.5 xs:px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-[9px] xs:text-[10px] font-mono text-white tracking-widest uppercase border border-white/10">
-                      BOTANICAL NICHE
+                    <span className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-md text-[9px] sm:text-[10px] font-mono text-[#D9CEBE] tracking-[0.16em] uppercase border border-white/15">
+                      Botanical Niche
                     </span>
-                    <span className="px-2.5 xs:px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-[9px] xs:text-[10px] font-mono text-white tracking-widest uppercase border border-white/10">
-                      COVE ILLUMINATION
+                    <span className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-md text-[9px] sm:text-[10px] font-mono text-[#D9CEBE] tracking-[0.16em] uppercase border border-white/15">
+                      Cove Illumination
                     </span>
                   </div>
                 </motion.div>
@@ -451,31 +423,31 @@ export default function HeroExperience({ onExploreProjects }) {
               {currentChapter === 2 && (
                 <motion.div
                   key="chap-2"
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
+                  exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.3 }}
-                  className="space-y-3"
+                  className="space-y-3 sm:space-y-3.5"
                 >
-                  <div className="flex items-center gap-2.5 sm:gap-3 text-[10px] xs:text-xs tracking-[0.25em] font-mono text-[#D9CEBE] uppercase">
-                    <span className="w-6 sm:w-8 h-px bg-[#D9CEBE]" />
+                  <div className="flex items-center gap-2 sm:gap-2.5 text-[9px] xs:text-[10px] sm:text-[11px] tracking-[0.26em] font-mono text-[#D9CEBE] uppercase font-medium">
+                    <span className="w-5 sm:w-6 h-px bg-[#D9CEBE]/70" />
                     <span>03 / Kids Bedroom</span>
                   </div>
 
-                  <h2 className="font-serif text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-normal tracking-tight text-white leading-tight drop-shadow-md">
-                    Kids<br />Bedroom
+                  <h2 className="font-serif text-lg xs:text-xl sm:text-2xl lg:text-[28px] font-normal tracking-wide text-white leading-tight drop-shadow-md">
+                    Kids Bedroom
                   </h2>
 
-                  <p className="text-xs xs:text-sm sm:text-base text-white/90 max-w-md font-light leading-relaxed">
+                  <p className="text-xs sm:text-sm text-white/85 max-w-md font-light leading-relaxed font-sans">
                     Disciplined modular joinery, integrated active gymnastics climbing ladder, window daybed, and graphic car mural.
                   </p>
 
                   <div className="flex items-center gap-2 pt-1 flex-wrap">
-                    <span className="px-2.5 xs:px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-[9px] xs:text-[10px] font-mono text-white tracking-widest uppercase border border-white/10">
-                      ACTIVE RIGGING
+                    <span className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-md text-[9px] sm:text-[10px] font-mono text-[#D9CEBE] tracking-[0.16em] uppercase border border-white/15">
+                      Active Rigging
                     </span>
-                    <span className="px-2.5 xs:px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-[9px] xs:text-[10px] font-mono text-white tracking-widest uppercase border border-white/10">
-                      CUSTOM JOINERY
+                    <span className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-md text-[9px] sm:text-[10px] font-mono text-[#D9CEBE] tracking-[0.16em] uppercase border border-white/15">
+                      Custom Joinery
                     </span>
                   </div>
                 </motion.div>
@@ -484,55 +456,7 @@ export default function HeroExperience({ onExploreProjects }) {
 
           </div>
         </div>
-
-        {/* ========================================================================= */}
-        {/* INTERACTIVE TIMELINE & PLAYBACK CONTROLLER (BOTTOM)                       */}
-        {/* ========================================================================= */}
-        <div className="relative z-20 w-full max-w-7xl mx-auto px-4 xs:px-6 sm:px-10 lg:px-12 pb-4 xs:pb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3">
-          
-          {/* Chapter Buttons with responsive mobile overflow-x handling */}
-          <div className="flex items-center gap-3 sm:gap-6 text-[11px] xs:text-xs font-mono overflow-x-auto no-scrollbar py-1">
-            <button
-              onClick={() => goToChapter(0)}
-              className={`flex items-center gap-1.5 sm:gap-2 shrink-0 transition-colors ${
-                currentChapter === 0 ? 'text-white font-medium' : 'text-white/50 hover:text-white'
-              }`}
-            >
-              <span className={`w-2 h-2 rounded-full ${currentChapter === 0 ? 'bg-[#D9CEBE]' : 'bg-white/30'}`} />
-              <span className="hidden sm:inline">01 LIVING ROOM</span>
-              <span className="sm:hidden">01 LIVING</span>
-            </button>
-
-            <span className="text-white/20 shrink-0">•</span>
-
-            <button
-              onClick={() => goToChapter(1)}
-              className={`flex items-center gap-1.5 sm:gap-2 shrink-0 transition-colors ${
-                currentChapter === 1 ? 'text-white font-medium' : 'text-white/50 hover:text-white'
-              }`}
-            >
-              <span className={`w-2 h-2 rounded-full ${currentChapter === 1 ? 'bg-[#D9CEBE]' : 'bg-white/30'}`} />
-              <span className="hidden sm:inline">02 BOTANICAL NICHE</span>
-              <span className="sm:hidden">02 NICHE</span>
-            </button>
-
-            <span className="text-white/20 shrink-0">•</span>
-
-            <button
-              onClick={() => goToChapter(2)}
-              className={`flex items-center gap-1.5 sm:gap-2 shrink-0 transition-colors ${
-                currentChapter === 2 ? 'text-white font-medium' : 'text-white/50 hover:text-white'
-              }`}
-            >
-              <span className={`w-2 h-2 rounded-full ${currentChapter === 2 ? 'bg-[#D9CEBE]' : 'bg-white/30'}`} />
-              <span className="hidden sm:inline">03 KIDS BEDROOM</span>
-              <span className="sm:hidden">03 KIDS</span>
-            </button>
-          </div>
-
-        </div>
-
       </div>
     </section>
   );
-}
+}

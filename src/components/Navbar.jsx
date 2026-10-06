@@ -122,37 +122,37 @@ export default function Navbar({ activeSection, onNavigate }) {
               ))}
             </nav>
 
-            {/* Utility Controls (Phone & Mobile Menu) */}
-            <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-2.5 shrink-0">
-              {/* Circular Phone / WhatsApp Button */}
+            {/* Utility Controls (Phone Contact Symbol & Mobile Menu) */}
+            <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+              {/* Refined Small Contact Symbol in Right Corner */}
               <a
                 href={`tel:${STUDIO_INFO.phone.replace(/\s+/g, '')}`}
-                className={`w-7 h-7 xs:w-8 xs:h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-105 focus:outline-hidden ${
+                className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-300 hover:scale-105 focus:outline-hidden ${
                   isScrolled
-                    ? 'bg-white hover:bg-[#FAF8F5] text-[#1C1B19] border border-[#1C1B19]/15 shadow-xs'
-                    : 'bg-white/20 hover:bg-white/30 text-white border border-white/30 shadow-md'
+                    ? 'bg-[#1C1B19]/5 hover:bg-[#1C1B19]/10 text-[#1C1B19] border border-[#1C1B19]/15 shadow-xs'
+                    : 'bg-white/10 hover:bg-white/20 text-white border border-white/20 shadow-xs'
                 }`}
                 title={`Call Consilio Studios: ${STUDIO_INFO.phone}`}
                 aria-label={`Call Consilio Studios at ${STUDIO_INFO.phone}`}
               >
-                <Phone className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isScrolled ? 'text-[#1C1B19]' : 'text-white'}`} />
+                <Phone className={`w-3.5 h-3.5 ${isScrolled ? 'text-[#1C1B19]' : 'text-white'}`} />
               </a>
 
               {/* Mobile Hamburger Toggle */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className={`md:hidden w-7 h-7 xs:w-8 xs:h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-200 focus:outline-hidden ${
+                className={`md:hidden w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-200 focus:outline-hidden ${
                   isScrolled
-                    ? 'bg-white hover:bg-[#FAF8F5] text-[#1C1B19] border border-[#1C1B19]/20 shadow-xs'
-                    : 'bg-white/20 hover:bg-white/30 text-white border border-white/30 shadow-md'
+                    ? 'bg-[#1C1B19]/5 hover:bg-[#1C1B19]/10 text-[#1C1B19] border border-[#1C1B19]/15 shadow-xs'
+                    : 'bg-white/10 hover:bg-white/20 text-white border border-white/20 shadow-xs'
                 }`}
                 aria-label={mobileMenuOpen ? "Close menu" : "Open mobile menu"}
                 aria-expanded={mobileMenuOpen}
               >
                 {mobileMenuOpen ? (
-                  <X className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isScrolled ? 'text-[#1C1B19]' : 'text-white'}`} />
+                  <X className={`w-3.5 h-3.5 ${isScrolled ? 'text-[#1C1B19]' : 'text-white'}`} />
                 ) : (
-                  <Menu className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isScrolled ? 'text-[#1C1B19]' : 'text-white'}`} />
+                  <Menu className={`w-3.5 h-3.5 ${isScrolled ? 'text-[#1C1B19]' : 'text-white'}`} />
                 )}
               </button>
             </div>
