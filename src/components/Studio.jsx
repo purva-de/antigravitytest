@@ -111,8 +111,8 @@ export default function Studio() {
               </p>
             </div>
 
-            {/* Direct Quick Action Buttons: Compact on Mobile, Full on Desktop */}
-            <div className="mt-3.5 pt-2.5 border-t border-black/5 dark:border-white/10 flex flex-col xs:flex-row items-stretch xs:items-center gap-1.5 xs:gap-2">
+            {/* Direct Quick Action Buttons: Removed on desktop version, present on mobile/tablet */}
+            <div className="md:hidden mt-3.5 pt-2.5 border-t border-black/5 dark:border-white/10 flex flex-col xs:flex-row items-stretch xs:items-center gap-1.5 xs:gap-2">
               <a
                 href="https://wa.me/917028234778"
                 target="_blank"
