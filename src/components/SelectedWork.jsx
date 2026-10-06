@@ -8,7 +8,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Maximize2,
-  Sliders,
   MessageCircle
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -125,13 +124,13 @@ function CurvedPanoramaCard({
     }
   };
 
-  // Click card to open explore monograph (suppressed if intentionally dragged/swiped)
+  // Click criteria card to pop up architectural specs drawer (suppressed if dragged)
   const handleCardClick = (e) => {
     if (dragDistRef.current > 12) {
       e.preventDefault();
       return;
     }
-    onSelectProject(project);
+    onSpecsToggle(virtualIndex);
   };
 
   const handleQuickViewClick = (e) => {
@@ -167,12 +166,12 @@ function CurvedPanoramaCard({
         willChange: 'transform'
       }}
       role="button"
-      aria-label={`Explore criteria ${project.criteriaTitle}: ${project.name}`}
+      aria-label={`View specs for ${project.criteriaTitle}: ${project.name}`}
       tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          onSelectProject(project);
+          onSpecsToggle(virtualIndex);
         }
       }}
     >
@@ -262,35 +261,23 @@ function CurvedPanoramaCard({
             </p>
           </div>
 
-          {/* Action Row: SPECS button + WhatsApp contact icon (EXPLORE part removed from image) */}
+          {/* Action Row: Space Status + WhatsApp contact icon (SPECS text removed from image card) */}
           <div className="pt-1.5 border-t border-white/15 flex items-center justify-between">
-            <div className="flex items-center gap-1.5">
-              <button
-                onClick={handleSpecsButtonClick}
-                className={`px-2 py-0.5 rounded-xs text-[8.5px] font-mono tracking-wider transition-colors flex items-center gap-1 ${
-                  isSpecsOpen
-                    ? 'bg-white text-black font-semibold'
-                    : 'bg-white/15 hover:bg-white/25 text-white/90 border border-white/20'
-                }`}
-                title="Toggle architectural specifications"
-                aria-label={`Toggle specs for ${project.name}`}
-              >
-                <Sliders size={9} />
-                <span>SPECS</span>
-              </button>
+            <span className="text-[8px] sm:text-[8.5px] font-mono text-[#FAF8F5]/65 tracking-wider uppercase">
+              {project.status || 'Completed'}
+            </span>
 
-              <a
-                href={`${STUDIO_INFO.whatsapp}?text=${encodeURIComponent(`Hello Consilio Studios, I am interested in inquiring about your ${project.criteriaTitle} (${project.name}) design.`)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="p-0.5 text-[#25D366] hover:text-[#1ebe5b] transition-all hover:scale-115 active:scale-95 flex items-center justify-center shrink-0"
-                title={`WhatsApp inquiry for ${project.name}`}
-                aria-label={`WhatsApp inquiry for ${project.name}`}
-              >
-                <MessageCircle size={14} />
-              </a>
-            </div>
+            <a
+              href={`${STUDIO_INFO.whatsapp}?text=${encodeURIComponent(`Hello Consilio Studios, I am interested in inquiring about your ${project.criteriaTitle} (${project.name}) design.`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="p-0.5 text-[#25D366] hover:text-[#1ebe5b] transition-all hover:scale-115 active:scale-95 flex items-center justify-center shrink-0"
+              title={`WhatsApp inquiry for ${project.name}`}
+              aria-label={`WhatsApp inquiry for ${project.name}`}
+            >
+              <MessageCircle size={14} />
+            </a>
           </div>
         </div>
 
@@ -756,23 +743,23 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
       {/* ===================================================================== */}
       {/* NAVIGATION CONTROLS: Centered (←) (→) Circles matching Reference       */}
       {/* ===================================================================== */}
-      <div className="mt-3 sm:mt-4 flex items-center justify-center gap-3">
+      <div className="mt-2.5 sm:mt-4 flex items-center justify-center gap-2 sm:gap-3">
         <button
           onClick={handlePrev}
-          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#1C1B19]/35 dark:border-white/35 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs"
+          className="w-7.5 h-7.5 xs:w-8 xs:h-8 sm:w-10 sm:h-10 rounded-full border border-[#1C1B19]/35 dark:border-white/35 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs"
           aria-label="Previous criteria (←)"
           title="Previous criteria (←)"
         >
-          <ArrowLeft size={16} />
+          <ArrowLeft className="w-3 h-3 xs:w-3.5 xs:h-3.5 sm:w-4 sm:h-4" />
         </button>
 
         <button
           onClick={handleNext}
-          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#1C1B19]/35 dark:border-white/35 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs"
+          className="w-7.5 h-7.5 xs:w-8 xs:h-8 sm:w-10 sm:h-10 rounded-full border border-[#1C1B19]/35 dark:border-white/35 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs"
           aria-label="Next criteria (→)"
           title="Next criteria (→)"
         >
-          <ArrowRight size={16} />
+          <ArrowRight className="w-3 h-3 xs:w-3.5 xs:h-3.5 sm:w-4 sm:h-4" />
         </button>
       </div>
     </div>
