@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { MessageCircle, Instagram, Linkedin, Play, Pause, RotateCcw, ArrowRight } from 'lucide-react';
+import { MessageCircle, Instagram, Linkedin, ArrowRight } from 'lucide-react';
 import { STUDIO_INFO } from '../data/projectsData';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -245,31 +245,6 @@ export default function HeroExperience({ onExploreProjects }) {
     }
   };
 
-  const toggleAutoPlay = () => {
-    const nextState = !isAutoPlaying;
-    setIsAutoPlaying(nextState);
-    if (mobileVideoRef.current) {
-      if (nextState) {
-        mobileVideoRef.current.play().catch(() => {});
-      } else {
-        mobileVideoRef.current.pause();
-      }
-    }
-  };
-
-  const handleTimelineScrub = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const pct = Math.max(0, Math.min(1, x / rect.width));
-
-    if (isMobileOrTablet && mobileVideoRef.current && mobileVideoRef.current.duration) {
-      mobileVideoRef.current.currentTime = pct * mobileVideoRef.current.duration;
-      setScrollProgress(pct);
-      return;
-    }
-
-    targetFrameRef.current = pct * (TOTAL_FRAMES - 1);
-  };
 
   // Chapter Jump Helper (Supports both desktop frames and mobile video timeline)
   const goToChapter = (chapterIdx) => {
@@ -553,35 +528,6 @@ export default function HeroExperience({ onExploreProjects }) {
               <span className="hidden sm:inline">03 KIDS BEDROOM</span>
               <span className="sm:hidden">03 KIDS</span>
             </button>
-          </div>
-
-          {/* Interactive Controls & Scrub Progress (Desktop/Tablet only, hidden on mobile) */}
-          <div className="hidden md:flex items-center justify-start gap-3 sm:gap-4">
-            {/* Auto Play / Pause Toggle Button */}
-            <button
-              onClick={toggleAutoPlay}
-              className="px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-[10px] font-mono tracking-wider uppercase flex items-center gap-1.5 transition-colors active:scale-95"
-              title={isAutoPlaying ? "Pause Walkthrough" : "Play Continuous Walkthrough"}
-            >
-              {isAutoPlaying ? <Pause size={10} /> : <Play size={10} />}
-              <span>{isAutoPlaying ? "PAUSE" : "AUTO-PLAY"}</span>
-            </button>
-
-            {/* Continuous Progress Track with Click-to-Scrub */}
-            <div
-              onClick={handleTimelineScrub}
-              className="flex-1 sm:flex-initial w-28 xs:w-36 h-2 bg-white/20 hover:bg-white/30 rounded-full overflow-hidden relative cursor-pointer transition-colors"
-              title="Click timeline to scrub video"
-            >
-              <div
-                className="h-full bg-[#D9CEBE] rounded-full transition-all duration-75"
-                style={{ width: `${Math.round(scrollProgress * 100)}%` }}
-              />
-            </div>
-
-            <span className="text-[10px] font-mono text-[#D9CEBE] w-8 sm:w-10 text-right">
-              {Math.round(scrollProgress * 100)}%
-            </span>
           </div>
 
         </div>
