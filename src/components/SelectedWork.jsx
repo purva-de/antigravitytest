@@ -398,7 +398,6 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
   });
 
   const [activeSpecsIndex, setActiveSpecsIndex] = useState(null);
-  const [activeCenterCriterion, setActiveCenterCriterion] = useState(0);
 
   // Animation & Motion Refs
   const currentOffsetRef = useRef(0);
@@ -536,10 +535,6 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
       }
 
       const offset = currentOffsetRef.current;
-
-      // Update active center criterion index (0 to 4)
-      const centerCriterion = (Math.round(offset / step) % CRITERIA_COUNT + CRITERIA_COUNT) % CRITERIA_COUNT;
-      setActiveCenterCriterion(centerCriterion);
 
       // Calculate 3D cylindrical transform for each of the 15 virtual cards
       for (let k = 0; k < VIRTUAL_COUNT; k++) {
@@ -734,61 +729,24 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
       {/* ===================================================================== */}
       {/* NAVIGATION CONTROLS: Centered (←) (→) Circles matching Reference       */}
       {/* ===================================================================== */}
-      <div className="mt-2 sm:mt-3 flex flex-col items-center justify-center gap-1.5">
-        {/* Centered Circular Arrow Buttons */}
-        <nav
-          className="flex items-center justify-center gap-2.5"
-          aria-label="3D Panorama Carousel Controls"
+      <div className="mt-3 sm:mt-4 flex items-center justify-center gap-3">
+        <button
+          onClick={handlePrev}
+          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#1C1B19]/35 dark:border-white/35 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs"
+          aria-label="Previous criteria (←)"
+          title="Previous criteria (←)"
         >
-          <button
-            onClick={handlePrev}
-            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#1C1B19]/30 dark:border-white/30 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs"
-            aria-label="Previous criteria (←)"
-            title="Previous criteria (←)"
-          >
-            <ArrowLeft size={15} />
-          </button>
+          <ArrowLeft size={16} />
+        </button>
 
-          {/* Active Criterion Status Indicator */}
-          <div className="px-3 py-0.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[9px] font-mono tracking-widest text-[#1C1B19] dark:text-[#FAF8F5] uppercase">
-            <span>{CRITERIA_CONFIG[activeCenterCriterion]?.num}</span>
-            <span className="mx-1 opacity-40">/</span>
-            <span className="font-medium">{CRITERIA_CONFIG[activeCenterCriterion]?.criteriaName}</span>
-          </div>
-
-          <button
-            onClick={handleNext}
-            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#1C1B19]/30 dark:border-white/30 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs"
-            aria-label="Next criteria (→)"
-            title="Next criteria (→)"
-          >
-            <ArrowRight size={15} />
-          </button>
-        </nav>
-
-        {/* Five Micro Criteria Indicator Dots */}
-        <div className="flex items-center gap-2 mt-0.5" aria-hidden="true">
-          {CRITERIA_CONFIG.map((crit, idx) => (
-            <button
-              key={crit.id}
-              onClick={() => {
-                // Glide directly to this criterion
-                const currentCrit = (Math.round(targetOffsetRef.current / dimensions.step) % CRITERIA_COUNT + CRITERIA_COUNT) % CRITERIA_COUNT;
-                let stepDiff = idx - currentCrit;
-                if (stepDiff > 2) stepDiff -= 5;
-                if (stepDiff < -2) stepDiff += 5;
-                targetOffsetRef.current += stepDiff * dimensions.step;
-              }}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                activeCenterCriterion === idx
-                  ? 'w-6 bg-[#1C1B19] dark:bg-white'
-                  : 'w-1.5 bg-[#1C1B19]/20 dark:bg-white/20 hover:bg-[#1C1B19]/50 dark:hover:bg-white/50'
-              }`}
-              title={crit.criteriaName}
-              aria-label={`Jump to ${crit.criteriaName}`}
-            />
-          ))}
-        </div>
+        <button
+          onClick={handleNext}
+          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#1C1B19]/35 dark:border-white/35 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs"
+          aria-label="Next criteria (→)"
+          title="Next criteria (→)"
+        >
+          <ArrowRight size={16} />
+        </button>
       </div>
     </div>
   );
@@ -803,7 +761,7 @@ export default function SelectedWork({ onSelectProject }) {
   return (
     <section
       id="work"
-      className="pt-1 sm:pt-1.5 pb-3 sm:pb-4 bg-[#FAF8F5] dark:bg-[#121110] text-[#1C1B19] dark:text-[#FAF8F5] transition-colors duration-500 relative"
+      className="pt-1 sm:pt-1.5 pb-2 sm:pb-3 bg-[#FAF8F5] dark:bg-[#121110] text-[#1C1B19] dark:text-[#FAF8F5] transition-colors duration-500 relative"
       aria-label="Selected Architectural Work"
     >
       <div className="max-w-7xl mx-auto px-4 xs:px-6 sm:px-8 lg:px-12">
@@ -823,20 +781,6 @@ export default function SelectedWork({ onSelectProject }) {
           onSelectProject={onSelectProject}
           onQuickView={(proj, imgIdx) => setLightboxData({ project: proj, imgIndex: imgIdx })}
         />
-
-        {/* ===================================================================== */}
-        {/* BOTTOM CALLOUT ACTION                                                 */}
-        {/* ===================================================================== */}
-        <div className="mt-3 sm:mt-4 pt-2 border-t border-[#1C1B19]/10 dark:border-white/10 flex items-center justify-end">
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 text-xs font-mono tracking-[0.18em] uppercase font-medium text-[#1C1B19] dark:text-[#FAF8F5] hover-underline-animation group"
-            data-cursor="pointer"
-          >
-            <span>Commission a Project</span>
-            <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform duration-200" />
-          </a>
-        </div>
       </div>
 
       {/* ===================================================================== */}

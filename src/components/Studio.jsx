@@ -62,7 +62,7 @@ export default function Studio() {
   ];
 
   return (
-    <section id="studio" className="pt-6 sm:pt-8 pb-6 sm:pb-8 bg-[#FAF8F5] dark:bg-[#121110] text-[#1C1B19] dark:text-[#FAF8F5] transition-colors duration-500">
+    <section id="studio" className="pt-3 sm:pt-4 pb-6 sm:pb-8 bg-[#FAF8F5] dark:bg-[#121110] text-[#1C1B19] dark:text-[#FAF8F5] transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-4 xs:px-6 sm:px-8 lg:px-12">
         
         {/* Editorial Sub-Header */}
