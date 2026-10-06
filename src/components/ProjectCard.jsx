@@ -361,61 +361,45 @@ export default function ProjectCard({
       <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between">
         <div>
           <div className="flex items-center justify-between gap-2 mb-1">
-            <span className="text-[10px] font-mono text-[#828C74] dark:text-[#A09C94] uppercase tracking-widest font-semibold">
-              {project.category}
-            </span>
-            <span className="text-[10px] font-mono text-[#8F8B83] dark:text-[#7A766F]">
+            <h3 className="font-serif text-xs sm:text-sm font-normal text-[#1C1B19] dark:text-[#FAF8F5] tracking-tight group-hover:text-[#4F5542] dark:group-hover:text-[#D9CEBE] transition-colors duration-200">
+              {project.name}
+            </h3>
+            <span className="text-[10px] font-mono text-[#8F8B83] dark:text-[#7A766F] shrink-0">
               {project.area}
             </span>
           </div>
-
-          <h3 className="font-serif text-xs sm:text-sm font-normal text-[#1C1B19] dark:text-[#FAF8F5] tracking-tight group-hover:text-[#4F5542] dark:group-hover:text-[#D9CEBE] transition-colors duration-200">
-            {project.name}
-          </h3>
-          <p className="text-xs text-[#57544E] dark:text-[#A09C94] font-light mt-1 line-clamp-1">
+          <p className="text-xs text-[#57544E] dark:text-[#A09C94] font-light line-clamp-1">
             {project.subtitle}
           </p>
         </div>
 
-        {/* Action Buttons: Mobile shows Specs + Contact only; Desktop shows Specs + Contact + Details */}
-        <div className="mt-3.5 pt-2.5 border-t border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <button
-              onClick={handleToggleSpecs}
-              className={`px-3 py-1.5 sm:px-2.5 sm:py-1 rounded-sm text-[10px] font-mono tracking-wider transition-colors flex items-center gap-1.5 ${
-                showSpecs
-                  ? 'bg-[#1C1B19] text-white dark:bg-white dark:text-black font-medium'
-                  : 'bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-[#57544E] hover:text-[#1C1B19] dark:text-[#A09C94] dark:hover:text-white'
-              }`}
-              title="Toggle architectural specifications"
-              aria-label="Toggle specs"
-            >
-              <Sliders size={11} />
-              <span>SPECS</span>
-            </button>
-
-            <a
-              href={`${STUDIO_INFO.whatsapp}?text=${encodeURIComponent(`Hello Consilio Studios, I am interested in inquiring about your ${project.category} (${project.name}) design.`)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="px-2.5 py-1.5 sm:px-2 sm:py-1 rounded-sm bg-[#25D366]/15 hover:bg-[#25D366] text-[#128C7E] hover:text-white dark:text-[#25D366] dark:hover:text-black transition-colors flex items-center gap-1.5 text-[10px] font-mono font-medium"
-              title={`Contact Consilio Studios about ${project.name}`}
-              aria-label={`Contact about ${project.name}`}
-            >
-              <MessageCircle size={12} />
-              <span className="md:hidden">CONTACT</span>
-            </a>
-          </div>
-
-          {/* Desktop-Only Details Action */}
+        {/* Action Buttons: Specs + Contact symbol only */}
+        <div className="mt-3.5 pt-2.5 border-t border-black/5 dark:border-white/5 flex items-center gap-1.5 sm:gap-2">
           <button
-            onClick={() => onSelect(project)}
-            className="hidden md:inline-flex items-center gap-1 py-1 text-xs font-mono uppercase tracking-wider text-[#1C1B19] dark:text-[#FAF8F5] hover:text-[#4F5542] dark:hover:text-[#D9CEBE] transition-colors group/btn"
+            onClick={handleToggleSpecs}
+            className={`px-3 py-1.5 sm:px-2.5 sm:py-1 rounded-sm text-[10px] font-mono tracking-wider transition-colors flex items-center gap-1.5 ${
+              showSpecs
+                ? 'bg-[#1C1B19] text-white dark:bg-white dark:text-black font-medium'
+                : 'bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-[#57544E] hover:text-[#1C1B19] dark:text-[#A09C94] dark:hover:text-white'
+            }`}
+            title="Toggle architectural specifications"
+            aria-label="Toggle specs"
           >
-            <span>Details</span>
-            <ArrowUpRight size={13} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+            <Sliders size={11} />
+            <span>SPECS</span>
           </button>
+
+          <a
+            href={`${STUDIO_INFO.whatsapp}?text=${encodeURIComponent(`Hello Consilio Studios, I am interested in inquiring about your ${project.category} (${project.name}) design.`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="w-7 h-7 sm:w-6 sm:h-6 rounded-sm bg-[#25D366]/15 hover:bg-[#25D366] text-[#128C7E] hover:text-white dark:text-[#25D366] dark:hover:text-black transition-colors flex items-center justify-center shrink-0"
+            title={`Contact Consilio Studios about ${project.name}`}
+            aria-label={`Contact about ${project.name}`}
+          >
+            <MessageCircle size={12} />
+          </a>
         </div>
       </div>
     </article>
