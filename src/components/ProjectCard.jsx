@@ -196,7 +196,7 @@ export default function ProjectCard({
       onClick={() => onSelect(project)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="group relative cursor-pointer flex flex-col select-none w-full bg-white dark:bg-[#181716] rounded-xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-black/25 dark:hover:border-white/25 hover:shadow-xl transition-all duration-300 transform-gpu hover:-translate-y-1"
+      className="group relative cursor-pointer flex flex-col select-none w-full h-full justify-between bg-white dark:bg-[#181716] rounded-xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-black/25 dark:hover:border-white/25 hover:shadow-xl transition-all duration-300 transform-gpu hover:-translate-y-0.5"
       data-cursor="view"
       role="button"
       tabIndex={0}
@@ -207,11 +207,11 @@ export default function ProjectCard({
     >
       {/* 
         ARCHITECTURAL MEDIA FRAME:
-        Balanced aspect ratio (16/11) with crisp image and smooth video playback on hover.
+        Compact widescreen aspect ratio so 3x2 grid fits in a single screen view.
       */}
       <div
         onClick={handleMediaTap}
-        className="relative w-full aspect-[16/11] overflow-hidden bg-[#E8E3DB] dark:bg-[#1A1918]"
+        className="relative w-full aspect-[16/10] lg:aspect-[16/9] xl:aspect-[16/9.5] overflow-hidden bg-[#E8E3DB] dark:bg-[#1A1918] shrink-0"
       >
         {/* STILL ARCHITECTURAL POSTER IMAGE (Default State) */}
         <img
@@ -358,26 +358,26 @@ export default function ProjectCard({
       </div>
 
       {/* Clean, Refined Metadata Card Body */}
-      <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between">
+      <div className="p-2.5 sm:p-3 lg:p-2.5 xl:p-3 flex flex-col flex-1 justify-between min-h-0">
         <div>
-          <div className="flex items-center justify-between gap-2 mb-1">
-            <h3 className="font-serif text-xs sm:text-sm font-normal text-[#1C1B19] dark:text-[#FAF8F5] tracking-tight group-hover:text-[#4F5542] dark:group-hover:text-[#D9CEBE] transition-colors duration-200">
+          <div className="flex items-center justify-between gap-1.5 mb-0.5">
+            <h3 className="font-serif text-[11px] sm:text-xs font-normal text-[#1C1B19] dark:text-[#FAF8F5] tracking-tight group-hover:text-[#4F5542] dark:group-hover:text-[#D9CEBE] transition-colors duration-200 truncate">
               {project.name}
             </h3>
-            <span className="text-[10px] font-mono text-[#8F8B83] dark:text-[#7A766F] shrink-0">
+            <span className="text-[9px] font-mono text-[#8F8B83] dark:text-[#7A766F] shrink-0">
               {project.area}
             </span>
           </div>
-          <p className="text-xs text-[#57544E] dark:text-[#A09C94] font-light line-clamp-1">
+          <p className="text-[10px] sm:text-[10.5px] text-[#57544E] dark:text-[#A09C94] font-light line-clamp-1">
             {project.subtitle}
           </p>
         </div>
 
         {/* Action Buttons: Specs + Contact symbol only (no outer box) */}
-        <div className="mt-3.5 pt-2.5 border-t border-black/5 dark:border-white/5 flex items-center gap-2">
+        <div className="mt-2 pt-1.5 border-t border-black/5 dark:border-white/5 flex items-center gap-2">
           <button
             onClick={handleToggleSpecs}
-            className={`px-3 py-1.5 sm:px-2.5 sm:py-1 rounded-sm text-[10px] font-mono tracking-wider transition-colors flex items-center gap-1.5 ${
+            className={`px-2.5 py-1 sm:px-2 sm:py-0.5 rounded-sm text-[9px] font-mono tracking-wider transition-colors flex items-center gap-1 ${
               showSpecs
                 ? 'bg-[#1C1B19] text-white dark:bg-white dark:text-black font-medium'
                 : 'bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-[#57544E] hover:text-[#1C1B19] dark:text-[#A09C94] dark:hover:text-white'
@@ -385,7 +385,7 @@ export default function ProjectCard({
             title="Toggle architectural specifications"
             aria-label="Toggle specs"
           >
-            <Sliders size={11} />
+            <Sliders size={10} />
             <span>SPECS</span>
           </button>
 
@@ -398,7 +398,7 @@ export default function ProjectCard({
             title={`Contact Consilio Studios about ${project.name}`}
             aria-label={`Contact about ${project.name}`}
           >
-            <MessageCircle size={15} />
+            <MessageCircle size={14} />
           </a>
         </div>
       </div>
