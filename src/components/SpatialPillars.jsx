@@ -132,8 +132,8 @@ function InteractiveTiltCard({ pillar, index, isExpanded, onHover, onSelect }) {
             {pillar.discipline}
           </span>
 
-          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/20 backdrop-blur-md border border-white/25 flex items-center justify-center text-white transition-all duration-300 group-hover:bg-white group-hover:text-black group-hover:rotate-45 shadow-md">
-            <ArrowUpRight size={13} />
+          <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white/20 backdrop-blur-md border border-white/25 flex items-center justify-center text-white transition-all duration-300 group-hover:bg-white group-hover:text-black group-hover:rotate-45 shadow-sm shrink-0">
+            <ArrowUpRight size={10} className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
           </div>
         </div>
 
