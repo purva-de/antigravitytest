@@ -34,6 +34,8 @@ export default {
       fontFamily: {
         serif: ['"Good Times"', 'sans-serif'],
         display: ['"Good Times"', 'sans-serif'],
+        instrument: ['"Instrument Serif"', 'Georgia', 'serif'],
+        editorial: ['"Instrument Serif"', 'Georgia', 'serif'],
         sans: ['"Noah Text"', 'system-ui', 'sans-serif'],
         body: ['"Noah Text"', 'system-ui', 'sans-serif'],
         mono: ['"ITC Blair"', '"Noah Text"', 'sans-serif'],
