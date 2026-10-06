@@ -132,8 +132,8 @@ function InteractiveTiltCard({ pillar, index, isExpanded, onHover, onSelect }) {
             {pillar.discipline}
           </span>
 
-          <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white/20 backdrop-blur-md border border-white/25 flex items-center justify-center text-white transition-all duration-300 group-hover:bg-white group-hover:text-black group-hover:rotate-45 shadow-sm shrink-0">
-            <ArrowUpRight size={10} className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+          <div className="w-4 h-4 rounded-full bg-white/20 backdrop-blur-md border border-white/25 flex items-center justify-center text-white transition-all duration-300 group-hover:bg-white group-hover:text-black group-hover:rotate-45 shadow-xs shrink-0">
+            <ArrowUpRight size={8} className="w-2 h-2" strokeWidth={2} />
           </div>
         </div>
 
@@ -217,13 +217,9 @@ export default function SpatialPillars({ onSelectProject }) {
         </div>
 
         {/* Subtle Bottom Interactive Hint */}
-        <div className="mt-3 sm:mt-4 flex items-center justify-between text-[10px] xs:text-[11px] font-mono text-[#8F8B83] tracking-widest uppercase">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#4E774E] animate-pulse" />
-            <span>INTERACTIVE 3D PERSPECTIVE</span>
-          </div>
-          <span className="hidden sm:inline">HOVER TO EXPLORE SPATIAL SPECIFICATIONS</span>
-          <span className="sm:hidden">TAP TO EXPLORE</span>
+        <div className="mt-3 sm:mt-4 flex items-center gap-2 text-[10px] xs:text-[11px] font-mono text-[#8F8B83] tracking-widest uppercase">
+          <span className="w-2 h-2 rounded-full bg-[#4E774E] animate-pulse" />
+          <span>INTERACTIVE 3D PERSPECTIVE</span>
         </div>
       </div>
 
