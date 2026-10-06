@@ -153,10 +153,10 @@ export const PROJECTS_DATA = [
   },
   {
     id: "tv-showcase",
-    name: "Fluted TV Showcase",
+    name: "TV Unit",
     subtitle: "Tactile Woodwork & Floating Marble Console",
-    category: "TV Showcase",
-    spaceType: "TV Showcase",
+    category: "TV Unit",
+    spaceType: "TV Unit",
     location: "Pune",
     year: "2024",
     status: "Completed",
@@ -172,14 +172,14 @@ export const PROJECTS_DATA = [
     ],
     overview: "A sophisticated entertainment unit where vertical fluted paneling, concealed cabling, and back-illuminated marble create a soft theatrical presence.",
     designConcept: "Linear rhythm and warm shadow play. The fluted texture breaks specular reflections while the floating credenza keeps the floor plane continuous.",
-    designPhilosophy: "Media walls often dominate a room aggressively. By treating the TV showcase as an architectural sculpture, the screen blends into a curated backdrop.",
+    designPhilosophy: "Media walls often dominate a room aggressively. By treating the TV unit as an architectural sculpture, the screen blends into a curated backdrop.",
     services: [
       "Architectural Wall Sculpture",
       "Media Console Engineering",
       "Hidden Conduit Architecture",
       "Indirect Halo Lighting"
     ],
-    projectType: "Custom TV Showcase & Unit",
+    projectType: "Custom TV Unit",
     featured: false,
     highlightStats: [
       { label: "Wall Width", value: "16 ft Continuous" },
@@ -190,10 +190,10 @@ export const PROJECTS_DATA = [
   },
   {
     id: "wooden-interior",
-    name: "Bespoke Wooden Interior",
+    name: "Classic Interior",
     subtitle: "Artisanal Millwork & Warm Walnut Core",
-    category: "Wooden Interior",
-    spaceType: "Wooden Interior",
+    category: "Classic Interior",
+    spaceType: "Classic Interior",
     location: "Pune",
     year: "2025",
     status: "Completed",
@@ -207,7 +207,7 @@ export const PROJECTS_DATA = [
       "/projects/IMG_9975_shot_1.jpg",
       "/projects/IMG_9957_shot_1.jpg"
     ],
-    overview: "A bespoke wooden interior showcase featuring solid fluted slats, American walnut acoustic wall cladding, and master-crafted concealed joinery.",
+    overview: "A bespoke classic interior showcase featuring solid fluted slats, American walnut acoustic wall cladding, and master-crafted concealed joinery.",
     designConcept: "Tactile warmth through artisanal carpentry. Every grain alignment, shadow gap, and hand-finished timber edge is custom made.",
     designPhilosophy: "Natural wood brings an undeniable biological warmth and acoustic tranquility to contemporary architecture.",
     services: [
@@ -216,7 +216,7 @@ export const PROJECTS_DATA = [
       "Custom Cabinetry & Joinery",
       "Solid Timber Feature Walls"
     ],
-    projectType: "Wooden Interior Craft",
+    projectType: "Classic Interior Craft",
     featured: false,
     highlightStats: [
       { label: "Wood Species", value: "American Walnut & Oak" },

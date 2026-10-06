@@ -69,7 +69,12 @@ export default function App() {
     }
 
     if (targetProjectId) {
-      const found = PROJECTS_DATA.find((p) => p.id === targetProjectId);
+      const aliasMap = {
+        "tv-unit": "tv-showcase",
+        "classic-interior": "wooden-interior"
+      };
+      const resolvedId = aliasMap[targetProjectId] || targetProjectId;
+      const found = PROJECTS_DATA.find((p) => p.id === resolvedId);
       if (found) return { type: "project", project: found };
     }
 
