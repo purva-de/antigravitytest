@@ -38,6 +38,100 @@ const VIRTUAL_COUNT = 15;
 const CRITERIA_COUNT = SELECTED_CRITERIA_PROJECTS.length; // 5
 
 // =============================================================================
+// HELPER: Curated Architectural Specifications Resolution
+// =============================================================================
+function getDetailedSpecs(project) {
+  if (!project) return null;
+
+  const customSpecs = {
+    'living-room': {
+      scale: '1,450 SQ.FT',
+      location: 'Pune, MH',
+      scope: '1,450 SQ.FT living footprint featuring organic archways, custom spatial partitions, and floating oak cabinetry.',
+      millwork: 'Bespoke White Oak Millwork & Slatted Timber Arch',
+      materials: [
+        '2700K Warm Indirect Cove Illumination',
+        'Custom Curved Arch Partitions',
+        'Hand-Textured Botanical Accents',
+        'Floating White Oak Entertainment Credenza'
+      ]
+    },
+    'bedroom': {
+      scale: '850 SQ.FT',
+      location: 'Pune, MH',
+      scope: '850 SQ.FT bedroom sanctuary with concealed floor-to-ceiling joinery and circadian evening lighting.',
+      millwork: 'Concealed European Joinery & Smoked Oak Fluted Headboard',
+      materials: [
+        '2200K Circadian Dimmable Lighting System',
+        'Fluted Velvet & Smoked Oak Headboard Wall',
+        'Concealed Soft-Close Wardrobe Architecture',
+        'Integrated Floating Bedside Consoles'
+      ]
+    },
+    'balcony': {
+      scale: '380 SQ.FT',
+      location: 'Pune, MH',
+      scope: '380 SQ.FT high-rise balcony oasis with weather-sealed timber trellis and integrated planter irrigation.',
+      millwork: 'Seasoned Teak Trellis & Exterior Weatherproof Timber Slats',
+      materials: [
+        'Automated Biophilic Green Wall Systems',
+        'Linear Weatherproof Warm Exterior Lighting',
+        'Drainage-Optimized Decking & Natural Stone',
+        'Natural Teak Louvers & Outdoor Lounger'
+      ]
+    },
+    'tv-showcase': {
+      scale: '620 SQ.FT',
+      location: 'Pune, MH',
+      scope: '16 FT Continuous architectural media wall featuring concealed cabling and floating credenza.',
+      millwork: 'Fluted Ash Paneling & Concealed Blum Soft-Close Joinery',
+      materials: [
+        'Statuario Marble Floating Console',
+        '24V Dimmable Halo Backlighting Strip',
+        'Concealed AV Conduits & Cable Management',
+        'Vertical Acoustic Wood Ribs'
+      ]
+    },
+    'wooden-interior': {
+      scale: '1,800 SQ.FT',
+      location: 'Pune, MH',
+      scope: '1,800 SQ.FT artisanal residence showcase with acoustic timber wall cladding and hidden pivot doors.',
+      millwork: 'Artisanal American Walnut & Oak with Natural Matte Hardwax Oil',
+      materials: [
+        '100% In-House Master Crafted Millwork',
+        'Solid Timber Acoustic Feature Walls',
+        'Concealed Soft-Close Blum Hardware',
+        'Satin Brass Inlays & Minimalist Shadow Gaps'
+      ]
+    }
+  };
+
+  const curated = customSpecs[project.id];
+  if (curated) return curated;
+
+  // Graceful fallback for any other project in data system
+  const scale = project.area ? project.area.toUpperCase() : '1,500 SQ.FT';
+  const location = project.location?.includes('MH')
+    ? project.location
+    : `${project.location || 'Pune'}, MH`;
+  const scope =
+    project.overview ||
+    `${project.projectType || project.name} custom layout with architectural spatial planning.`;
+  const millworkStat = project.highlightStats?.find((s) =>
+    /millwork|wood|timber|finish|joinery|cabinetry/i.test(s.label)
+  );
+  const millwork = millworkStat
+    ? `${millworkStat.label}: ${millworkStat.value}`
+    : 'Artisanal Millwork & Bespoke Detailing';
+  const materials = [
+    ...(project.highlightStats || []).map((s) => `${s.label}: ${s.value}`),
+    ...(project.services || [])
+  ].slice(0, 4);
+
+  return { scale, location, scope, millwork, materials };
+}
+
+// =============================================================================
 // INDIVIDUAL 3D CAROUSEL CARD COMPONENT
 // =============================================================================
 function CurvedPanoramaCard({
@@ -45,10 +139,7 @@ function CurvedPanoramaCard({
   virtualIndex,
   cardWidth,
   cardHeight,
-  onSelectProject,
-  onQuickView,
-  onSpecsToggle,
-  isSpecsOpen,
+  onOpenSpecsModal,
   dragDistRef,
   setCardElementRef,
   setShadowElementRef
@@ -124,30 +215,23 @@ function CurvedPanoramaCard({
     }
   };
 
-  // Click criteria card to pop up architectural specs drawer (suppressed if dragged)
+  // Card click opens centered specifications modal (suppressed if dragged)
   const handleCardClick = (e) => {
     if (dragDistRef.current > 12) {
       e.preventDefault();
       return;
     }
-    onSpecsToggle(virtualIndex);
+    onOpenSpecsModal(project);
   };
 
-  const handleQuickViewClick = (e) => {
+  const handleFullscreenClick = (e) => {
     e.stopPropagation();
-    onQuickView(project, 0);
+    onOpenSpecsModal(project);
   };
 
   const handleSpecsButtonClick = (e) => {
     e.stopPropagation();
-    onSpecsToggle(virtualIndex);
-  };
-
-  const handleExploreFromSpecs = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    onSpecsToggle(virtualIndex);
-    onSelectProject(project);
+    onOpenSpecsModal(project);
   };
 
   return (
@@ -166,12 +250,12 @@ function CurvedPanoramaCard({
         willChange: 'transform'
       }}
       role="button"
-      aria-label={`View specs for ${project.criteriaTitle}: ${project.name}`}
+      aria-label={`View architectural details for ${project.criteriaTitle}: ${project.name}`}
       tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          onSpecsToggle(virtualIndex);
+          onOpenSpecsModal(project);
         }
       }}
     >
@@ -222,12 +306,12 @@ function CurvedPanoramaCard({
             {project.criteriaNum} • {project.criteriaTitle}
           </span>
 
-          {/* Quick Lightbox Expand Icon */}
+          {/* Quick Details / Fullscreen Expand Icon */}
           <button
-            onClick={handleQuickViewClick}
-            className="w-6 h-6 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md text-white flex items-center justify-center transition-all border border-white/20 active:scale-90"
-            title="Expand photo lightbox"
-            aria-label={`Expand photo for ${project.name}`}
+            onClick={handleFullscreenClick}
+            className="w-6 h-6 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md text-white flex items-center justify-center transition-all border border-white/20 active:scale-90 cursor-pointer"
+            title="Open specifications & gallery"
+            aria-label={`Open specifications & gallery for ${project.name}`}
           >
             <Maximize2 size={11} />
           </button>
@@ -244,7 +328,7 @@ function CurvedPanoramaCard({
         )}
 
         {/* ===================================================================== */}
-        {/* LOWER METADATA OVERLAY (Space Name, Area, Specs, Contact)              */}
+        {/* LOWER METADATA OVERLAY (Space Name, Area, Specs Button, WhatsApp)     */}
         {/* ===================================================================== */}
         <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-3.5 text-white z-10 flex flex-col justify-end">
           <div className="mb-2">
@@ -261,116 +345,32 @@ function CurvedPanoramaCard({
             </p>
           </div>
 
-          {/* Action Row: Space Status + WhatsApp contact icon (SPECS text removed from image card) */}
-          <div className="pt-1.5 border-t border-white/15 flex items-center justify-between">
-            <span className="text-[8px] sm:text-[8.5px] font-mono text-[#FAF8F5]/65 tracking-wider uppercase">
-              {project.status || 'Completed'}
-            </span>
+          {/* Action Row: SPECS trigger button + WhatsApp contact icon (Completed badge removed) */}
+          <div className="pt-2 border-t border-white/15 flex items-center justify-between">
+            <button
+              type="button"
+              onClick={handleSpecsButtonClick}
+              className="px-2 py-0.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-[8px] sm:text-[8.5px] font-mono tracking-wider uppercase text-[#FAF8F5]/90 hover:text-white flex items-center gap-1 transition-all active:scale-95 cursor-pointer shadow-xs"
+              title={`View architectural specifications for ${project.criteriaTitle}`}
+              aria-label={`View architectural specifications for ${project.criteriaTitle}`}
+            >
+              <span>SPECS</span>
+              <ArrowUpRight size={10} className="text-[#D4B993]" />
+            </button>
 
             <a
               href={`${STUDIO_INFO.whatsapp}?text=${encodeURIComponent(`Hello Consilio Studios, I am interested in inquiring about your ${project.criteriaTitle} (${project.name}) design.`)}`}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="p-0.5 text-[#25D366] hover:text-[#1ebe5b] transition-all hover:scale-115 active:scale-95 flex items-center justify-center shrink-0"
+              className="p-1 text-[#25D366] hover:text-[#1ebe5b] transition-all hover:scale-115 active:scale-95 flex items-center justify-center shrink-0"
               title={`WhatsApp inquiry for ${project.name}`}
               aria-label={`WhatsApp inquiry for ${project.name}`}
             >
-              <MessageCircle size={14} />
+              <MessageCircle size={15} />
             </a>
           </div>
         </div>
-
-        {/* ===================================================================== */}
-        {/* COMPACT ARCHITECTURAL SPECS DRAWER (Toggled via [SPECS] button)       */}
-        {/* ===================================================================== */}
-        <AnimatePresence>
-          {isSpecsOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: '100%' }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: '100%' }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
-              onClick={(e) => e.stopPropagation()}
-              onMouseDown={(e) => e.stopPropagation()}
-              onTouchStart={(e) => e.stopPropagation()}
-              onTouchMove={(e) => e.stopPropagation()}
-              onTouchEnd={(e) => e.stopPropagation()}
-              className="absolute inset-0 bg-[#1C1B19]/96 backdrop-blur-md text-[#FAF8F5] p-3 sm:p-3.5 flex flex-col justify-between z-30 overflow-y-auto no-scrollbar"
-            >
-              <div>
-                <div className="flex items-center justify-between pb-1.5 border-b border-white/15 mb-2">
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#828C74]" />
-                    <span className="text-[8.5px] sm:text-[9px] font-mono tracking-widest text-[#D4B993] uppercase font-semibold">
-                      {project.criteriaNum} • {project.criteriaTitle}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={handleExploreFromSpecs}
-                      className="text-[8px] sm:text-[8.5px] font-mono text-[#D4B993] hover:text-white flex items-center gap-0.5 transition-colors uppercase tracking-wider"
-                      title="Explore full project details"
-                    >
-                      <span>EXPLORE</span>
-                      <ArrowUpRight size={10} />
-                    </button>
-                    <button
-                      onClick={handleSpecsButtonClick}
-                      className="text-[8px] sm:text-[8.5px] font-mono text-white/50 hover:text-white px-1.5 py-0.5 rounded-xs border border-white/20 hover:border-white/40 transition-colors uppercase"
-                    >
-                      CLOSE
-                    </button>
-                  </div>
-                </div>
-
-                <div className="space-y-1 sm:space-y-1.5 text-[8.5px] sm:text-[9px] font-mono">
-                  <div className="flex justify-between border-b border-white/5 pb-1">
-                    <span className="text-[#A09C94]">SCALE:</span>
-                    <span className="text-white font-medium">{project.area || 'Bespoke'}</span>
-                  </div>
-                  <div className="flex justify-between border-b border-white/5 pb-1">
-                    <span className="text-[#A09C94]">LOCATION:</span>
-                    <span className="text-white truncate max-w-[140px] text-right">
-                      {project.location}
-                    </span>
-                  </div>
-                  {project.highlightStats?.[0] && (
-                    <div className="flex justify-between border-b border-white/5 pb-1">
-                      <span className="text-[#A09C94] truncate max-w-[85px]">
-                        {project.highlightStats[0].label}:
-                      </span>
-                      <span className="text-white truncate max-w-[130px] text-right">
-                        {project.highlightStats[0].value}
-                      </span>
-                    </div>
-                  )}
-                  {project.highlightStats?.[1] && (
-                    <div className="flex justify-between border-b border-white/5 pb-1">
-                      <span className="text-[#A09C94] truncate max-w-[85px]">
-                        {project.highlightStats[1].label}:
-                      </span>
-                      <span className="text-white truncate max-w-[130px] text-right">
-                        {project.highlightStats[1].value}
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Prominent High-Contrast Explore Button Always Anchored at Bottom */}
-              <button
-                onClick={handleExploreFromSpecs}
-                className="w-full py-2 sm:py-2.5 rounded-lg bg-white hover:bg-neutral-100 active:bg-neutral-200 text-black text-[9px] sm:text-[10px] font-mono tracking-wider uppercase font-semibold transition-all duration-200 flex items-center justify-center gap-1.5 shadow-lg active:scale-98 mt-2.5 cursor-pointer shrink-0"
-                data-cursor="pointer"
-              >
-                <span>EXPLORE FULL SPACE</span>
-                <ArrowUpRight size={12} />
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
     </article>
   );
@@ -379,7 +379,7 @@ function CurvedPanoramaCard({
 // =============================================================================
 // MAIN 3D CURVED PANORAMA CAROUSEL COMPONENT
 // =============================================================================
-function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
+function CurvedPanoramaCarousel({ onOpenSpecsModal, isModalOpen }) {
   const containerRef = useRef(null);
   const cardElementsRef = useRef([]);
   const shadowElementsRef = useRef([]);
@@ -396,8 +396,6 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
     curvatureFactor: 0.85,
     depthFactor: 1.25
   });
-
-  const [activeSpecsIndex, setActiveSpecsIndex] = useState(null);
 
   // Animation & Motion Refs
   const currentOffsetRef = useRef(0);
@@ -504,16 +502,15 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
         cardWidth
       } = dimensions;
 
-      const cycleLength = CRITERIA_COUNT * step; // 5 * step
-      const trackLength = VIRTUAL_COUNT * step;  // 15 * step
+      const trackLength = VIRTUAL_COUNT * step; // 15 * step
 
       // Continuous Right-to-Left Auto-Scroll (advancing offset)
-      // Pauses on hover, active dragging, reduced motion, or open specs drawer
+      // Pauses on hover, active dragging, reduced motion, or active modal
       const isPaused =
         isHoveredRef.current ||
         isDraggingRef.current ||
         isReducedMotionRef.current ||
-        activeSpecsIndex !== null;
+        isModalOpen;
 
       if (!isPaused) {
         // Slow, elegant continuous motion moving right to left: 0.3 speed (~18px/sec)
@@ -578,7 +575,7 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
 
       rafIdRef.current = requestAnimationFrame(animate);
     },
-    [dimensions, activeSpecsIndex]
+    [dimensions, isModalOpen]
   );
 
   useEffect(() => {
@@ -590,12 +587,10 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
 
   // 3. Navigation Buttons: Gliding to Previous / Next Criteria
   const handlePrev = useCallback(() => {
-    // Move left to right (reverse flow) by 1 card step
     targetOffsetRef.current -= dimensions.step;
   }, [dimensions.step]);
 
   const handleNext = useCallback(() => {
-    // Move right to left (advance flow) by 1 card step
     targetOffsetRef.current += dimensions.step;
   }, [dimensions.step]);
 
@@ -615,7 +610,6 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
       const dist = Math.hypot(dx, dy);
       dragDistRef.current = dist;
       if (dist > 6) {
-        // Dragging left (dx < 0) advances offset (moves cards left)
         targetOffsetRef.current = dragStartOffsetRef.current - dx;
         currentOffsetRef.current = targetOffsetRef.current;
       }
@@ -625,7 +619,6 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
       isDraggingRef.current = false;
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
-      // Reset drag distance shortly after click event completes
       setTimeout(() => {
         dragDistRef.current = 0;
       }, 120);
@@ -652,7 +645,6 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
     const dist = Math.hypot(dx, dy);
     dragDistRef.current = dist;
 
-    // Distinguish horizontal swipe from vertical page scroll
     if (Math.abs(dx) > Math.abs(dy) && dist > 6) {
       targetOffsetRef.current = dragStartOffsetRef.current - dx;
       currentOffsetRef.current = targetOffsetRef.current;
@@ -661,14 +653,9 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
 
   const handleTouchEnd = () => {
     isDraggingRef.current = false;
-    // Reset drag distance shortly after tap/click event completes
     setTimeout(() => {
       dragDistRef.current = 0;
     }, 120);
-  };
-
-  const handleSpecsToggle = (virtualIdx) => {
-    setActiveSpecsIndex((prev) => (prev === virtualIdx ? null : virtualIdx));
   };
 
   // Create 15 virtual card items from the 5 criteria
@@ -728,10 +715,7 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
               virtualIndex={virtualIndex}
               cardWidth={dimensions.cardWidth}
               cardHeight={dimensions.cardHeight}
-              onSelectProject={onSelectProject}
-              onQuickView={onQuickView}
-              onSpecsToggle={handleSpecsToggle}
-              isSpecsOpen={activeSpecsIndex === virtualIndex}
+              onOpenSpecsModal={onOpenSpecsModal}
               dragDistRef={dragDistRef}
               setCardElementRef={setCardElementRef}
               setShadowElementRef={setShadowElementRef}
@@ -746,7 +730,7 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
       <div className="mt-2.5 sm:mt-4 flex items-center justify-center gap-2 sm:gap-3">
         <button
           onClick={handlePrev}
-          className="w-7.5 h-7.5 xs:w-8 xs:h-8 sm:w-10 sm:h-10 rounded-full border border-[#1C1B19]/35 dark:border-white/35 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs"
+          className="w-7.5 h-7.5 xs:w-8 xs:h-8 sm:w-10 sm:h-10 rounded-full border border-[#1C1B19]/35 dark:border-white/35 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs cursor-pointer"
           aria-label="Previous criteria (←)"
           title="Previous criteria (←)"
         >
@@ -755,7 +739,7 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
 
         <button
           onClick={handleNext}
-          className="w-7.5 h-7.5 xs:w-8 xs:h-8 sm:w-10 sm:h-10 rounded-full border border-[#1C1B19]/35 dark:border-white/35 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs"
+          className="w-7.5 h-7.5 xs:w-8 xs:h-8 sm:w-10 sm:h-10 rounded-full border border-[#1C1B19]/35 dark:border-white/35 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs cursor-pointer"
           aria-label="Next criteria (→)"
           title="Next criteria (→)"
         >
@@ -767,10 +751,303 @@ function CurvedPanoramaCarousel({ onSelectProject, onQuickView }) {
 }
 
 // =============================================================================
+// DETAILED SPECIFICATIONS MODAL / OVERLAY COMPONENT
+// =============================================================================
+function ProjectSpecsModal({ project, onClose, onExplore }) {
+  const [activeImgIndex, setActiveImgIndex] = useState(0);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  // High-Resolution Image Angles
+  const images = useMemo(() => {
+    if (project.galleryImages && project.galleryImages.length > 0) {
+      return project.galleryImages;
+    }
+    return [project.heroImage];
+  }, [project]);
+
+  const activeImage = images[activeImgIndex] || project.heroImage;
+
+  // Key-Value Specifications
+  const specs = useMemo(() => getDetailedSpecs(project), [project]);
+
+  // Accessibility: Escape key & Arrow navigation listener + body scroll lock
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      } else if (e.key === 'ArrowLeft') {
+        setActiveImgIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1));
+      } else if (e.key === 'ArrowRight') {
+        setActiveImgIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0));
+      }
+    };
+
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    window.addEventListener('keydown', handleKeyDown);
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [onClose, images.length]);
+
+  const whatsappMessage = encodeURIComponent(
+    `Hello Consilio Studios, I am inquiring about the architectural specifications for ${project.criteriaTitle} (${project.name}).`
+  );
+  const whatsappUrl = `${STUDIO_INFO.whatsapp}?text=${whatsappMessage}`;
+
+  return (
+    <div
+      onClick={onClose}
+      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-3 xs:p-4 sm:p-6 md:p-8 overflow-y-auto"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="specs-modal-title"
+    >
+      <motion.div
+        onClick={(e) => e.stopPropagation()}
+        initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95 }}
+        animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+        exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95 }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
+        className="relative w-full max-w-5xl max-h-[92vh] flex flex-col bg-[#141312] border border-white/10 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden text-[#FAF8F5] my-auto"
+      >
+        {/* ================================================================= */}
+        {/* HEADER: Project Number + Title & Prominent Close Button           */}
+        {/* ================================================================= */}
+        <header className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-white/10 flex items-center justify-between shrink-0 bg-[#181715]/80 backdrop-blur-md z-10">
+          <div className="flex items-center gap-2.5">
+            <span className="w-2 h-2 rounded-full bg-[#828C74]" />
+            <h3
+              id="specs-modal-title"
+              className="font-mono text-xs sm:text-sm tracking-widest text-[#D4B993] uppercase font-semibold"
+            >
+              {project.criteriaNum} • {project.criteriaTitle}
+            </h3>
+            <span className="hidden sm:inline-block text-white/30 text-xs">•</span>
+            <span className="hidden sm:inline-block font-serif text-sm text-white/90 font-normal">
+              {project.name}
+            </span>
+          </div>
+
+          <button
+            onClick={onClose}
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 text-white flex items-center justify-center transition-all border border-white/15 cursor-pointer"
+            aria-label="Close specifications modal"
+            title="Close (Esc)"
+          >
+            <X size={16} className="sm:w-[18px] sm:h-[18px]" />
+          </button>
+        </header>
+
+        {/* ================================================================= */}
+        {/* MODAL BODY: Two-Column Responsive Layout (Gallery + Specs)        */}
+        {/* ================================================================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 p-4 sm:p-6 overflow-y-auto max-h-[calc(92vh-64px)]">
+          {/* =============================================================== */}
+          {/* LEFT/MAIN COLUMN: Image Gallery                                 */}
+          {/* =============================================================== */}
+          <section
+            className="lg:col-span-7 flex flex-col justify-between"
+            aria-label="Room Image Gallery"
+          >
+            <div>
+              {/* Large Active Image Display */}
+              <div className="relative w-full aspect-[4/3] max-h-[380px] sm:max-h-[420px] rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 bg-black/50 shadow-inner group">
+                <img
+                  src={activeImage}
+                  alt={`${project.name} angle ${activeImgIndex + 1}`}
+                  className="w-full h-full object-cover select-none transition-opacity duration-300"
+                />
+
+                {/* Subtle vignette gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
+
+                {/* Photo index counter tag */}
+                <div className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-[9px] font-mono tracking-widest text-white/90 border border-white/15">
+                  ANGLE {String(activeImgIndex + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}
+                </div>
+
+                {/* Prev / Next Arrows */}
+                {images.length > 1 && (
+                  <div className="absolute inset-x-2.5 top-1/2 -translate-y-1/2 flex items-center justify-between pointer-events-none">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveImgIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1));
+                      }}
+                      className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/60 hover:bg-black/85 text-white flex items-center justify-center transition-all border border-white/20 active:scale-95 pointer-events-auto backdrop-blur-xs cursor-pointer"
+                      aria-label="Previous angle"
+                      title="Previous angle (←)"
+                    >
+                      <ChevronLeft size={16} />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveImgIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0));
+                      }}
+                      className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/60 hover:bg-black/85 text-white flex items-center justify-center transition-all border border-white/20 active:scale-95 pointer-events-auto backdrop-blur-xs cursor-pointer"
+                      aria-label="Next angle"
+                      title="Next angle (→)"
+                    >
+                      <ChevronRight size={16} />
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Interactive Thumbnail Carousel / Strip */}
+              {images.length > 1 && (
+                <div className="flex items-center gap-2 sm:gap-2.5 mt-3 overflow-x-auto no-scrollbar py-1">
+                  {images.map((img, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setActiveImgIndex(idx)}
+                      className={`relative w-14 h-10 xs:w-16 xs:h-11 sm:w-18 sm:h-12 shrink-0 rounded-lg overflow-hidden border transition-all cursor-pointer ${
+                        activeImgIndex === idx
+                          ? 'border-[#D4B993] ring-2 ring-[#D4B993]/40 scale-102 opacity-100'
+                          : 'border-white/15 opacity-60 hover:opacity-90 hover:border-white/40'
+                      }`}
+                      aria-label={`Select angle ${idx + 1}`}
+                    >
+                      <img
+                        src={img}
+                        alt=""
+                        className="w-full h-full object-cover pointer-events-none select-none"
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Mobile Title & Subtitle Note if small screen */}
+            <div className="mt-3 block sm:hidden">
+              <h4 className="font-serif text-base text-white">{project.name}</h4>
+              <p className="text-[11px] text-[#FAF8F5]/70 font-light">{project.subtitle}</p>
+            </div>
+          </section>
+
+          {/* =============================================================== */}
+          {/* RIGHT COLUMN: Specifications Sheet                              */}
+          {/* =============================================================== */}
+          <section
+            className="lg:col-span-5 flex flex-col justify-between"
+            aria-label="Architectural Specifications Sheet"
+          >
+            <div>
+              {/* Category Subhead */}
+              <div className="mb-3">
+                <span className="text-[9px] font-mono tracking-widest text-[#D4B993] uppercase font-medium">
+                  ARCHITECTURAL SPECIFICATION
+                </span>
+                <h4 className="font-serif text-lg sm:text-xl text-white font-normal mt-0.5">
+                  {project.name}
+                </h4>
+                <p className="text-xs text-[#FAF8F5]/70 font-light mt-0.5">
+                  {project.subtitle}
+                </p>
+              </div>
+
+              {/* Structured Key-Value Specs Sheet */}
+              <dl className="space-y-2.5 text-xs">
+                {/* Scale */}
+                <div className="pb-2 border-b border-white/10">
+                  <dt className="text-[9.5px] font-mono tracking-wider text-[#A09C94] uppercase mb-0.5">
+                    SCALE
+                  </dt>
+                  <dd className="font-mono text-white text-xs sm:text-[13px] font-medium">
+                    {specs.scale}
+                  </dd>
+                </div>
+
+                {/* Location */}
+                <div className="pb-2 border-b border-white/10">
+                  <dt className="text-[9.5px] font-mono tracking-wider text-[#A09C94] uppercase mb-0.5">
+                    LOCATION
+                  </dt>
+                  <dd className="text-white text-xs sm:text-[13px] font-normal">
+                    {specs.location}
+                  </dd>
+                </div>
+
+                {/* Scope / Living Area */}
+                <div className="pb-2 border-b border-white/10">
+                  <dt className="text-[9.5px] font-mono tracking-wider text-[#A09C94] uppercase mb-0.5">
+                    SCOPE / LIVING AREA
+                  </dt>
+                  <dd className="text-[#FAF8F5]/85 text-xs sm:text-[12.5px] font-light leading-relaxed">
+                    {specs.scope}
+                  </dd>
+                </div>
+
+                {/* Millwork & Finishes */}
+                <div className="pb-2 border-b border-white/10">
+                  <dt className="text-[9.5px] font-mono tracking-wider text-[#A09C94] uppercase mb-0.5">
+                    MILLWORK & FINISHES
+                  </dt>
+                  <dd className="text-white text-xs sm:text-[12.5px] font-normal leading-snug">
+                    {specs.millwork}
+                  </dd>
+                </div>
+
+                {/* Materials / Features */}
+                <div className="pb-2 border-b border-white/10">
+                  <dt className="text-[9.5px] font-mono tracking-wider text-[#A09C94] uppercase mb-1">
+                    MATERIALS / FEATURES
+                  </dt>
+                  <dd className="space-y-1">
+                    {specs.materials.map((mat, i) => (
+                      <div key={i} className="flex items-start gap-1.5 text-[11px] sm:text-xs text-[#FAF8F5]/85">
+                        <span className="text-[#D4B993] text-[9px] mt-0.5">◆</span>
+                        <span>{mat}</span>
+                      </div>
+                    ))}
+                  </dd>
+                </div>
+              </dl>
+            </div>
+
+            {/* CTA Buttons Row at Bottom of Right Column */}
+            <div className="pt-4 mt-2 sm:mt-4 space-y-2">
+              {/* Primary WhatsApp CTA */}
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2.5 px-3 rounded-xl bg-[#25D366] hover:bg-[#1ebe5b] active:scale-98 text-black font-mono text-xs tracking-wider uppercase font-semibold flex items-center justify-center gap-2 transition-all shadow-lg"
+              >
+                <MessageCircle size={15} />
+                <span>INQUIRE ABOUT THIS SPACE</span>
+              </a>
+
+              {/* Secondary Case Study Link */}
+              <button
+                type="button"
+                onClick={() => onExplore(project)}
+                className="w-full py-2 px-3 rounded-xl bg-white/10 hover:bg-white/15 active:scale-98 text-white font-mono text-[11px] tracking-wider uppercase font-medium flex items-center justify-center gap-1.5 transition-all border border-white/15 cursor-pointer"
+              >
+                <span>EXPLORE FULL SPACE</span>
+                <ArrowUpRight size={13} className="text-[#D4B993]" />
+              </button>
+            </div>
+          </section>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+// =============================================================================
 // MAIN EXPORTED SECTION
 // =============================================================================
 export default function SelectedWork({ onSelectProject }) {
-  const [lightboxData, setLightboxData] = useState(null);
+  const [activeModalProject, setActiveModalProject] = useState(null);
 
   return (
     <section
@@ -792,104 +1069,26 @@ export default function SelectedWork({ onSelectProject }) {
         {/* 3D CURVED PANORAMA CAROUSEL (5 CRITERIA, CONTINUOUS RIGHT-TO-LEFT)    */}
         {/* ===================================================================== */}
         <CurvedPanoramaCarousel
-          onSelectProject={onSelectProject}
-          onQuickView={(proj, imgIdx) => setLightboxData({ project: proj, imgIndex: imgIdx })}
+          onOpenSpecsModal={(proj) => setActiveModalProject(proj)}
+          isModalOpen={Boolean(activeModalProject)}
         />
       </div>
 
       {/* ===================================================================== */}
-      {/* INTERACTIVE LIGHTBOX / FULLSCREEN ZOOM MODAL                          */}
+      {/* DETAILED ARCHITECTURAL SPECIFICATIONS & GALLERY MODAL                */}
       {/* ===================================================================== */}
       <AnimatePresence>
-        {lightboxData && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setLightboxData(null)}
-            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col justify-between p-3 xs:p-4 sm:p-8"
-          >
-            {/* Lightbox Topbar */}
-            <div className="flex items-center justify-between text-white pb-3 sm:pb-4 border-b border-white/10">
-              <div>
-                <h3 className="font-serif text-xs sm:text-sm">{lightboxData.project.name}</h3>
-                <p className="text-[10px] sm:text-xs font-mono text-[#A09C94] uppercase tracking-wider">
-                  {lightboxData.project.category} • {lightboxData.project.location} • PHOTO {lightboxData.imgIndex + 1} OF {lightboxData.project.galleryImages.length}
-                </p>
-              </div>
-
-              <button
-                onClick={() => setLightboxData(null)}
-                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
-                aria-label="Close lightbox"
-              >
-                <X size={18} />
-              </button>
-            </div>
-
-            {/* Main Lightbox Image Viewport */}
-            <div
-              onClick={(e) => e.stopPropagation()}
-              className="relative max-w-5xl max-h-[70vh] mx-auto my-auto flex items-center justify-center w-full"
-            >
-              <img
-                src={lightboxData.project.galleryImages[lightboxData.imgIndex] || lightboxData.project.heroImage}
-                alt={lightboxData.project.name}
-                className="max-w-full max-h-[65vh] sm:max-h-[68vh] object-contain rounded-lg shadow-2xl border border-white/10"
-              />
-
-              {/* Prev / Next Arrows in Lightbox */}
-              {lightboxData.project.galleryImages.length > 1 && (
-                <>
-                  <button
-                    onClick={() =>
-                      setLightboxData((prev) => ({
-                        ...prev,
-                        imgIndex: prev.imgIndex > 0 ? prev.imgIndex - 1 : prev.project.galleryImages.length - 1
-                      }))
-                    }
-                    className="absolute left-2 sm:-left-12 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/60 sm:bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all z-20 backdrop-blur-xs"
-                    aria-label="Previous photo"
-                  >
-                    <ChevronLeft size={20} />
-                  </button>
-
-                  <button
-                    onClick={() =>
-                      setLightboxData((prev) => ({
-                        ...prev,
-                        imgIndex: prev.imgIndex < prev.project.galleryImages.length - 1 ? prev.imgIndex + 1 : 0
-                      }))
-                    }
-                    className="absolute right-2 sm:-right-12 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/60 sm:bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all z-20 backdrop-blur-xs"
-                    aria-label="Next photo"
-                  >
-                    <ChevronRight size={20} />
-                  </button>
-                </>
-              )}
-            </div>
-
-            {/* Thumbnail Navigation Strip */}
-            <div
-              onClick={(e) => e.stopPropagation()}
-              className="flex items-center justify-start sm:justify-center gap-2 pt-3 sm:pt-4 border-t border-white/10 overflow-x-auto no-scrollbar max-w-full px-1"
-            >
-              {lightboxData.project.galleryImages.map((img, thumbIdx) => (
-                <button
-                  key={thumbIdx}
-                  onClick={() => setLightboxData((prev) => ({ ...prev, imgIndex: thumbIdx }))}
-                  className={`w-12 h-9 sm:w-14 sm:h-10 shrink-0 rounded-md overflow-hidden border-2 transition-all ${
-                    lightboxData.imgIndex === thumbIdx
-                      ? 'border-white scale-105'
-                      : 'border-white/20 opacity-60 hover:opacity-100'
-                  }`}
-                >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
-                </button>
-              ))}
-            </div>
-          </motion.div>
+        {activeModalProject && (
+          <ProjectSpecsModal
+            project={activeModalProject}
+            onClose={() => setActiveModalProject(null)}
+            onExplore={(proj) => {
+              setActiveModalProject(null);
+              if (onSelectProject) {
+                onSelectProject(proj);
+              }
+            }}
+          />
         )}
       </AnimatePresence>
     </section>
