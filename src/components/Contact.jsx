@@ -76,11 +76,14 @@ export default function Contact({ onNavigate }) {
                 href={STUDIO_INFO.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-5 xs:px-6 py-3 sm:py-3.5 rounded-full bg-[#25D366]/15 hover:bg-[#25D366] text-[#25D366] hover:text-black border border-[#25D366]/30 text-xs sm:text-sm font-medium inline-flex items-center justify-center gap-2.5 transition-all duration-300 hover:scale-105 shadow-lg group focus:outline-hidden"
+                className="px-5 xs:px-6 py-2.5 sm:py-3 rounded-full bg-[#25D366]/15 hover:bg-[#25D366] text-[#25D366] hover:text-black border border-[#25D366]/30 text-xs sm:text-sm font-medium inline-flex items-center justify-center gap-2.5 transition-all duration-300 hover:scale-105 shadow-lg group focus:outline-hidden"
                 data-cursor="pointer"
               >
-                <MessageCircle size={16} />
-                <span>WhatsApp: {STUDIO_INFO.phone}</span>
+                <MessageCircle size={16} className="shrink-0" />
+                <span className="flex flex-col text-left leading-tight">
+                  <span className="text-[11px] sm:text-xs font-normal">WhatsApp:</span>
+                  <span className="whitespace-nowrap font-mono text-xs sm:text-sm font-medium">{STUDIO_INFO.phone}</span>
+                </span>
               </a>
             </div>
           </div>

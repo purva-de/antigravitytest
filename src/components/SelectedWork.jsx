@@ -66,10 +66,7 @@ export default function SelectedWork({ onSelectProject }) {
         {/* ========================================================================= */}
         {/* BOTTOM CALLOUT & ARCHITECTURAL INQUIRY ACTION                             */}
         {/* ========================================================================= */}
-        <div className="mt-8 sm:mt-10 pt-4 border-t border-[#1C1B19]/10 dark:border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <p className="text-xs font-light text-[#57544E] dark:text-[#A09C94] max-w-lg">
-            Hover over any space card to preview its architectural video. Click <span className="font-mono text-[#1C1B19] dark:text-white font-medium">SPECS</span> for exact dimensions & materials, or click the card to explore the full monograph.
-          </p>
+        <div className="mt-8 sm:mt-10 pt-4 border-t border-[#1C1B19]/10 dark:border-white/10 flex items-center justify-end">
           <a
             href="#contact"
             className="inline-flex items-center gap-2 text-xs font-mono tracking-[0.18em] uppercase font-medium text-[#1C1B19] dark:text-[#FAF8F5] hover-underline-animation group"
