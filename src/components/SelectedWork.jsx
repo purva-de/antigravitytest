@@ -241,7 +241,7 @@ function SelectedWorkCard({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       data-cursor="view"
-      className="absolute top-0 cursor-pointer select-none rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 shadow-lg bg-[#EFECE6] dark:bg-[#181716] group transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+      className="absolute top-0 cursor-pointer select-none rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 shadow-lg hover:shadow-2xl hover:border-black/25 dark:hover:border-white/30 hover:!z-30 bg-[#EFECE6] dark:bg-[#181716] group transition-shadow duration-300"
       style={{
         width: `${cardWidth}px`,
         height: `${cardHeight}px`,
@@ -379,10 +379,10 @@ function SelectedWorkCarousel({ onOpenSpecsModal, isModalOpen }) {
   // Responsive Layout Parameters (8px grid spacing: 16px mobile, 24px desktop)
   const [dimensions, setDimensions] = useState({
     viewportWidth: typeof window !== 'undefined' ? window.innerWidth : 1200,
-    cardWidth: 240,
-    cardHeight: 330,
+    cardWidth: 250,
+    cardHeight: 340,
     cardGap: 24,
-    step: 264
+    step: 274
   });
 
   // Animation & Motion Refs
@@ -478,8 +478,8 @@ function SelectedWorkCarousel({ onOpenSpecsModal, isModalOpen }) {
         isModalOpen;
 
       if (!isPaused) {
-        // Slow, elegant continuous motion moving right to left: 0.3 speed (~18px/sec)
-        const autoSpeed = 0.3;
+        // Continuous motion moving right to left: increased by 0.2 to 0.5 speed (~30px/sec)
+        const autoSpeed = 0.5;
         targetOffsetRef.current += autoSpeed * dt;
       }
 
