@@ -51,8 +51,8 @@ export default function Footer({ onNavigate }) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-[var(--color-text)] hover:text-[#25D366] transition-colors"
               >
-                <MessageCircle size={13} className="text-[#25D366]" />
-                <span>{STUDIO_INFO.phone}</span>
+                <MessageCircle size={13} className="text-[#25D366] shrink-0" />
+                <span className="whitespace-nowrap">{STUDIO_INFO.phone}</span>
               </a>
               <span>•</span>
               <span className="inline-flex items-center gap-1.5">

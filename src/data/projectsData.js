@@ -232,7 +232,7 @@ export const STUDIO_INFO = {
   tagline: "YOU GOT SPACE, AND WE GOT THE IDEA",
   descriptor: "Architecture • Interior Design • Spatial Storytelling",
   location: (typeof import.meta !== "undefined" && import.meta.env?.VITE_STUDIO_LOCATION) || "Pune",
-  phone: (typeof import.meta !== "undefined" && import.meta.env?.VITE_STUDIO_PHONE) || "+91 70282 34778",
+  phone: (typeof import.meta !== "undefined" && import.meta.env?.VITE_STUDIO_PHONE) || "+91\u00A070282\u00A034778",
   email: (typeof import.meta !== "undefined" && import.meta.env?.VITE_STUDIO_EMAIL) || "hello@consiliostudios.com",
   instagram: (typeof import.meta !== "undefined" && import.meta.env?.VITE_STUDIO_INSTAGRAM) || "https://www.instagram.com/consilio_studios?stkn=MWpuZHh6eGpvcGtscg==",
   whatsapp: (typeof import.meta !== "undefined" && import.meta.env?.VITE_STUDIO_WHATSAPP) || "https://wa.me/917028234778",

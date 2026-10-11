@@ -244,7 +244,7 @@ export default function Navbar({ activeSection, onNavigate }) {
                 rel="noopener noreferrer"
                 className="w-full justify-center px-4 py-2.5 rounded-full bg-[#25D366]/15 text-[#25D366] border border-[#25D366]/30 font-mono text-xs inline-flex items-center gap-1.5 font-medium hover:bg-[#25D366]/25 transition-colors"
               >
-                <span>WhatsApp Dialogue: {STUDIO_INFO.phone}</span>
+                <span className="whitespace-nowrap">WhatsApp Dialogue: {STUDIO_INFO.phone}</span>
               </a>
             </div>
           </div>

@@ -80,7 +80,7 @@ export default function Contact({ onNavigate }) {
                 data-cursor="pointer"
               >
                 <MessageCircle size={17} className="shrink-0" />
-                <span className="font-mono text-xs sm:text-sm font-semibold tracking-wide">
+                <span className="font-mono text-xs sm:text-sm font-semibold tracking-wide whitespace-nowrap">
                   {STUDIO_INFO.phone}
                 </span>
               </a>
@@ -88,7 +88,7 @@ export default function Contact({ onNavigate }) {
           </div>
 
           {/* RIGHT: Contact, Location, Social & Studio Directory Columns */}
-          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 pt-2 sm:pt-4">
+          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-[1.3fr_1fr_1fr] gap-6 sm:gap-8 pt-2 sm:pt-4">
             
             {/* CONTACT & LOCATION COLUMN */}
             <div className="space-y-5 sm:space-y-6">
@@ -98,7 +98,7 @@ export default function Contact({ onNavigate }) {
                 </span>
                 <a
                   href={`tel:${STUDIO_INFO.phone.replace(/\s+/g, '')}`}
-                  className="text-xs sm:text-sm text-white/90 hover:text-[#828C74] transition-colors font-light block"
+                  className="text-xs sm:text-sm text-white/90 hover:text-[#828C74] transition-colors font-light block whitespace-nowrap"
                 >
                   {STUDIO_INFO.phone}
                 </a>
@@ -106,7 +106,7 @@ export default function Contact({ onNavigate }) {
                   href={STUDIO_INFO.whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[11px] text-[#25D366] hover:underline font-mono inline-flex items-center gap-1 mt-1"
+                  className="text-[11px] text-[#25D366] hover:underline font-mono inline-flex items-center gap-1 mt-1 whitespace-nowrap"
                 >
                   <MessageCircle size={11} /> [WhatsApp]
                 </a>
@@ -394,8 +394,8 @@ export default function Contact({ onNavigate }) {
                       rel="noopener noreferrer"
                       className="text-xs text-white/70 hover:text-[#25D366] transition-colors flex items-center justify-center gap-1.5 font-mono py-1 sm:py-0"
                     >
-                      <MessageCircle size={14} className="text-[#25D366]" />
-                      <span>WhatsApp: {STUDIO_INFO.phone}</span>
+                      <MessageCircle size={14} className="text-[#25D366] shrink-0" />
+                      <span className="whitespace-nowrap">WhatsApp: {STUDIO_INFO.phone}</span>
                     </a>
                   </div>
                 </form>
