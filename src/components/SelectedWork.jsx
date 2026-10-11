@@ -326,7 +326,7 @@ function SelectedWorkCard({
         <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-3.5 text-white z-10 flex flex-col justify-end">
           <div className="mb-2">
             <div className="flex items-baseline justify-between gap-2 mb-0.5">
-              <h3 className="font-serif text-xs sm:text-sm font-normal tracking-tight text-white drop-shadow-sm group-hover:text-amber-200 transition-colors">
+              <h3 className="font-serif text-xs sm:text-sm font-semibold tracking-tight text-white drop-shadow-sm group-hover:text-amber-200 transition-colors">
                 {project.name}
               </h3>
               <span className="text-[9px] font-mono text-[#D9CEBE] shrink-0 font-light">
@@ -1054,7 +1054,7 @@ export default function SelectedWork({ onSelectProject }) {
         {/* SECTION HEADER: Clean Title Only                                      */}
         {/* ===================================================================== */}
         <div className="pb-1 sm:pb-1.5 border-b border-[#1C1B19]/10 dark:border-white/10 mb-1.5 sm:mb-2">
-          <h2 className="font-serif text-base xs:text-lg sm:text-xl lg:text-2xl font-normal tracking-tight">
+          <h2 className="font-serif text-base xs:text-lg sm:text-xl lg:text-2xl font-bold tracking-tight">
             SELECTED WORK
           </h2>
         </div>

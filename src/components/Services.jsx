@@ -121,7 +121,7 @@ export default function Services() {
               <span className="w-6 sm:w-8 h-px bg-[#1C1B19]/30 dark:bg-white/30" />
               <span>DISCIPLINES & CAPABILITIES</span>
             </div>
-            <h2 className="font-serif text-base sm:text-lg font-normal tracking-tight">
+            <h2 className="font-serif text-base sm:text-lg font-bold tracking-tight">
               SERVICES
             </h2>
           </div>

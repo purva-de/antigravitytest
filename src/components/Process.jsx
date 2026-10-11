@@ -13,7 +13,7 @@ export default function Process() {
               <span className="w-6 sm:w-8 h-px bg-[#1C1B19]/30 dark:bg-white/30" />
               <span>METHODOLOGY & EXECUTION</span>
             </div>
-            <h2 className="font-serif text-sm sm:text-base lg:text-lg font-normal tracking-tight">
+            <h2 className="font-serif text-sm sm:text-base lg:text-lg font-bold tracking-tight">
               THE PROCESS
             </h2>
           </div>

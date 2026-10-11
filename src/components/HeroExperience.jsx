@@ -317,7 +317,7 @@ export default function HeroExperience({ onExploreProjects }) {
                     <span>01 / Living Sanctuary</span>
                   </div>
 
-                  <h1 className="font-serif text-xl xs:text-2xl sm:text-3xl lg:text-[32px] font-normal tracking-wide text-white leading-tight drop-shadow-md">
+                  <h1 className="font-serif text-xl xs:text-2xl sm:text-3xl lg:text-[32px] font-bold tracking-wide text-white leading-tight drop-shadow-md">
                     Consilio Studios
                   </h1>
 
@@ -363,7 +363,7 @@ export default function HeroExperience({ onExploreProjects }) {
                     <span>02 / Botanical Niche</span>
                   </div>
 
-                  <h2 className="font-serif text-lg xs:text-xl sm:text-2xl lg:text-[28px] font-normal tracking-wide text-white leading-tight drop-shadow-md">
+                  <h2 className="font-serif text-lg xs:text-xl sm:text-2xl lg:text-[28px] font-bold tracking-wide text-white leading-tight drop-shadow-md">
                     Living Room
                   </h2>
 
@@ -397,7 +397,7 @@ export default function HeroExperience({ onExploreProjects }) {
                     <span>03 / Kids Bedroom</span>
                   </div>
 
-                  <h2 className="font-serif text-lg xs:text-xl sm:text-2xl lg:text-[28px] font-normal tracking-wide text-white leading-tight drop-shadow-md">
+                  <h2 className="font-serif text-lg xs:text-xl sm:text-2xl lg:text-[28px] font-bold tracking-wide text-white leading-tight drop-shadow-md">
                     Kids Bedroom
                   </h2>
 

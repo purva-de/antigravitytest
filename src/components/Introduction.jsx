@@ -42,9 +42,9 @@ export default function Introduction() {
           {/* Left: Editorial Statement & Philosophy */}
           <div className="lg:col-span-7 flex flex-col justify-between">
             <div>
-              <h2 className="font-serif text-base xs:text-lg sm:text-2xl lg:text-3xl font-normal leading-[1.12] tracking-tight text-[#1C1B19] dark:text-[#FAF8F5]">
+              <h2 className="font-serif text-base xs:text-lg sm:text-2xl lg:text-3xl font-bold leading-[1.12] tracking-tight text-[#1C1B19] dark:text-[#FAF8F5]">
                 DESIGNING SPACES
-                <span className="block text-[#4F5542] dark:text-[#D4B993] font-normal mt-1">
+                <span className="block text-[#4F5542] dark:text-[#D4B993] font-bold mt-1">
                   WITH INTENTION.
                 </span>
               </h2>

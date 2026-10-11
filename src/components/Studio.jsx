@@ -77,9 +77,9 @@ export default function Studio() {
           
           {/* Left: Punchy Core Philosophy (Zero Fluff) */}
           <div className="lg:col-span-7 flex flex-col justify-center">
-            <h2 className="font-serif text-base xs:text-lg sm:text-xl lg:text-[21px] font-normal leading-[1.16] tracking-tight text-[#1C1B19] dark:text-[#FAF8F5]">
+            <h2 className="font-serif text-base xs:text-lg sm:text-xl lg:text-[21px] font-bold leading-[1.16] tracking-tight text-[#1C1B19] dark:text-[#FAF8F5]">
               Good design begins with{' '}
-              <span className="text-[#9A3412] dark:text-[#FDBA74] font-normal">
+              <span className="text-[#9A3412] dark:text-[#FDBA74] font-bold">
                 good thinking.
               </span>
             </h2>

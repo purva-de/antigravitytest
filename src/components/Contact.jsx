@@ -53,7 +53,7 @@ export default function Contact({ onNavigate }) {
           
           {/* LEFT: Grand Editorial Headline & Consultation Button */}
           <div className="lg:col-span-6">
-            <h2 className="font-serif text-lg xs:text-xl sm:text-3xl lg:text-4xl font-normal leading-[1.08] tracking-tight text-white">
+            <h2 className="font-serif text-lg xs:text-xl sm:text-3xl lg:text-4xl font-bold leading-[1.08] tracking-tight text-white">
               Elevate your<br />
               architectural<br />
               <span className="italic text-[#828C74] font-light">

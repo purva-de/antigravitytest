@@ -168,7 +168,7 @@ export default function ProjectDetail({ project, onClose, onSelectProject }) {
                 <span>•</span>
                 <span>{project.projectType}</span>
               </div>
-              <h1 id="project-title" className="font-serif text-base sm:text-lg lg:text-xl font-normal tracking-tight text-[#1C1B19] dark:text-[#FAF8F5] leading-tight">
+              <h1 id="project-title" className="font-serif text-base sm:text-lg lg:text-xl font-bold tracking-tight text-[#1C1B19] dark:text-[#FAF8F5] leading-tight">
                 {project.name}
               </h1>
               <p className="font-serif italic text-xs text-[#57544E] dark:text-[#D9CEBE] mt-0.5 font-light line-clamp-1">
