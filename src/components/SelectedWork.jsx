@@ -385,6 +385,10 @@ function SelectedWorkCarousel({ onOpenSpecsModal, isModalOpen }) {
     step: 274
   });
 
+  // Active space index for interactive directional indicators
+  const [activeCriteriaIndex, setActiveCriteriaIndex] = useState(0);
+  const activeCriteriaIndexRef = useRef(0);
+
   // Animation & Motion Refs
   const currentOffsetRef = useRef(0);
   const targetOffsetRef = useRef(0);
@@ -523,6 +527,15 @@ function SelectedWorkCarousel({ onOpenSpecsModal, isModalOpen }) {
         cardEl.style.zIndex = '10';
       }
 
+      // Track active criteria for interactive direction indicator
+      const currentCriteria =
+        ((Math.round(offset / step) % CRITERIA_COUNT) + CRITERIA_COUNT) %
+        CRITERIA_COUNT;
+      if (currentCriteria !== activeCriteriaIndexRef.current) {
+        activeCriteriaIndexRef.current = currentCriteria;
+        setActiveCriteriaIndex(currentCriteria);
+      }
+
       rafIdRef.current = requestAnimationFrame(animate);
     },
     [dimensions, isModalOpen]
@@ -543,6 +556,21 @@ function SelectedWorkCarousel({ onOpenSpecsModal, isModalOpen }) {
   const handleNext = useCallback(() => {
     targetOffsetRef.current += dimensions.step;
   }, [dimensions.step]);
+
+  const handleJumpTo = useCallback(
+    (index) => {
+      const current =
+        ((Math.round(targetOffsetRef.current / dimensions.step) %
+          CRITERIA_COUNT) +
+          CRITERIA_COUNT) %
+        CRITERIA_COUNT;
+      let diff = index - current;
+      if (diff > CRITERIA_COUNT / 2) diff -= CRITERIA_COUNT;
+      if (diff < -CRITERIA_COUNT / 2) diff += CRITERIA_COUNT;
+      targetOffsetRef.current += diff * dimensions.step;
+    },
+    [dimensions.step]
+  );
 
   // 4. Mouse Drag Handlers
   const handleMouseDown = (e) => {
@@ -663,26 +691,54 @@ function SelectedWorkCarousel({ onOpenSpecsModal, isModalOpen }) {
       </div>
 
       {/* ===================================================================== */}
-      {/* NAVIGATION CONTROLS: Centered (←) (→) Circles matching Reference       */}
+      {/* INTERACTIVE DIRECTIONAL CONTROLS: Compact Architectural Capsule Dock   */}
       {/* ===================================================================== */}
-      <div className="mt-3 sm:mt-5 flex items-center justify-center gap-2 sm:gap-3">
-        <button
-          onClick={handlePrev}
-          className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 rounded-full border border-[#1C1B19]/35 dark:border-white/35 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs cursor-pointer"
-          aria-label="Previous criteria (←)"
-          title="Previous criteria (←)"
-        >
-          <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-        </button>
+      <div className="mt-2.5 sm:mt-3.5 flex items-center justify-center">
+        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 backdrop-blur-md shadow-xs">
+          {/* Previous Direction Trigger (Compact, Animated Arrow Nudge) */}
+          <button
+            onClick={handlePrev}
+            className="w-7 h-7 rounded-full bg-white dark:bg-[#1A1918] border border-black/10 dark:border-white/15 hover:border-black/35 dark:hover:border-white/45 flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-90 shadow-2xs group cursor-pointer"
+            aria-label="Previous space (←)"
+            title="Previous space (←)"
+          >
+            <ArrowLeft className="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-x-0.5" />
+          </button>
 
-        <button
-          onClick={handleNext}
-          className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 rounded-full border border-[#1C1B19]/35 dark:border-white/35 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs cursor-pointer"
-          aria-label="Next criteria (→)"
-          title="Next criteria (→)"
-        >
-          <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-        </button>
+          {/* Interactive Directional Space Track (5 Architectural Spaces) */}
+          <div
+            className="flex items-center gap-1.5 px-1.5"
+            role="tablist"
+            aria-label="Selected spaces directional indicator"
+          >
+            {SELECTED_CRITERIA_PROJECTS.map((p, idx) => {
+              const isActive = activeCriteriaIndex === idx;
+              return (
+                <button
+                  key={p.id}
+                  onClick={() => handleJumpTo(idx)}
+                  className={`transition-all duration-300 rounded-full cursor-pointer ${
+                    isActive
+                      ? 'w-5 h-1.5 bg-[#1C1B19] dark:bg-[#FAF8F5] shadow-xs'
+                      : 'w-1.5 h-1.5 bg-black/25 dark:bg-white/30 hover:bg-black/50 dark:hover:bg-white/60 hover:scale-125'
+                  }`}
+                  aria-label={`Jump to space ${p.criteriaNum}: ${p.criteriaTitle}`}
+                  title={`${p.criteriaNum} • ${p.criteriaTitle}`}
+                />
+              );
+            })}
+          </div>
+
+          {/* Next Direction Trigger (Compact, Animated Arrow Nudge) */}
+          <button
+            onClick={handleNext}
+            className="w-7 h-7 rounded-full bg-white dark:bg-[#1A1918] border border-black/10 dark:border-white/15 hover:border-black/35 dark:hover:border-white/45 flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-90 shadow-2xs group cursor-pointer"
+            aria-label="Next space (→)"
+            title="Next space (→)"
+          >
+            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
+          </button>
+        </div>
       </div>
     </div>
   );
