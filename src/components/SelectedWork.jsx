@@ -33,6 +33,7 @@ const SELECTED_CRITERIA_PROJECTS = CRITERIA_CONFIG.map((cfg) => {
   };
 });
 
+
 // Repeat 5 criteria 3 times = 15 virtual cards for seamless infinite flow
 const VIRTUAL_COUNT = 15;
 const CRITERIA_COUNT = SELECTED_CRITERIA_PROJECTS.length; // 5
@@ -132,17 +133,16 @@ function getDetailedSpecs(project) {
 }
 
 // =============================================================================
-// INDIVIDUAL 3D CAROUSEL CARD COMPONENT
+// INDIVIDUAL FLAT CAROUSEL CARD COMPONENT (Clean, Simple, No Fading)
 // =============================================================================
-function CurvedPanoramaCard({
+function SelectedWorkCard({
   project,
   virtualIndex,
   cardWidth,
   cardHeight,
   onOpenSpecsModal,
   dragDistRef,
-  setCardElementRef,
-  setShadowElementRef
+  setCardElementRef
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
@@ -241,12 +241,11 @@ function CurvedPanoramaCard({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       data-cursor="view"
-      className="absolute top-0 cursor-pointer select-none rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 shadow-2xl bg-[#EFECE6] dark:bg-[#181716] group transition-shadow duration-300"
+      className="absolute top-0 cursor-pointer select-none rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 shadow-lg bg-[#EFECE6] dark:bg-[#181716] group transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
       style={{
         width: `${cardWidth}px`,
         height: `${cardHeight}px`,
         left: `calc(50% - ${cardWidth / 2}px)`,
-        transformOrigin: '50% 50%',
         willChange: 'transform'
       }}
       role="button"
@@ -259,13 +258,6 @@ function CurvedPanoramaCard({
         }
       }}
     >
-      {/* Dynamic 3D Atmospheric Lighting Shadow Overlay */}
-      <div
-        ref={(el) => setShadowElementRef(virtualIndex, el)}
-        className="absolute inset-0 bg-black pointer-events-none z-20 transition-opacity duration-75"
-        style={{ opacity: 0 }}
-      />
-
       {/* ===================================================================== */}
       {/* MEDIA FRAME: High-Res Poster + Smooth Hover Video                      */}
       {/* ===================================================================== */}
@@ -276,7 +268,7 @@ function CurvedPanoramaCard({
           alt={`${project.name} architectural space`}
           loading="lazy"
           draggable="false"
-          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 pointer-events-none select-none"
+          className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 pointer-events-none select-none"
         />
 
         {/* Video Overlay on Hover */}
@@ -290,26 +282,27 @@ function CurvedPanoramaCard({
             webkit-playsinline="true"
             loop
             onTimeUpdate={handleTimeUpdate}
-            className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-500 ease-out ${
+            className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-300 ease-out ${
               isVideoVisible ? 'opacity-100' : 'opacity-0'
             }`}
           />
         )}
 
-        {/* Cinematic Gradient Vignette at Top and Bottom */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/60 pointer-events-none" />
+        {/* Subtle Top & Bottom Gradient (Text Protection Only - No Overall Fading) */}
+        <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-black/55 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black/85 via-black/40 to-transparent pointer-events-none" />
 
         {/* Top Badges & Controls */}
         <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between z-10">
           {/* Criteria Tag Pill (e.g. 01 • LIVING ROOM) */}
-          <span className="px-2 py-0.5 rounded-full bg-black/60 dark:bg-black/75 backdrop-blur-md text-[8px] sm:text-[8.5px] font-mono font-medium tracking-widest text-[#FAF8F5] uppercase border border-white/15 group-hover:border-white/35 transition-colors shadow-sm">
+          <span className="px-2.5 py-0.5 rounded-full bg-black/65 dark:bg-black/75 backdrop-blur-md text-[8px] sm:text-[8.5px] font-mono font-medium tracking-widest text-[#FAF8F5] uppercase border border-white/20 group-hover:border-white/40 transition-colors shadow-sm">
             {project.criteriaNum} • {project.criteriaTitle}
           </span>
 
           {/* Quick Details / Fullscreen Expand Icon */}
           <button
             onClick={handleFullscreenClick}
-            className="w-6 h-6 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md text-white flex items-center justify-center transition-all border border-white/20 active:scale-90 cursor-pointer"
+            className="w-6 h-6 rounded-full bg-black/65 hover:bg-black/90 backdrop-blur-md text-white flex items-center justify-center transition-all border border-white/20 active:scale-90 cursor-pointer"
             title="Open specifications & gallery"
             aria-label={`Open specifications & gallery for ${project.name}`}
           >
@@ -340,17 +333,17 @@ function CurvedPanoramaCard({
                 {project.area}
               </span>
             </div>
-            <p className="text-[10px] sm:text-[10.5px] text-[#E5E0D8]/80 font-light line-clamp-1">
+            <p className="text-[10px] sm:text-[10.5px] text-[#E5E0D8]/85 font-light line-clamp-1">
               {project.subtitle}
             </p>
           </div>
 
-          {/* Action Row: SPECS trigger button + WhatsApp contact icon (Completed badge removed) */}
-          <div className="pt-2 border-t border-white/15 flex items-center justify-between">
+          {/* Action Row: SPECS trigger button + WhatsApp contact icon */}
+          <div className="pt-2 border-t border-white/20 flex items-center justify-between">
             <button
               type="button"
               onClick={handleSpecsButtonClick}
-              className="px-2 py-0.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-[8px] sm:text-[8.5px] font-mono tracking-wider uppercase text-[#FAF8F5]/90 hover:text-white flex items-center gap-1 transition-all active:scale-95 cursor-pointer shadow-xs"
+              className="px-2.5 py-0.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/25 text-[8px] sm:text-[8.5px] font-mono tracking-wider uppercase text-[#FAF8F5] hover:text-white flex items-center gap-1 transition-all active:scale-95 cursor-pointer shadow-xs"
               title={`View architectural specifications for ${project.criteriaTitle}`}
               aria-label={`View architectural specifications for ${project.criteriaTitle}`}
             >
@@ -377,24 +370,19 @@ function CurvedPanoramaCard({
 }
 
 // =============================================================================
-// MAIN 3D CURVED PANORAMA CAROUSEL COMPONENT
+// MAIN FLAT HORIZONTAL CAROUSEL COMPONENT (Simple Graphics, No Fading)
 // =============================================================================
-function CurvedPanoramaCarousel({ onOpenSpecsModal, isModalOpen }) {
+function SelectedWorkCarousel({ onOpenSpecsModal, isModalOpen }) {
   const containerRef = useRef(null);
   const cardElementsRef = useRef([]);
-  const shadowElementsRef = useRef([]);
 
-  // Responsive Layout Parameters
+  // Responsive Layout Parameters (8px grid spacing: 16px mobile, 24px desktop)
   const [dimensions, setDimensions] = useState({
     viewportWidth: typeof window !== 'undefined' ? window.innerWidth : 1200,
-    cardWidth: 360,
-    cardHeight: 500,
+    cardWidth: 240,
+    cardHeight: 330,
     cardGap: 24,
-    step: 384,
-    radius: 1100,
-    perspective: 1100,
-    curvatureFactor: 0.85,
-    depthFactor: 1.25
+    step: 264
   });
 
   // Animation & Motion Refs
@@ -410,37 +398,25 @@ function CurvedPanoramaCarousel({ onOpenSpecsModal, isModalOpen }) {
   const lastTimeRef = useRef(0);
   const rafIdRef = useRef(null);
 
-  // 1. Responsive Resizing (Sleek Compact Proportions)
+  // 1. Responsive Resizing (Simple Flat Proportions)
   const updateDimensions = useCallback(() => {
     if (!containerRef.current) return;
     const w = containerRef.current.clientWidth || window.innerWidth;
 
-    let cWidth, cHeight, cGap, rad, persp, curve, depth;
+    let cWidth, cHeight, cGap;
 
     if (w < 640) {
-      cWidth = Math.min(170, Math.floor(w * 0.52));
-      cHeight = Math.floor(cWidth * 1.36); // ~230px
-      cGap = 4;
-      rad = 480;
-      persp = 680;
-      curve = 0.90;
-      depth = 1.30;
+      cWidth = Math.min(210, Math.floor(w * 0.58));
+      cHeight = Math.floor(cWidth * 1.38); // ~280px
+      cGap = 16;
     } else if (w < 1024) {
-      cWidth = 195;
-      cHeight = 265;
-      cGap = 4;
-      rad = 620;
-      persp = 760;
-      curve = 0.88;
-      depth = 1.25;
+      cWidth = 230;
+      cHeight = 315;
+      cGap = 16;
     } else {
-      cWidth = 220;
-      cHeight = 300;
-      cGap = 5;
-      rad = 750;
-      persp = 850;
-      curve = 0.85;
-      depth = 1.25;
+      cWidth = 250;
+      cHeight = 340;
+      cGap = 24;
     }
 
     setDimensions({
@@ -448,11 +424,7 @@ function CurvedPanoramaCarousel({ onOpenSpecsModal, isModalOpen }) {
       cardWidth: cWidth,
       cardHeight: cHeight,
       cardGap: cGap,
-      step: cWidth + cGap,
-      radius: rad,
-      perspective: persp,
-      curvatureFactor: curve,
-      depthFactor: depth
+      step: cWidth + cGap
     });
   }, []);
 
@@ -477,16 +449,12 @@ function CurvedPanoramaCarousel({ onOpenSpecsModal, isModalOpen }) {
     };
   }, [updateDimensions]);
 
-  // Set card and shadow element refs
+  // Set card element refs
   const setCardElementRef = useCallback((idx, el) => {
     cardElementsRef.current[idx] = el;
   }, []);
 
-  const setShadowElementRef = useCallback((idx, el) => {
-    shadowElementsRef.current[idx] = el;
-  }, []);
-
-  // 2. High-Performance 60fps/120fps Cylindrical Projection Loop
+  // 2. High-Performance Flat 2D Animation Loop (Simple, No Fading)
   const animate = useCallback(
     (time) => {
       if (!lastTimeRef.current) lastTimeRef.current = time;
@@ -496,9 +464,6 @@ function CurvedPanoramaCarousel({ onOpenSpecsModal, isModalOpen }) {
       const {
         step,
         viewportWidth,
-        radius,
-        curvatureFactor,
-        depthFactor,
         cardWidth
       } = dimensions;
 
@@ -533,10 +498,9 @@ function CurvedPanoramaCarousel({ onOpenSpecsModal, isModalOpen }) {
 
       const offset = currentOffsetRef.current;
 
-      // Calculate 3D cylindrical transform for each of the 15 virtual cards
+      // Calculate simple flat 2D transform for each of the 15 virtual cards
       for (let k = 0; k < VIRTUAL_COUNT; k++) {
         const cardEl = cardElementsRef.current[k];
-        const shadowEl = shadowElementsRef.current[k];
         if (!cardEl) continue;
 
         // Position on the continuous track wrapped symmetrically around center
@@ -545,7 +509,7 @@ function CurvedPanoramaCarousel({ onOpenSpecsModal, isModalOpen }) {
         if (x > trackLength / 2) x -= trackLength;
 
         // Visibility Culling for off-screen cards
-        const isVisible = Math.abs(x) < viewportWidth / 2 + cardWidth + 120;
+        const isVisible = Math.abs(x) < viewportWidth / 2 + cardWidth + 80;
 
         if (!isVisible) {
           cardEl.style.visibility = 'hidden';
@@ -554,23 +518,9 @@ function CurvedPanoramaCarousel({ onOpenSpecsModal, isModalOpen }) {
 
         cardEl.style.visibility = 'visible';
 
-        // 3D Cylindrical Geometry Projection
-        const theta = x / radius; // angle in radians
-        const rotY = -theta * (180 / Math.PI) * curvatureFactor;
-        const transZ = -radius * (1 - Math.cos(theta)) * depthFactor;
-        const transX = radius * Math.sin(theta);
-
-        cardEl.style.transform = `translate3d(${transX.toFixed(2)}px, 0px, ${transZ.toFixed(2)}px) rotateY(${rotY.toFixed(2)}deg)`;
-        cardEl.style.zIndex = `${Math.round(100 - Math.abs(x) / 10)}`;
-
-        // Atmospheric Depth Lighting
-        if (shadowEl) {
-          const shadowOpacity = Math.min(
-            0.45,
-            Math.pow(Math.abs(x) / (radius * 1.35), 1.5)
-          );
-          shadowEl.style.opacity = shadowOpacity.toFixed(3);
-        }
+        // Simple Flat 2D Transform (Zero 3D rotation, zero depth distortion, zero fading)
+        cardEl.style.transform = `translate3d(${x.toFixed(2)}px, 0px, 0px)`;
+        cardEl.style.zIndex = '10';
       }
 
       rafIdRef.current = requestAnimationFrame(animate);
@@ -671,9 +621,9 @@ function CurvedPanoramaCarousel({ onOpenSpecsModal, isModalOpen }) {
   }, []);
 
   return (
-    <div className="w-full relative py-0.5 sm:py-1">
+    <div className="w-full relative py-1 sm:py-2">
       {/* ===================================================================== */}
-      {/* 3D CYLINDRICAL PANORAMA STAGE                                          */}
+      {/* FLAT CAROUSEL STAGE (Clean, Simple, Zero Edge Fading)                   */}
       {/* ===================================================================== */}
       <div
         ref={containerRef}
@@ -687,29 +637,18 @@ function CurvedPanoramaCarousel({ onOpenSpecsModal, isModalOpen }) {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        className="relative w-full overflow-hidden select-none cursor-grab active:cursor-grabbing flex items-center justify-center"
+        className="relative w-full overflow-hidden select-none cursor-grab active:cursor-grabbing flex items-center justify-center py-2"
         style={{
-          perspective: `${dimensions.perspective}px`,
-          perspectiveOrigin: '50% 50%',
-          height: `${dimensions.cardHeight + 10}px`
+          height: `${dimensions.cardHeight + 16}px`
         }}
         role="region"
         aria-roledescription="carousel"
-        aria-label="3D Curved Panorama of Selected Work"
+        aria-label="Carousel of Selected Work"
       >
-        {/* Soft Left and Right Edge Vignette Fades */}
-        <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-20 bg-gradient-to-r from-[#FAF8F5] dark:from-[#121110] to-transparent pointer-events-none z-30" />
-        <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-20 bg-gradient-to-l from-[#FAF8F5] dark:from-[#121110] to-transparent pointer-events-none z-30" />
-
-        {/* 3D Stage Container */}
-        <div
-          className="relative w-full h-full flex items-center justify-center pointer-events-auto"
-          style={{
-            transformStyle: 'preserve-3d'
-          }}
-        >
+        {/* Simple Flat Track */}
+        <div className="relative w-full h-full flex items-center justify-center pointer-events-auto">
           {virtualCards.map(({ key, virtualIndex, project }) => (
-            <CurvedPanoramaCard
+            <SelectedWorkCard
               key={key}
               project={project}
               virtualIndex={virtualIndex}
@@ -718,7 +657,6 @@ function CurvedPanoramaCarousel({ onOpenSpecsModal, isModalOpen }) {
               onOpenSpecsModal={onOpenSpecsModal}
               dragDistRef={dragDistRef}
               setCardElementRef={setCardElementRef}
-              setShadowElementRef={setShadowElementRef}
             />
           ))}
         </div>
@@ -727,23 +665,23 @@ function CurvedPanoramaCarousel({ onOpenSpecsModal, isModalOpen }) {
       {/* ===================================================================== */}
       {/* NAVIGATION CONTROLS: Centered (←) (→) Circles matching Reference       */}
       {/* ===================================================================== */}
-      <div className="mt-2.5 sm:mt-4 flex items-center justify-center gap-2 sm:gap-3">
+      <div className="mt-3 sm:mt-5 flex items-center justify-center gap-2 sm:gap-3">
         <button
           onClick={handlePrev}
-          className="w-7.5 h-7.5 xs:w-8 xs:h-8 sm:w-10 sm:h-10 rounded-full border border-[#1C1B19]/35 dark:border-white/35 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs cursor-pointer"
+          className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 rounded-full border border-[#1C1B19]/35 dark:border-white/35 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs cursor-pointer"
           aria-label="Previous criteria (←)"
           title="Previous criteria (←)"
         >
-          <ArrowLeft className="w-3 h-3 xs:w-3.5 xs:h-3.5 sm:w-4 sm:h-4" />
+          <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
         </button>
 
         <button
           onClick={handleNext}
-          className="w-7.5 h-7.5 xs:w-8 xs:h-8 sm:w-10 sm:h-10 rounded-full border border-[#1C1B19]/35 dark:border-white/35 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs cursor-pointer"
+          className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 rounded-full border border-[#1C1B19]/35 dark:border-white/35 hover:border-[#1C1B19] dark:hover:border-white flex items-center justify-center text-[#1C1B19] dark:text-[#FAF8F5] hover:bg-[#1C1B19] hover:text-[#FAF8F5] dark:hover:bg-[#FAF8F5] dark:hover:text-[#1C1B19] transition-all duration-200 active:scale-95 shadow-xs cursor-pointer"
           aria-label="Next criteria (→)"
           title="Next criteria (→)"
         >
-          <ArrowRight className="w-3 h-3 xs:w-3.5 xs:h-3.5 sm:w-4 sm:h-4" />
+          <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
         </button>
       </div>
     </div>
@@ -1066,9 +1004,9 @@ export default function SelectedWork({ onSelectProject }) {
         </div>
 
         {/* ===================================================================== */}
-        {/* 3D CURVED PANORAMA CAROUSEL (5 CRITERIA, CONTINUOUS RIGHT-TO-LEFT)    */}
+        {/* FLAT CONTINUOUS FLOW CAROUSEL (5 CRITERIA, SIMPLE GRAPHICS, NO FADING)*/}
         {/* ===================================================================== */}
-        <CurvedPanoramaCarousel
+        <SelectedWorkCarousel
           onOpenSpecsModal={(proj) => setActiveModalProject(proj)}
           isModalOpen={Boolean(activeModalProject)}
         />
