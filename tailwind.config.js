@@ -32,12 +32,13 @@ export default {
         }
       },
       fontFamily: {
-        serif: ['"Good Times"', 'sans-serif'],
-        display: ['"Good Times"', 'sans-serif'],
-        sans: ['"Noah Text"', 'system-ui', 'sans-serif'],
-        body: ['"Noah Text"', 'system-ui', 'sans-serif'],
-        mono: ['"ITC Blair"', '"Noah Text"', 'sans-serif'],
-        blair: ['"ITC Blair"', 'sans-serif'],
+        serif: ['"Modamode"', 'sans-serif'],
+        display: ['"Modamode"', 'sans-serif'],
+        sans: ['"Modamode"', 'system-ui', 'sans-serif'],
+        body: ['"Modamode"', 'system-ui', 'sans-serif'],
+        mono: ['"Modamode"', 'sans-serif'],
+        blair: ['"Modamode"', 'sans-serif'],
+        modamode: ['"Modamode"', 'sans-serif'],
       },
       spacing: {
         // 8px grid system
