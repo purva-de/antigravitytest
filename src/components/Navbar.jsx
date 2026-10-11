@@ -68,7 +68,7 @@ export default function Navbar({ activeSection, onNavigate }) {
             aria-label="Consilio Studios Home"
           >
             {/* The Official Uploaded Logo: White over hero video, Solid Black after scrolling */}
-            <div className="w-[28px] h-[28px] xs:w-[32px] xs:h-[32px] sm:w-[38px] sm:h-[38px] flex items-center justify-center transition-transform duration-300 group-hover:scale-105 shrink-0">
+            <div className="w-[32px] h-[32px] xs:w-[36px] xs:h-[36px] sm:w-[38px] sm:h-[38px] flex items-center justify-center transition-transform duration-300 group-hover:scale-105 shrink-0">
               <img
                 src="/logo.png"
                 alt="Consilio Studios Logo"
@@ -82,7 +82,7 @@ export default function Navbar({ activeSection, onNavigate }) {
             
             <div className="flex flex-col shrink-0">
               <span
-                className={`font-serif text-[10px] xs:text-[11px] sm:text-sm md:text-base font-normal tracking-wide leading-tight whitespace-nowrap transition-colors duration-300 ${
+                className={`font-serif text-[15px] xs:text-[16.5px] sm:text-base md:text-lg font-normal tracking-wide leading-tight whitespace-nowrap transition-colors duration-300 ${
                   isScrolled
                     ? 'text-[#1C1B19]'
                     : 'text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]'
@@ -91,7 +91,7 @@ export default function Navbar({ activeSection, onNavigate }) {
                 Consilio Studios
               </span>
               <span
-                className={`text-[6.5px] xs:text-[7px] sm:text-[8px] tracking-[0.14em] sm:tracking-[0.2em] font-mono uppercase font-medium whitespace-nowrap transition-colors duration-300 ${
+                className={`text-[8px] xs:text-[9px] sm:text-[8px] tracking-[0.14em] sm:tracking-[0.2em] font-mono uppercase font-medium whitespace-nowrap transition-colors duration-300 ${
                   isScrolled
                     ? 'text-[#57544E]'
                     : 'text-[#D9CEBE] drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]'
@@ -171,10 +171,10 @@ export default function Navbar({ activeSection, onNavigate }) {
         >
           <div className="flex items-center justify-between border-b border-[#1C1B19]/10 pb-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 flex items-center justify-center shrink-0">
+              <div className="w-9 h-9 flex items-center justify-center shrink-0">
                 <img src="/logo.png" alt="Consilio Studios Logo" className="w-full h-full object-contain filter brightness-0 transition-all duration-300" />
               </div>
-              <span className="font-serif text-xs xs:text-sm tracking-wider text-[#1C1B19]">Consilio Studios</span>
+              <span className="font-serif text-base xs:text-lg tracking-wider text-[#1C1B19]">Consilio Studios</span>
             </div>
             <button
               onClick={() => setMobileMenuOpen(false)}
