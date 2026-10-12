@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { MessageCircle, Instagram, Linkedin, ArrowRight } from 'lucide-react';
 import { STUDIO_INFO } from '../data/projectsData';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -11,7 +11,6 @@ export default function HeroExperience({ onExploreProjects }) {
   const videoRef = useRef(null);
   const mobileVideoRef = useRef(null);
 
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [currentChapter, setCurrentChapter] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isReady, setIsReady] = useState(false);
@@ -29,8 +28,10 @@ export default function HeroExperience({ onExploreProjects }) {
   const animFrameIdRef = useRef(null);
   const autoPlayTimerRef = useRef(null);
 
-  // 1. Preload all 145 WebP frames of the authentic Consilio main video
+  // 1. Preload all 145 WebP frames of the authentic Consilio main video (Desktop Canvas only)
   useEffect(() => {
+    if (isMobileOrTablet) return;
+
     let loadedCount = 0;
     const images = [];
 
@@ -57,9 +58,9 @@ export default function HeroExperience({ onExploreProjects }) {
     return () => {
       frameImagesRef.current = [];
     };
-  }, []);
+  }, [isMobileOrTablet]);
 
-  // 2. High-DPI Edge-to-Edge Canvas Renderer (Zero black space / zero letterboxing)
+  // 2. High-DPI Edge-to-Edge Canvas Renderer (Desktop)
   const renderFrame = (frameIndex) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -100,7 +101,7 @@ export default function HeroExperience({ onExploreProjects }) {
     ctx.restore();
   };
 
-  // Touch swipe scrubbing for mobile
+  // Touch swipe scrubbing for desktop/touch-canvas
   const touchStartXRef = useRef(0);
   const touchStartFrameRef = useRef(0);
 
@@ -120,7 +121,7 @@ export default function HeroExperience({ onExploreProjects }) {
     }
   };
 
-  // 3. Pause desktop autoplay when scrolled out of view or on mobile
+  // 3. Pause desktop autoplay when scrolled out of view (Desktop only)
   useEffect(() => {
     if (isMobileOrTablet) {
       if (autoPlayTimerRef.current) {
@@ -146,12 +147,13 @@ export default function HeroExperience({ onExploreProjects }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isAutoPlaying, isMobileOrTablet]);
 
-  // 4. Smooth Animation Loop via requestAnimationFrame
+  // 4. Smooth Animation Loop via requestAnimationFrame (Desktop Canvas only)
   useEffect(() => {
+    if (isMobileOrTablet) return;
+
     let lastRendered = -1;
 
     const loop = () => {
-      // Smooth interpolation for slow, cinematic Steadicam feel
       const diff = targetFrameRef.current - currentFrameRef.current;
       currentFrameRef.current += diff * 0.1;
 
@@ -160,17 +162,16 @@ export default function HeroExperience({ onExploreProjects }) {
         Math.max(0, Math.round(currentFrameRef.current))
       );
 
-      const normProgress = currentFrameRef.current / (TOTAL_FRAMES - 1);
-      setScrollProgress(normProgress);
-
-      // Chapter detection based on video frame progression
+      // Chapter detection based on video frame progression (145 frames total)
+      let chapter = 0;
       if (currentIdx < 45) {
-        setCurrentChapter(0);
+        chapter = 0;
       } else if (currentIdx < 95) {
-        setCurrentChapter(1);
+        chapter = 1;
       } else {
-        setCurrentChapter(2);
+        chapter = 2;
       }
+      setCurrentChapter((prev) => (prev !== chapter ? chapter : prev));
 
       if (currentIdx !== lastRendered) {
         renderFrame(currentIdx);
@@ -185,11 +186,11 @@ export default function HeroExperience({ onExploreProjects }) {
     return () => {
       if (animFrameIdRef.current) cancelAnimationFrame(animFrameIdRef.current);
     };
-  }, []);
+  }, [isMobileOrTablet]);
 
-  // Auto-play / Walkthrough mode timer
+  // 5. Desktop Auto-play timer
   useEffect(() => {
-    if (!isAutoPlaying) {
+    if (isMobileOrTablet || !isAutoPlaying) {
       if (autoPlayTimerRef.current) {
         clearInterval(autoPlayTimerRef.current);
         autoPlayTimerRef.current = null;
@@ -209,9 +210,9 @@ export default function HeroExperience({ onExploreProjects }) {
         autoPlayTimerRef.current = null;
       }
     };
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, isMobileOrTablet]);
 
-  // Handle Resize and Mobile/Tablet Detection
+  // 6. Handle Resize and Mobile/Tablet Detection
   useEffect(() => {
     const handleResize = () => {
       const isMob = window.innerWidth < 1024;
@@ -229,21 +230,44 @@ export default function HeroExperience({ onExploreProjects }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Synchronize mobile video playback with chapter & progress
-  const handleMobileTimeUpdate = () => {
-    if (!mobileVideoRef.current) return;
-    const { currentTime, duration } = mobileVideoRef.current;
-    if (!duration) return;
-    const progress = currentTime / duration;
-    setScrollProgress(progress);
-    if (progress < 0.33) {
-      setCurrentChapter(0);
-    } else if (progress < 0.66) {
-      setCurrentChapter(1);
+  // 7. Frame-accurate mobile video chapter synchronization (ZERO LAG)
+  // /videos/mobile.mp4 exact scene cuts:
+  // Scene 0: 0.00s to 3.00s (01 / Living Sanctuary)
+  // Scene 1: 3.00s to 6.00s (02 / Botanical Niche)
+  // Scene 2: 6.00s to 10.00s (03 / Kids Bedroom)
+  const syncMobileChapter = useCallback(() => {
+    const video = mobileVideoRef.current;
+    if (!video || !video.duration) return;
+
+    const t = video.currentTime;
+    let target = 0;
+    // Switch ~120ms before the cut so the smooth entrance finishes right on the cut
+    if (t >= 5.88 && t < 9.85) {
+      target = 2;
+    } else if (t >= 2.88 && t < 5.88) {
+      target = 1;
     } else {
-      setCurrentChapter(2);
+      target = 0;
     }
-  };
+
+    setCurrentChapter((prev) => (prev !== target ? target : prev));
+  }, []);
+
+  // Continuous rAF polling on mobile to eliminate HTML5 timeupdate event latency
+  useEffect(() => {
+    if (!isMobileOrTablet) return;
+
+    let rafId;
+    const loop = () => {
+      syncMobileChapter();
+      rafId = requestAnimationFrame(loop);
+    };
+
+    rafId = requestAnimationFrame(loop);
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, [isMobileOrTablet, syncMobileChapter]);
 
   return (
     <section
@@ -267,7 +291,10 @@ export default function HeroExperience({ onExploreProjects }) {
           loop
           muted
           playsInline
-          onTimeUpdate={handleMobileTimeUpdate}
+          preload="auto"
+          onTimeUpdate={syncMobileChapter}
+          onSeeked={syncMobileChapter}
+          onPlay={syncMobileChapter}
           className="absolute inset-0 w-full h-full object-cover z-0 block lg:hidden"
         />
 
@@ -306,10 +333,10 @@ export default function HeroExperience({ onExploreProjects }) {
               {currentChapter === 0 && (
                 <motion.div
                   key="chap-0"
-                  initial={{ opacity: 0, y: 12 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.3 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.22, ease: 'easeOut' }}
                   className="space-y-3 sm:space-y-3.5"
                 >
                   <div className="flex items-center gap-2 sm:gap-2.5 text-[9px] xs:text-[10px] sm:text-[11px] tracking-[0.26em] font-mono text-[#D9CEBE] uppercase font-medium">
@@ -352,10 +379,10 @@ export default function HeroExperience({ onExploreProjects }) {
               {currentChapter === 1 && (
                 <motion.div
                   key="chap-1"
-                  initial={{ opacity: 0, y: 12 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.3 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.22, ease: 'easeOut' }}
                   className="space-y-3 sm:space-y-3.5"
                 >
                   <div className="flex items-center gap-2 sm:gap-2.5 text-[9px] xs:text-[10px] sm:text-[11px] tracking-[0.26em] font-mono text-[#D9CEBE] uppercase font-medium">
@@ -386,10 +413,10 @@ export default function HeroExperience({ onExploreProjects }) {
               {currentChapter === 2 && (
                 <motion.div
                   key="chap-2"
-                  initial={{ opacity: 0, y: 12 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.3 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.22, ease: 'easeOut' }}
                   className="space-y-3 sm:space-y-3.5"
                 >
                   <div className="flex items-center gap-2 sm:gap-2.5 text-[9px] xs:text-[10px] sm:text-[11px] tracking-[0.26em] font-mono text-[#D9CEBE] uppercase font-medium">
