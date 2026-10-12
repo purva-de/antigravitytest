@@ -165,12 +165,14 @@ export default function HeroExperience({ onExploreProjects }) {
 
       // Chapter detection based on video frame progression (145 frames total)
       let chapter = 0;
-      if (currentIdx < 45) {
-        chapter = 0;
+      if (currentIdx < 16) {
+        chapter = 0; // Consilio Studios (Intro - short)
+      } else if (currentIdx < 45) {
+        chapter = 1; // Living Room
       } else if (currentIdx < 95) {
-        chapter = 1;
+        chapter = 2; // Botanical Niche
       } else {
-        chapter = 2;
+        chapter = 3; // Kids Bedroom
       }
       setCurrentChapter((prev) => (prev !== chapter ? chapter : prev));
 
@@ -265,10 +267,11 @@ export default function HeroExperience({ onExploreProjects }) {
   }, [isMobileOrTablet]);
 
   // 8. Frame-accurate mobile video chapter synchronization (ZERO LAG)
-  // /videos/mobile.mp4 exact scene cuts:
-  // Scene 0: 0.00s to 3.00s (01 / Living Sanctuary)
-  // Scene 1: 3.00s to 6.00s (02 / Botanical Niche)
-  // Scene 2: 6.00s to 10.00s (03 / Kids Bedroom)
+  // /videos/mobile.mp4 scene timeline:
+  // 0.00s to 1.10s: Chapter 0 (Consilio Studios Brand Intro - short display)
+  // 1.10s to 3.00s: Chapter 1 (Living Room - Living Sanctuary)
+  // 3.00s to 6.00s: Chapter 2 (Botanical Niche - Arched Alcove)
+  // 6.00s to 10.00s: Chapter 3 (Kids Bedroom - Junior Suite)
   const syncMobileChapter = useCallback(() => {
     const video = mobileVideoRef.current;
     if (!video || !video.duration) return;
@@ -276,11 +279,13 @@ export default function HeroExperience({ onExploreProjects }) {
     const t = video.currentTime;
     let target = 0;
     if (t >= 6.00) {
-      target = 2;
+      target = 3; // Kids Bedroom
     } else if (t >= 3.00) {
-      target = 1;
+      target = 2; // Botanical Niche
+    } else if (t >= 1.10) {
+      target = 1; // Living Room
     } else {
-      target = 0;
+      target = 0; // Consilio Studios (Intro - short)
     }
 
     setCurrentChapter((prev) => (prev !== target ? target : prev));
@@ -369,7 +374,7 @@ export default function HeroExperience({ onExploreProjects }) {
           <div className="max-w-xl">
 
             <AnimatePresence mode="wait">
-              {/* CHAPTER 0: ENTRANCE TO LIVING SANCTUARY */}
+              {/* CHAPTER 0: BRAND INTRO (CONSILIO STUDIOS - SHORT DURATION) */}
               {currentChapter === 0 && (
                 <motion.div
                   key="chap-0"
@@ -415,10 +420,44 @@ export default function HeroExperience({ onExploreProjects }) {
                 </motion.div>
               )}
 
-              {/* CHAPTER 1: BOTANICAL LIVING ALCOVE */}
+              {/* CHAPTER 1: LIVING ROOM */}
               {currentChapter === 1 && (
                 <motion.div
                   key="chap-1"
+                  initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
+                  animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                  exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
+                  transition={{ duration: 0.18, ease: 'easeOut' }}
+                  className="space-y-3 sm:space-y-3.5"
+                >
+                  <div className="flex items-center gap-2 sm:gap-2.5 text-[9px] xs:text-[10px] sm:text-[11px] tracking-[0.26em] font-mono text-[#D9CEBE] uppercase font-medium">
+                    <span className="w-5 sm:w-6 h-px bg-[#D9CEBE]/70" />
+                    <span>01 / Living Room</span>
+                  </div>
+
+                  <h2 className="font-serif text-lg xs:text-xl sm:text-2xl lg:text-[28px] font-bold tracking-wide text-white leading-tight drop-shadow-md">
+                    Living Room
+                  </h2>
+
+                  <p className="text-xs sm:text-sm text-white/85 max-w-md font-light leading-relaxed font-sans">
+                    Warm architectural living sanctuary featuring bespoke modular lounge seating, layered ambient lighting, and refined natural textures.
+                  </p>
+
+                  <div className="flex items-center gap-2 pt-1 flex-wrap">
+                    <span className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-md text-[9px] sm:text-[10px] font-mono text-[#D9CEBE] tracking-[0.16em] uppercase border border-white/15">
+                      Living Sanctuary
+                    </span>
+                    <span className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-md text-[9px] sm:text-[10px] font-mono text-[#D9CEBE] tracking-[0.16em] uppercase border border-white/15">
+                      Bespoke Lounge
+                    </span>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* CHAPTER 2: BOTANICAL LIVING ALCOVE */}
+              {currentChapter === 2 && (
+                <motion.div
+                  key="chap-2"
                   initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
                   animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
                   exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
@@ -449,10 +488,10 @@ export default function HeroExperience({ onExploreProjects }) {
                 </motion.div>
               )}
 
-              {/* CHAPTER 2: PETITE VITESSE JUNIOR SUITE */}
-              {currentChapter === 2 && (
+              {/* CHAPTER 3: KIDS BEDROOM */}
+              {currentChapter === 3 && (
                 <motion.div
-                  key="chap-2"
+                  key="chap-3"
                   initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
                   animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
                   exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
